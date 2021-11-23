@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Challenges
 {
@@ -6,7 +8,9 @@ namespace Challenges
     {
         static void Main(string[] args)
         {
+        
         }
+
 
     }
 
