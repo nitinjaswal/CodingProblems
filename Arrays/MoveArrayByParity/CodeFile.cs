@@ -1,4 +1,4 @@
-﻿public class Solution
+﻿public class SolutionSortArrayByParity
 {
     public int[] SortArrayByParity(int[] nums)
     {
