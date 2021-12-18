@@ -9,41 +9,34 @@ namespace Challenges
     {
         static void Main(string[] args)
         {
-            int[] arr = { 1 };
+            int[] arr = { 4, 3, -2, 6, 7, -10, -10, 4, 5, 9, -3, 4, 7, -28, 2, 9, 3, 2, 11 };
             int target = 0;
-            int index = SearchInsert(arr, target);
+            int index = MaxSubArray(arr);
             //{ 1, 2, 2 };
         }
 
-        public static int SearchInsert(int[] nums, int target)
+        public static int MaxSubArray(int[] nums)
         {
-            int index = 0;
-            int low = 0;
-            int high = nums.Length - 1;
-
-            while (low <= high)
+            int currentBest = nums[0];
+            int overAllBest = nums[0];
+            for (int i = 1; i <= nums.Length - 1; i++)
             {
-                int mid = (low + high) / 2;
-
-                if (target == nums[mid])
+                if (currentBest < 0)
                 {
-                    return mid;
-                }
-
-                if (target > nums[mid])
-                {
-                    low = mid + 1;
-                    index = low;
+                    currentBest = nums[i];
                 }
                 else
                 {
-                    index = mid;
-                    high = mid - 1;                
-
+                    currentBest = currentBest + nums[i];
                 }
-            }
-            return index;
+                if (currentBest > overAllBest)
+                {
+                    overAllBest = currentBest;
+                }
 
+
+            }
+            return overAllBest;
         }
     }
 }
