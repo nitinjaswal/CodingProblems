@@ -1,4 +1,4 @@
-﻿public class SolutionHasCycle
+﻿public class SolutionHasCycleLinkedList
 {
     public bool HasCycle(ListNode head)
     {
@@ -19,6 +19,5 @@
         }
         return false;
     }
-
 
 }
