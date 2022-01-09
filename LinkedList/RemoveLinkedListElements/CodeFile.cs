@@ -9,7 +9,7 @@
  *     }
  * }
  */
-public class Solution
+public class SolutionRemoveElements
 {
     public ListNode RemoveElements(ListNode head, int val)
     {
