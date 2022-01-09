@@ -28,28 +28,44 @@ namespace Challenges
             LinkedList list = new LinkedList();
 
             // creating first linked list
-            list.head = new Node(1);
-            list.head.next = new Node(2);
-            list.head.next.next = new Node(3);
-            list.head.next.next.next = new Node(4);
-            list.head.next.next.next.next = new Node(5);
-
-            var node = list.ReverseList(list.head);
+            list.head = new Node(6);
+            list.head.next = new Node(1);
+            list.head.next.next = new Node(2);
+            list.head.next.next.next = new Node(3);
+            list.head.next.next.next.next = new Node(6);
+            list.head.next.next.next.next.next = new Node(4);
+            list.head.next.next.next.next.next.next = new Node(6);
+            var node = list.RemoveElements(list.head, 6);
         }
 
-        public Node ReverseList(Node head)
+        public Node RemoveElements(Node head, int val)
         {
 
-            Node previousNode = null;
-            var currentNode = head;
+            if (head == null)
+            {
+                return null;
+            }
+         
+            Node dummyNode = new Node(0);
+            dummyNode.next = head;
+
+            Node currentNode = head;
+            Node previousNode = dummyNode;
+           
             while (currentNode != null)
             {
-                Node temp = currentNode.next;
-                currentNode.next = previousNode;
-                previousNode = currentNode;
-                currentNode = temp;
+                if (currentNode.data == val)
+                {
+                    previousNode.next = currentNode.next;
+                }
+                else
+                {
+                    previousNode = currentNode;
+                }
+                currentNode = currentNode.next;
+
             }
-            return previousNode;
+            return dummyNode.next;
         }
     }
 
