@@ -30,43 +30,71 @@ namespace Challenges
             // creating first linked list
             list.head = new Node(1);
             list.head.next = new Node(2);
-            list.head.next.next = new Node(3);
-            list.head.next.next.next = new Node(4);
-            list.head.next.next.next.next = new Node(5);
+            list.head.next.next = new Node(1);
+            list.head.next.next.next = new Node(1);
+            //list.head.next.next.next.next = new Node(5);
             //list.head.next.next.next.next.next = new Node(4);
             //list.head.next.next.next.next.next.next = new Node(6);
-            var node = list.OddEvenList(list.head);
+            var node = list.IsPalindrome(list.head);
         }
 
-        public Node OddEvenList(Node head)
+        public bool IsPalindrome(Node head)
         {
-            if (head == null || head.next == null)
+            //In brute force we can simply reverse a linked list and compare both the linked list
+            // it will tak extra space
+            //Solution in O(N) and O(1) space: Reverse second half of linked list and start comparing first and last element 
+            
+            if (head == null)
             {
-                return null;
+                return true;
             }
-            var evenHead = head.next;
-            var currentOdd = head;
-            var currentEven = head.next;
+            var currentNode = head;//1->2
+            var middleNode = MiddleElement(head);//it will find middle element in the list
+            var lastNode = ReverseList(middleNode);//it contains second half of the list in reverse order (2->1 will become NULL<-2<-1)
 
-            while (currentOdd != null && currentEven != null)
+            while (lastNode != null)
             {
-                if (currentOdd.next == currentEven)
+                if (lastNode.data != currentNode.data)
                 {
-                    currentOdd.next = currentEven.next;
-                    if (currentOdd.next != null)
-                    {
-                        currentOdd = currentOdd.next;
-                    }    
+                    return false;
                 }
                 else
                 {
-                    currentEven.next = currentOdd.next;
-                    currentEven = currentEven.next;
+                    currentNode = currentNode.next;
+                    lastNode = lastNode.next;
                 }
             }
-            currentOdd.next = evenHead;
+            return true;
+        }
 
-            return head;
+        private Node MiddleElement(Node head)
+        {
+            var slowPointer = head;
+            var fastPointer = head;
+            while (fastPointer != null && fastPointer.next != null)
+            {
+                fastPointer = fastPointer.next.next;
+                slowPointer = slowPointer.next;
+            }
+
+            return slowPointer;
+        }
+
+        private Node ReverseList(Node head)
+        {
+            Node previuosNode = null;
+            Node currentNode = head;
+
+            while (currentNode != null)
+            {
+                var temp = currentNode.next;
+                currentNode.next = previuosNode;//First it will point to NULL(as previuosNode is set to NULL initially)
+                previuosNode = currentNode;
+                currentNode = temp;
+
+            }
+            return previuosNode;
+
         }
     }
 
