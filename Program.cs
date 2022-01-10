@@ -25,76 +25,62 @@ namespace Challenges
 
         public static void Main(String[] args)
         {
-            LinkedList list = new LinkedList();
+            LinkedList list1 = new LinkedList();
+            LinkedList list2 = new LinkedList();
 
             // creating first linked list
-            list.head = new Node(1);
-            list.head.next = new Node(2);
-            list.head.next.next = new Node(1);
-            list.head.next.next.next = new Node(1);
+            list1.head = new Node(-9);
+            list1.head.next = new Node(3);
+           // list1.head.next.next = new Node(4);
+
+            // creating first linked list
+
+            list2.head = new Node(5);
+            list2.head.next = new Node(7);
+           // list2.head.next.next = new Node(4);
+            //list.head.next.next.next = new Node(1);
             //list.head.next.next.next.next = new Node(5);
             //list.head.next.next.next.next.next = new Node(4);
             //list.head.next.next.next.next.next.next = new Node(6);
-            var node = list.IsPalindrome(list.head);
+            var sortedList = MergeTwoLists(list1.head, list2.head);
         }
 
-        public bool IsPalindrome(Node head)
+        public static Node MergeTwoLists(Node l1, Node l2)
         {
-            //In brute force we can simply reverse a linked list and compare both the linked list
-            // it will tak extra space
-            //Solution in O(N) and O(1) space: Reverse second half of linked list and start comparing first and last element 
-            
-            if (head == null)
-            {
-                return true;
-            }
-            var currentNode = head;//1->2
-            var middleNode = MiddleElement(head);//it will find middle element in the list
-            var lastNode = ReverseList(middleNode);//it contains second half of the list in reverse order (2->1 will become NULL<-2<-1)
+            var head = new Node(0);
+            var dummyNode = head;
+            var list1 = l1;
+            var list2 = l2;
 
-            while (lastNode != null)
+            while (list1 != null && list2 != null)
             {
-                if (lastNode.data != currentNode.data)
+                if (list1.data < list2.data)
                 {
-                    return false;
+                    dummyNode.next = list1;
+                    dummyNode = dummyNode.next;
+                    list1 = list1.next;
                 }
                 else
                 {
-                    currentNode = currentNode.next;
-                    lastNode = lastNode.next;
+                    dummyNode.next = list2;
+                    dummyNode = dummyNode.next;
+                    list2 = list2.next;
                 }
             }
-            return true;
-        }
 
-        private Node MiddleElement(Node head)
-        {
-            var slowPointer = head;
-            var fastPointer = head;
-            while (fastPointer != null && fastPointer.next != null)
+            while (list1 != null)
             {
-                fastPointer = fastPointer.next.next;
-                slowPointer = slowPointer.next;
+                dummyNode.next = list1;
+                dummyNode = dummyNode.next;
+                list1 = list1.next;
             }
-
-            return slowPointer;
-        }
-
-        private Node ReverseList(Node head)
-        {
-            Node previuosNode = null;
-            Node currentNode = head;
-
-            while (currentNode != null)
+            while (list2 != null)
             {
-                var temp = currentNode.next;
-                currentNode.next = previuosNode;//First it will point to NULL(as previuosNode is set to NULL initially)
-                previuosNode = currentNode;
-                currentNode = temp;
-
+                dummyNode.next = list2;
+                dummyNode = dummyNode.next;
+                list2 = list2.next;
             }
-            return previuosNode;
-
+            return head.next;
         }
     }
 
