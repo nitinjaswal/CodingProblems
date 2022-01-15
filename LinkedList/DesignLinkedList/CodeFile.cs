@@ -1,9 +1,9 @@
-﻿public class Node
+﻿public class Node1
 {
     public int value;
-    public Node nextNode;
+    public Node1 nextNode;
 
-    public Node(int value)
+    public Node1(int value)
     {
         this.value = value;
         this.nextNode = null;
@@ -11,8 +11,8 @@
 }
 public class MyLinkedList
 {
-    public Node head;
-    public Node tail;
+    public Node1 head;
+    public Node1 tail;
     public int length;
     public MyLinkedList()
     {
@@ -41,7 +41,7 @@ public class MyLinkedList
 
     public void AddAtHead(int val)
     {
-        Node newNode = new Node(val);
+        Node1 newNode = new Node1(val);
         newNode.nextNode = this.head;
         this.head = newNode;
         length++;
@@ -56,7 +56,7 @@ public class MyLinkedList
         }
         else
         {
-            Node newNode = new Node(val);
+            Node1 newNode = new Node1(val);
             var currentode = this.head;
             while (currentode.nextNode != null)
             {
@@ -88,7 +88,7 @@ public class MyLinkedList
         }
         else //Insert at given position
         {
-            Node newNode = new Node(val);
+            Node1 newNode = new Node1(val);
             var currentode = this.head;
             //Here we are using for loop because we know at which position we have to stop to insert new node.
             for (int i = 0; i < index - 1; i++)
