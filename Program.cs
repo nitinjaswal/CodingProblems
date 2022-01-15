@@ -14,84 +14,82 @@ namespace Challenges
 
             public int val;
             public ListNode next;
-            public ListNode prev;
-            public ListNode child;
-
+            public ListNode random;
             public ListNode(int d)
             {
                 val = d;
                 next = null;
-                prev = null;
-                child = null;
+                random = null;
             }
         }
 
         public static void Main(String[] args)
         {
-            LinkedList list1 = new LinkedList();
-            LinkedList list2 = new LinkedList();
-            ListNode head = new ListNode(1);
-            head.next = new ListNode(2);
-            head.next.next = new ListNode(3);
-            head.next.next.next = new ListNode(4);
-            head.next.child = new ListNode(7);
-            head.next.child.child = new ListNode(9);
-            head.next.child.child.child = new ListNode(14);
-            head.next.child.child.child.child = new ListNode(15);
-            head.next.child.child.child.child.next = new ListNode(23);
-            head.next.child.child.child.child.next.child = new ListNode(24);
-            head.next.child.next = new ListNode(8);
-            head.next.child.next.child = new ListNode(16);
-            head.next.child.next.child.child = new ListNode(17);
-            head.next.child.next.child.child.next = new ListNode(18);
-            head.next.child.next.child.child.next.next = new ListNode(19);
-            head.next.child.next.child.child.next.next.next
-                                                = new ListNode(20);
-            head.next.child.next.child.child.next.next.next.child
-                                                = new ListNode(21);
-            head.next.child.next.next = new ListNode(10);
-            head.next.child.next.next.child = new ListNode(11);
-            head.next.child.next.next.next = new ListNode(12);
-            var list = FlattenLinkedList(head);
-        }
 
-        public static ListNode FlattenLinkedList(ListNode head)
+            ListNode start = new ListNode(1);
+            start.next = new ListNode(2);
+            start.next.next = new ListNode(3);
+            start.next.next.next = new ListNode(4);
+            start.next.next.next.next = new ListNode(5);
+
+            // 1's random points to 3
+            start.random = start.next.next;
+
+            // 2's random points to 1
+            start.next.random = start;
+
+            // 3's and 4's random points to 5
+            start.next.next.random = start.next.next.next.next;
+            start.next.next.next.random = start.next.next.next.next;
+
+            // 5's random points to 2
+            start.next.next.next.next.random = start.next;
+
+            var copiedList = CopyRandomList(start);
+        }
+        static Dictionary<ListNode, ListNode> map = new Dictionary<ListNode, ListNode>();
+        public static ListNode CopyRandomList(ListNode head)
         {
+            // Hash map which contains node to node mapping of
+            // original and clone linked list.
             if (head == null)
             {
                 return head;
             }
-
-            var dummyNode = new ListNode(0);
-            dummyNode.next = head;
-            ListNode currentNode;
-            ListNode prevNode = dummyNode;
-
-            Stack<ListNode> stack = new Stack<ListNode>();
-            stack.Push(head);
-
-            while (stack.Count > 0)
+            ListNode originalNode = head;
+            ListNode copiedNode = new ListNode(head.val);
+            map.Add(originalNode, copiedNode);
+            // Traverse the original list and making a copy of that
+            // in the clone linked list.
+            while (originalNode != null)
             {
-                currentNode = stack.Pop();
-                prevNode.next = currentNode;
-                currentNode.prev = prevNode;
+                //Copying value of orignialNode to copiedNode
+                copiedNode.random = GetNode(originalNode.random);
+                copiedNode.next = GetNode(originalNode.next);
 
-                if (currentNode.next != null)
-                {
-                    stack.Push(currentNode.next);
-                }
-
-                if (currentNode.child != null)
-                {
-                    stack.Push(currentNode.child);
-                    currentNode.child = null;
-                }
-                prevNode = currentNode;
+                originalNode = originalNode.next;
+                copiedNode = copiedNode.next;
             }
-            dummyNode.next.prev = null;
-            return dummyNode.next;
+            return map[head];
         }
 
+        private static ListNode GetNode(ListNode node)
+        {
+            if (node != null)
+            {
+                if (map.ContainsKey(node))
+                {
+                    return map[node];
+                }
+                else
+                {
+                    var newNode = new ListNode(node.val);
+                    map.Add(node, newNode);
+                    return map[node];
+                }
+            }
+            return null;
+        }
     }
 
 }
