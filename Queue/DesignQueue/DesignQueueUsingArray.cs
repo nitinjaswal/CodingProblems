@@ -1,28 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 
-namespace Challenges
+namespace Challenges.Queue
 {
-    class MyQueue
+    class DesignQueueUsingArray
     {
         int[] a;
         int capacity;
         int rear;
 
-        public MyQueue(int n)
+        public DesignQueueUsingArray(int n)
         {
             capacity = n;
             a = new int[n];
             rear = -1;
-        }
-
-        public static void Main(String[] args)
-        {
-
-
-
         }
 
         private void enqueue(int val)
@@ -56,10 +48,4 @@ namespace Challenges
             return result;
         }
     }
-
 }
-
-
-
-
-
