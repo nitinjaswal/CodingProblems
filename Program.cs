@@ -21,39 +21,100 @@ namespace Challenges
         public static void Main(String[] args)
         {
 
-
-
+            MyCircularQueue obj = new MyCircularQueue(5);
+            obj.EnQueue(1);
+            obj.EnQueue(2);
+            obj.EnQueue(3);
+            obj.EnQueue(4);
+            obj.EnQueue(5);
+            obj.DeQueue();
+            obj.DeQueue();
+            obj.EnQueue(6);
+            obj.Front();
         }
 
-        private void enqueue(int val)
+        public class MyCircularQueue
         {
-            if (rear == capacity - 1)
+            int front = 0;
+            int rear = -1;
+            int[] a;
+            int n;
+            int length;
+            public MyCircularQueue(int k)
             {
-                Console.WriteLine("Queue is full");
-            }
-            else
-            {
-                rear++;
-                a[rear] = val;
-            }
-        }
 
-        private int dequeue(int val)
-        {
-            if (rear == -1)
-            {
-                Console.WriteLine("Queue is empty");
-                return -1;
+                this.n = k; //length of the queue(array)
+                a = new int[n];
             }
 
-            int result = a[0];//we dequeue from front
-            //After removing element from front, shift all elementts to the left
-            for (int i = 0; i < rear; i++)
+            public bool EnQueue(int value)
             {
-                a[i] = a[i + 1];
+                if (IsFull())
+                {
+                    return false;
+                }
+                //calculate rear
+                rear = (rear + 1) % a.Length;
+                a[rear] = value;
+                length++;
+                return true;
+
             }
-            rear--;//updating rear position
-            return result;
+
+            public bool DeQueue()
+            {
+                if (IsEmpty())
+                {
+                    return false;
+                }
+                //calculate front
+                front = (front + 1) % a.Length;
+                length--;
+                return true;
+
+            }
+
+            public int Front()
+            {
+                if (IsEmpty())
+                {
+                    return -1;
+                }
+                else
+                {
+                    return a[front];
+                }
+            }
+
+            public int Rear()
+            {
+                if (IsEmpty())
+                {
+                    return -1;
+                }
+                else
+                {
+                    return a[rear];
+                }
+            }
+
+            public bool IsEmpty()
+            {
+                if (length == 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            public bool IsFull()
+            {
+                if (length == a.Length)
+                {
+                    return true;
+                }
+                return false;
+            }
         }
     }
 
