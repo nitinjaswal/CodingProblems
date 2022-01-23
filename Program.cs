@@ -2,123 +2,81 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Challenges.Queue.ShortestDistance;
 
 namespace Challenges
 {
-    class MyQueue
+    class BFSShortestPath
     {
-        int[] a;
-        int capacity;
-        int rear;
 
-        public MyQueue(int n)
-        {
-            capacity = n;
-            a = new int[n];
-            rear = -1;
-        }
 
         public static void Main(String[] args)
         {
-
-            MyCircularQueue obj = new MyCircularQueue(5);
-            obj.EnQueue(1);
-            obj.EnQueue(2);
-            obj.EnQueue(3);
-            obj.EnQueue(4);
-            obj.EnQueue(5);
-            obj.DeQueue();
-            obj.DeQueue();
-            obj.EnQueue(6);
-            obj.Front();
+            MinStack minStack = new MinStack();
+            minStack.Push(2);
+            minStack.Push(0);
+            minStack.Push(3);
+            minStack.Push(0);
+            minStack.GetMin();
+            minStack.Pop();
+            minStack.GetMin();
+            minStack.Pop();
+            minStack.GetMin();
+            minStack.Pop();
+            minStack.GetMin();
         }
 
-        public class MyCircularQueue
+        public class MinStack
         {
-            int front = 0;
-            int rear = -1;
-            int[] a;
-            int n;
-            int length;
-            public MyCircularQueue(int k)
+            Stack<int> stack;
+            Stack<int> minStack;
+            int min = 0;
+            /** initialize your data structure here. */
+            public MinStack()
             {
-
-                this.n = k; //length of the queue(array)
-                a = new int[n];
+                stack = new Stack<int>();
+                minStack = new Stack<int>();
             }
 
-            public bool EnQueue(int value)
+            public void Push(int x)
             {
-                if (IsFull())
+                stack.Push(x);
+
+                //IF minStack is empty then insert value
+                //OR minStack is not empty, then insert value only if minStack top element is greater than new value
+                if (minStack.Count == 0 || x <= minStack.Peek())
                 {
-                    return false;
+                    minStack.Push(x);
                 }
-                //calculate rear
-                rear = (rear + 1) % a.Length;
-                a[rear] = value;
-                length++;
-                return true;
 
             }
 
-            public bool DeQueue()
+            public void Pop()
             {
-                if (IsEmpty())
+                int val = stack.Pop();
+                if (val == minStack.Peek())
                 {
-                    return false;
-                }
-                //calculate front
-                front = (front + 1) % a.Length;
-                length--;
-                return true;
-
-            }
-
-            public int Front()
-            {
-                if (IsEmpty())
-                {
-                    return -1;
-                }
-                else
-                {
-                    return a[front];
+                    minStack.Pop();
                 }
             }
 
-            public int Rear()
+            public int Top()
             {
-                if (IsEmpty())
-                {
-                    return -1;
-                }
-                else
-                {
-                    return a[rear];
-                }
+                return stack.Peek();
             }
 
-            public bool IsEmpty()
+            public int GetMin()
             {
-                if (length == 0)
-                {
-                    return true;
-                }
-                return false;
-            }
-
-            public bool IsFull()
-            {
-                if (length == a.Length)
-                {
-                    return true;
-                }
-                return false;
+                return minStack.Count != 0 ? minStack.Peek() : 0;
+                // return minStack.Peek();
             }
         }
     }
 
+
 }
+
+
 
 
 
