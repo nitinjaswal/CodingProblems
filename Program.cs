@@ -6,74 +6,76 @@ using Challenges.Queue.ShortestDistance;
 
 namespace Challenges
 {
-    class BFSShortestPath
+    class IsValidString
     {
 
 
         public static void Main(String[] args)
         {
-            MinStack minStack = new MinStack();
-            minStack.Push(2);
-            minStack.Push(0);
-            minStack.Push(3);
-            minStack.Push(0);
-            minStack.GetMin();
-            minStack.Pop();
-            minStack.GetMin();
-            minStack.Pop();
-            minStack.GetMin();
-            minStack.Pop();
-            minStack.GetMin();
+            string s = "{([])}";
+            var isValid = IsValid(s);
         }
 
-        public class MinStack
+        public static bool IsValid(string s)
         {
-            Stack<int> stack;
-            Stack<int> minStack;
-            int min = 0;
-            /** initialize your data structure here. */
-            public MinStack()
-            {
-                stack = new Stack<int>();
-                minStack = new Stack<int>();
-            }
+            Stack<char> stack = new Stack<char>();
 
-            public void Push(int x)
+            char[] str = s.ToCharArray();
+            for (int i = 0; i < str.Length; i++)
             {
-                stack.Push(x);
-
-                //IF minStack is empty then insert value
-                //OR minStack is not empty, then insert value only if minStack top element is greater than new value
-                if (minStack.Count == 0 || x <= minStack.Peek())
+                //this is checking if it contains opening bracket
+                if (isOpening(str[i]))
                 {
-                    minStack.Push(x);
+                    stack.Push(str[i]);
                 }
 
-            }
-
-            public void Pop()
-            {
-                int val = stack.Pop();
-                if (val == minStack.Peek())
+                else
                 {
-                    minStack.Pop();
+                    if (stack.Count == 0)
+                    {
+                        return false;
+                    }
+                    //if 
+                    else if (!isMatching(stack.Peek(), str[i]))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        //if elements are matching then remove from stack
+                        stack.Pop();
+                    }
                 }
             }
-
-            public int Top()
+            return stack.Count == 0 ? true : false;
+        }
+        //method to check if brackets are opening
+        private static bool isOpening(char c)
+        {
+            if (c == '(' || c == '{' || c == '[')
             {
-                return stack.Peek();
+                return true;
             }
-
-            public int GetMin()
+            else
             {
-                return minStack.Count != 0 ? minStack.Peek() : 0;
-                // return minStack.Peek();
+                return false;
+            }
+        }
+
+        //a: from Stack.b: new value from string
+        private static bool isMatching(char a, char b)
+        {
+            //check opening and closing pair for the bracket
+            if (a == '(' && b == ')' || a == '{' && b == '}' || a == '[' && b == ']')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
-
-
 }
 
 
