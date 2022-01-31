@@ -1,4 +1,6 @@
-﻿public class SolutionDailyTemperatures
+﻿using System.Collections.Generic;
+
+public class SolutionDailyTemperatures
 {
     public int[] DailyTemperatures(int[] temperatures)
     {

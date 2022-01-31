@@ -12,28 +12,62 @@ namespace Challenges
 
         public static void Main(String[] args)
         {
-            int[] temp = { 73, 74, 75, 71, 69, 72, 76, 73 };
-            var isValid = DailyTemperatures(temp);
+            string[] tokens = { "4", "13", "5", "/", "+" };
+            var isValid = EvalRPN(tokens);
         }
 
-        public static int[] DailyTemperatures(int[] temperatures)
+        public static int EvalRPN(string[] tokens)
         {
-            var stack = new Stack<int>();
-            var result = new int[temperatures.Length];
-
-            for (int i = 0; i < temperatures.Length; i++)
+            Stack<int> stack = new Stack<int>();
+            int sum = 0;
+            for (int i = 0; i < tokens.Length; i++)
             {
-                while (stack.Count > 0 && temperatures[stack.Peek()] < temperatures[i])
+                if (!isOperator(tokens[i]))
                 {
-                    var index = stack.Pop();
-                    result[index] = i - index;
+                    stack.Push(Convert.ToInt32(tokens[i]));
                 }
-
-                stack.Push(i);
+                else
+                {
+                    int op1 = stack.Pop();
+                    int op2 = stack.Pop();
+                    sum = calculate(op2, op1, tokens[i]);
+                    stack.Push(sum);
+                }
             }
 
-            return result;
+            return stack.Pop();
+        }
 
+        private static  int calculate(int op1, int op2 , string opr)
+        {
+            if(opr == "+")
+            {
+                return op1 + op2;
+            }
+            else if(opr == "-")
+            {
+                return op1 - op2;
+            }
+            else if(opr == "*")
+            {
+                return op1 * op2;
+            }
+            else
+            {
+                return op1 / op2;
+            }
+        }
+
+        private static bool isOperator(string c)
+        {
+            if (c == "+" || c == "-" || c == "*" || c == "/")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }
