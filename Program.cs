@@ -6,17 +6,16 @@ using Challenges.Queue.ShortestDistance;
 
 namespace Challenges
 {
-    class MyStack
+    class MyStackUsingSingleQueue
     {
 
         private Queue<int> q1 = new Queue<int>();
-        private Queue<int> q2 = new Queue<int>();
         public static void Main(String[] args)
         {
 
         }
 
-        public MyStack()
+        public MyStackUsingSingleQueue()
         {
 
         }

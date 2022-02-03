@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 
-public class MyStack
+public class MyStackUsingSingleQueue
 {
     private Queue<int> q1 = new Queue<int>();
 
-    public MyStack()
+    public MyStackUsingSingleQueue()
     {
 
     }
 
     public void Push(int x)
     {
-       //Add element
+        //Add element
         q1.Enqueue(x);
 
         // get previous size of queue
@@ -20,7 +20,7 @@ public class MyStack
         // Pop (or Dequeue) all previous
         // elements and put them after current
         // element
-        for (int i = 0; i < size-1; i++)
+        for (int i = 0; i < size - 1; i++)
         {
             // this will add front element into
             // rear of queue
@@ -34,7 +34,6 @@ public class MyStack
         return q1.Dequeue();
     }
 
-    // Returns top of stack
     public int Top()
     {
         return q1.Peek();
