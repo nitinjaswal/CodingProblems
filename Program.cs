@@ -6,67 +6,52 @@ using Challenges.Queue.ShortestDistance;
 
 namespace Challenges
 {
-    class MyQueue
+    class MyStack
     {
 
-        private Stack<int> s1 = new Stack<int>();
-        private Stack<int> s2 = new Stack<int>();
+        private Queue<int> q1 = new Queue<int>();
+        private Queue<int> q2 = new Queue<int>();
         public static void Main(String[] args)
         {
 
         }
 
-        public MyQueue()
+        public MyStack()
         {
 
         }
 
         //Push element to the queue
-        public void Enqueue(int x)
+        public void Push(int x)
         {
-            s1.Push(x);
+            //copy all elements from queue1 to queue2
+            while (q1.Count > 0)
+            {
+                q2.Enqueue(q1.Dequeue());
+            }
+
+            q1.Enqueue(x);
+
+            //copy back all the elements to queue1
+            while (q2.Count > 0)
+            {
+                q1.Enqueue(q2.Dequeue());
+            }
         }
 
         //Dequeue element from queue
-        public int Dequeue()
+        public int Pop()
         {
-            //copy all elements from stack1 to stack2
-            while (s1.Count > 0)
-            {
-                s2.Push(s1.Pop());
-            }
-
-            //remove top element from the stack(eventually it is first element in the stack1)
-            int elementToRemove = s2.Pop();
-
-            //copy back all the elements to stack1
-            while (s2.Count > 0)
-            {
-                s1.Push(s2.Pop());
-            }
-
-            return elementToRemove;
+            return q1.Dequeue();        
         }
 
-        //get the front element
-        public int Peek()
+        public int Top()
         {
-            while (s1.Count > 0)
-            {
-                s2.Push(s1.Pop());
-            }
-            int element = s2.Peek();
-            while (s2.Count > 0)
-            {
-                s1.Push(s2.Pop());
-            }
-
-            return element;
+            return q1.Peek();
         }
-
         public bool Empty()
         {
-            if (s1.Count == 0)
+            if (q1.Count == 0)
                 return true;
             else
                 return false;
