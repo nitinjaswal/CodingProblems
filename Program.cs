@@ -7,62 +7,69 @@ using Challenges.Queue.ShortestDistance;
 
 namespace Challenges
 {
-    class MyStackUsingSingleQueue
+    public class Node
     {
+        public int data;
+        public Node left, right;
 
-
-
+        public Node(int item)
+        {
+            data = item;
+            left = right = null;
+        }
+    }
+    class PreOrderBinaryTree
+    {
+        public Node root;
         public static void Main(String[] args)
         {
-            string s = "3[a]2[bc]";
-            string res = DecodeString(s);
+            char[][] input = new char[4][];
+            input[0] = new char[5] { '1', '1', '0', '0', '0' };
+            input[1] = new char[5] { '1', '1', '0', '0', '0' };
+            input[2] = new char[5] { '0', '0', '1', '0', '0' };
+            input[3] = new char[5] { '0', '0', '0', '1', '1' };
 
+            PreOrderBinaryTree tree = new PreOrderBinaryTree();
+            tree.root = new Node(1);
+            tree.root.left = new Node(2);
+            tree.root.right = new Node(7);
+            tree.root.left.left = new Node(3);
+            tree.root.left.right = new Node(4);
+            tree.root.left.right.left = new Node(5);
+            tree.root.left.right.right = new Node(6);
+            //tree.root.right.left = new Node(7);
+            var res = PreorderTraversal(tree.root);
         }
 
-        public static string DecodeString(string s)
+        public static IList<int> PreorderTraversal(Node root)
         {
-            Stack<int> numStack = new Stack<int>();
-            Stack<StringBuilder> strStack = new Stack<StringBuilder>();
-
-            StringBuilder str = new StringBuilder();
-            int num = 0;
-            char[] c = s.ToCharArray();
-
-            for (int i = 0; i < c.Length; i++)
+            Stack<Node> stack = new Stack<Node>();
+            List<int> preOrder = new List<int>();
+            if (root == null) return preOrder;
+            stack.Push(root);//Insert root node in stack
+            while (stack.Count > 0)
             {
-                if (Char.IsDigit(c[i]))
-                {
-                    num = num * 10 + c[i] - '0';
-                }
-                else if (c[i] == '[')
-                {
-                    strStack.Push(str);  //Store str(stringbuilder) in stack
-                    str = new StringBuilder();//Reset str
-                    numStack.Push(num);//push num into the numstack
-                    num = 0;//Reset num
+                var node = stack.Pop();
 
-                }
-                else if (c[i] == ']')
+                //Pop the node from the stack and print it
+                preOrder.Add(node.data);
+
+                //First we push right node as we want to process left node first(LIFO)
+                if (node.right != null)
                 {
-                    StringBuilder temp = str;
-                    str = strStack.Pop();
-                    int count = numStack.Pop();
-                    while (count > 0)
-                    {
-                        str.Append(temp);
-                        count--;
-                    }
+                    stack.Push(node.right);
                 }
-                else
+                if (node.left != null)
                 {
-                    str.Append(c[i]);
+                    stack.Push(node.left);
                 }
             }
-            return str.ToString();
+            return preOrder;
         }
-
     }
+
 }
+
 
 
 

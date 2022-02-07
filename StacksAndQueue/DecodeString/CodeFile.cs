@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
-public class Solution
+public class SolutionDecodeString
 {
     public string DecodeString(string s)
     {
