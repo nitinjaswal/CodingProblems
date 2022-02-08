@@ -38,44 +38,52 @@ namespace Challenges
             tree.root.left.right.left = new Node(6);
             tree.root.left.right.right = new Node(7);
             //tree.root.right.left = new Node(7);
-            var res = PreorderTraversal(tree.root);
+            var res = LevelOrder(tree.root);
         }
 
-        public static IList<int> PreorderTraversal(Node root)
+        public static IList<IList<int>> LevelOrder(Node root)
         {
-            Stack<Node> stack = new Stack<Node>();
-            List<int> postOrder = new List<int>();
-            if (root == null) return postOrder;
-            //   stack.Push(root);//Insert root node in stack
-            var currentNode = root;
-            Node lastNode = null;
+            var levelOrder = new List<IList<int>>();
 
-            while (currentNode!=null ||stack.Count>0)
+
+            if (root == null)
             {
-                //iterate each left node and put it into the stack
-                if (currentNode != null)
+                return levelOrder;
+            }
+
+            Queue<Node> queue = new Queue<Node>();
+            queue.Enqueue(root);
+
+            var list = new List<int>();
+            list.Add(root.data);
+            levelOrder.Add(list);
+            while (queue.Count > 0)
+            {
+                list = new List<int>();
+                var level = queue.Count;
+                for (int i = 0; i < level; i++)
                 {
-                    stack.Push(currentNode);
-                    currentNode = currentNode.left;
-                }
-                else
-                {
-                    currentNode = stack.Peek();
-                    if(currentNode.right == null || currentNode.right == lastNode)
+                   var currentNode = queue.Dequeue();
+
+                    if (currentNode.left != null)
                     {
-                        postOrder.Add(currentNode.data);
-                        stack.Pop();
-                        lastNode = currentNode;
-                        currentNode = null;
+                        queue.Enqueue(currentNode.left);
+                        list.Add(currentNode.left.data);
                     }
-                    else
+                    if (currentNode.right != null)
                     {
-                        currentNode = currentNode.right;
+                        queue.Enqueue(currentNode.right);
+                        list.Add(currentNode.right.data);
                     }
                 }
 
+                if (list.Count > 0)
+                {
+                    levelOrder.Add(list);
+                }
             }
-            return postOrder;
+
+            return levelOrder;
         }
     }
 
