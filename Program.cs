@@ -44,24 +44,38 @@ namespace Challenges
         public static IList<int> PreorderTraversal(Node root)
         {
             Stack<Node> stack = new Stack<Node>();
-            List<int> inOrder = new List<int>();
-            if (root == null) return inOrder;
+            List<int> postOrder = new List<int>();
+            if (root == null) return postOrder;
             //   stack.Push(root);//Insert root node in stack
-            var node = root;
-            while (node!=null || stack.Count>0)
+            var currentNode = root;
+            Node lastNode = null;
+
+            while (currentNode!=null ||stack.Count>0)
             {
                 //iterate each left node and put it into the stack
-                while (node != null)
+                if (currentNode != null)
                 {
-                    stack.Push(node);
-                    node = node.left;
+                    stack.Push(currentNode);
+                    currentNode = currentNode.left;
+                }
+                else
+                {
+                    currentNode = stack.Peek();
+                    if(currentNode.right == null || currentNode.right == lastNode)
+                    {
+                        postOrder.Add(currentNode.data);
+                        stack.Pop();
+                        lastNode = currentNode;
+                        currentNode = null;
+                    }
+                    else
+                    {
+                        currentNode = currentNode.right;
+                    }
                 }
 
-                node = stack.Pop();
-                inOrder.Add(node.data);
-                node = node.right;
             }
-            return inOrder;
+            return postOrder;
         }
     }
 
