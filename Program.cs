@@ -33,57 +33,48 @@ namespace Challenges
             tree.root = new Node(1);
             tree.root.left = new Node(2);
             tree.root.right = new Node(3);
+
+
             tree.root.left.left = new Node(4);
             tree.root.left.right = new Node(5);
-            tree.root.left.right.left = new Node(6);
-            tree.root.left.right.right = new Node(7);
+
+            //tree.root.right.right = new Node(7);
+            //tree.root.right.left = new Node(6);
             //tree.root.right.left = new Node(7);
             var res = LevelOrder(tree.root);
         }
 
-        public static IList<IList<int>> LevelOrder(Node root)
+        public static int LevelOrder(Node root)
         {
-            var levelOrder = new List<IList<int>>();
-
-
             if (root == null)
             {
-                return levelOrder;
+                return 0;
             }
+
+            int treeLevel = 0;
 
             Queue<Node> queue = new Queue<Node>();
             queue.Enqueue(root);
-
-            var list = new List<int>();
-            list.Add(root.data);
-            levelOrder.Add(list);
+            var currentNode = root; 
             while (queue.Count > 0)
             {
-                list = new List<int>();
+                treeLevel++;           
                 var level = queue.Count;
                 for (int i = 0; i < level; i++)
                 {
-                   var currentNode = queue.Dequeue();
-
+                    currentNode  = queue.Dequeue();
                     if (currentNode.left != null)
                     {
                         queue.Enqueue(currentNode.left);
-                        list.Add(currentNode.left.data);
                     }
                     if (currentNode.right != null)
                     {
                         queue.Enqueue(currentNode.right);
-                        list.Add(currentNode.right.data);
                     }
-                }
-
-                if (list.Count > 0)
-                {
-                    levelOrder.Add(list);
                 }
             }
 
-            return levelOrder;
+            return treeLevel;
         }
     }
 
