@@ -28,54 +28,31 @@ namespace Challenges
             //input[1] = new char[5] { '1', '1', '0', '0', '0' };
             //input[2] = new char[5] { '0', '0', '1', '0', '0' };
             //input[3] = new char[5] { '0', '0', '0', '1', '1' };
+            char[] s = { 'h', 'e', 'l', 'l', 'o' };
+            ReverseString(s);
 
-            PreOrderBinaryTree tree = new PreOrderBinaryTree();
-            tree.root = new Node(1);
-            tree.root.left = new Node(2);
-            tree.root.right = new Node(3);
-
-
-            tree.root.left.left = new Node(4);
-            tree.root.left.right = new Node(5);
-
-            //tree.root.right.right = new Node(7);
-            //tree.root.right.left = new Node(6);
-            //tree.root.right.left = new Node(7);
-            var res = LevelOrder(tree.root);
         }
 
-        public static int LevelOrder(Node root)
+
+        public static void ReverseString(char[] s)
         {
-            if (root == null)
-            {
-                return 0;
-            }
-
-            int treeLevel = 0;
-
-            Queue<Node> queue = new Queue<Node>();
-            queue.Enqueue(root);
-            var currentNode = root; 
-            while (queue.Count > 0)
-            {
-                treeLevel++;           
-                var level = queue.Count;
-                for (int i = 0; i < level; i++)
-                {
-                    currentNode  = queue.Dequeue();
-                    if (currentNode.left != null)
-                    {
-                        queue.Enqueue(currentNode.left);
-                    }
-                    if (currentNode.right != null)
-                    {
-                        queue.Enqueue(currentNode.right);
-                    }
-                }
-            }
-
-            return treeLevel;
+            ReverseHelper(s, 0, s.Length - 1);
         }
+
+        private static void ReverseHelper(char[] s, int leftPointer, int rightPointer)
+        {
+            if (leftPointer >= rightPointer)
+            {
+                return;
+            }
+            var temp = s[rightPointer];
+            s[rightPointer] = s[leftPointer];
+            s[leftPointer] = temp;
+            leftPointer++;
+            rightPointer--;
+            ReverseHelper(s, leftPointer, rightPointer);
+        }
+
     }
 
 }
