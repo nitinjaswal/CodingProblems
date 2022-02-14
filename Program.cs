@@ -34,24 +34,19 @@ namespace Challenges
         }
 
 
-        public static void ReverseString(char[] s)
+        public static void ReverseString(char[] s,int leftPointer, int rightPointer)
         {
-            ReverseHelper(s, 0, s.Length - 1);
+            int i = 0;
+            for (int j = s.Length - 1; i < j; j--)
+            {
+                var temp = s[j];
+                s[j] = s[i];
+                s[i] = temp;
+                i++;
+            }
         }
 
-        private static void ReverseHelper(char[] s, int leftPointer, int rightPointer)
-        {
-            if (leftPointer >= rightPointer)
-            {
-                return;
-            }
-            var temp = s[rightPointer];
-            s[rightPointer] = s[leftPointer];
-            s[leftPointer] = temp;
-            leftPointer++;
-            rightPointer--;
-            ReverseHelper(s, leftPointer, rightPointer);
-        }
+        private stat
 
     }
 
