@@ -7,47 +7,66 @@ using Challenges.Queue.ShortestDistance;
 
 namespace Challenges
 {
-    public class Node
+    public class ListNode
     {
-        public int data;
-        public Node left, right;
-
-        public Node(int item)
+        public int val;
+        public ListNode next;
+        public ListNode(int val = 0, ListNode next = null)
         {
-            data = item;
-            left = right = null;
+            this.val = val;
+            this.next = next;
         }
     }
-    class PreOrderBinaryTree
+    class LinkedList
     {
         public Node root;
         public static void Main(String[] args)
         {
-            //char[][] input = new char[4][];
-            //input[0] = new char[5] { '1', '1', '0', '0', '0' };
-            //input[1] = new char[5] { '1', '1', '0', '0', '0' };
-            //input[2] = new char[5] { '0', '0', '1', '0', '0' };
-            //input[3] = new char[5] { '0', '0', '0', '1', '1' };
-            char[] s = { 'h', 'e', 'l', 'l', 'o' };
-            ReverseString(s);
+            ListNode node = new ListNode(1);
+            node.next = new ListNode(2);
+            node.next.next = new ListNode(3);
+            node.next.next.next = new ListNode(4);
+            node.next.next.next.next = new ListNode(5);
 
+            var swappedList = SwapPairs(node);
         }
 
 
-        public static void ReverseString(char[] s,int leftPointer, int rightPointer)
+        public static  ListNode SwapPairs(ListNode head)
         {
-            int i = 0;
-            for (int j = s.Length - 1; i < j; j--)
+            if (head == null)
             {
-                var temp = s[j];
-                s[j] = s[i];
-                s[i] = temp;
-                i++;
+                return null;
+            }
+            var dummyNode = new ListNode();
+            dummyNode.next = head;
+            swap(dummyNode);
+            return dummyNode;
+        }
+
+        static void swap(ListNode node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            ListNode first = node.next;
+            ListNode second = null;
+            if (first != null)
+            {
+                second = first.next;
+            }
+
+            if (second != null)
+            {
+                ListNode secondNext = second.next;
+                second.next = first;
+                node.next = second;
+                first.next = secondNext;
+                swap(first);
             }
         }
-
-        private stat
-
     }
 
 }
