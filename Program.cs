@@ -28,44 +28,33 @@ namespace Challenges
             node.next.next.next = new ListNode(4);
             node.next.next.next.next = new ListNode(5);
 
-            var swappedList = SwapPairs(node);
+            var swappedList = ReverseList(node);
         }
 
 
-        public static  ListNode SwapPairs(ListNode head)
+        public static ListNode ReverseList(ListNode head)
         {
-            if (head == null)
-            {
-                return null;
-            }
-            var dummyNode = new ListNode();
-            dummyNode.next = head;
-            swap(dummyNode);
-            return dummyNode;
+            if (head == null || head.next == null)
+                return head;
+
+            ListNode newHead = ReverseList(head.next);
+            head.next.next = head;
+            head.next = null;
+
+            return newHead;
         }
 
-        static void swap(ListNode node)
+        static void Reverse(ListNode currentNode, ListNode previousNode)
         {
-            if (node == null)
+            if (currentNode == null)
             {
                 return;
             }
-
-            ListNode first = node.next;
-            ListNode second = null;
-            if (first != null)
-            {
-                second = first.next;
-            }
-
-            if (second != null)
-            {
-                ListNode secondNext = second.next;
-                second.next = first;
-                node.next = second;
-                first.next = secondNext;
-                swap(first);
-            }
+            var temp = currentNode.next;
+            currentNode.next = previousNode;
+            previousNode = currentNode;
+            currentNode = temp;
+            Reverse(currentNode, previousNode);
         }
     }
 
