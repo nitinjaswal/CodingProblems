@@ -7,14 +7,15 @@ using Challenges.Queue.ShortestDistance;
 
 namespace Challenges
 {
-    public class ListNode
+    public class TreeNode
     {
         public int val;
-        public ListNode next;
-        public ListNode(int val = 0, ListNode next = null)
+        public TreeNode left, right;
+
+        public TreeNode(int item)
         {
-            this.val = val;
-            this.next = next;
+            val = item;
+            left = right = null;
         }
     }
     class LinkedList
@@ -22,40 +23,37 @@ namespace Challenges
         public Node root;
         public static void Main(String[] args)
         {
-            ListNode node = new ListNode(1);
-            node.next = new ListNode(2);
-            node.next.next = new ListNode(3);
-            node.next.next.next = new ListNode(4);
-            node.next.next.next.next = new ListNode(5);
+            TreeNode root = new TreeNode(1);
 
-            var swappedList = ReverseList(node);
+            root.left = new TreeNode(2);
+            root.right = new TreeNode(3);
+            root.left.left = new TreeNode(4);
+            root.left.right = new TreeNode(5);
+
         }
 
-
-        public static ListNode ReverseList(ListNode head)
+        public TreeNode SearchBST(TreeNode root, int val)
         {
-            if (head == null || head.next == null)
-                return head;
-
-            ListNode newHead = ReverseList(head.next);
-            head.next.next = head;
-            head.next = null;
-
-            return newHead;
-        }
-
-        static void Reverse(ListNode currentNode, ListNode previousNode)
-        {
-            if (currentNode == null)
+            var currentNode = root;
+            while (currentNode != null)
             {
-                return;
+                if (currentNode.val == val)
+                {
+                    return currentNode;
+                }
+                else if (val > currentNode.val)
+                {
+                    currentNode = currentNode.right;
+                }
+                else if (val < currentNode.val)
+                {
+                    currentNode = currentNode.left;
+                }
             }
-            var temp = currentNode.next;
-            currentNode.next = previousNode;
-            previousNode = currentNode;
-            currentNode = temp;
-            Reverse(currentNode, previousNode);
+            return currentNode;
+
         }
+
     }
 
 }
