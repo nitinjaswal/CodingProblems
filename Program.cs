@@ -34,24 +34,22 @@ namespace Challenges
 
         public TreeNode SearchBST(TreeNode root, int val)
         {
-            var currentNode = root;
-            while (currentNode != null)
+            //Base case
+            if (root == null && root.val == val)
             {
-                if (currentNode.val == val)
-                {
-                    return currentNode;
-                }
-                else if (val > currentNode.val)
-                {
-                    currentNode = currentNode.right;
-                }
-                else if (val < currentNode.val)
-                {
-                    currentNode = currentNode.left;
-                }
+                return root;
             }
-            return currentNode;
 
+            if (val > root.val)
+            {
+                root = root.right;
+                return SearchBST(root, val);
+            }
+            else if (val < root.val)
+            {
+                root = root.left;
+                return SearchBST(root, val);
+            }
         }
 
     }
