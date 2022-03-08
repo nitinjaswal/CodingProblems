@@ -20,36 +20,22 @@ namespace Challenges
     }
     class LinkedList
     {
-        public Node root;
+      
         public static void Main(String[] args)
         {
-            TreeNode root = new TreeNode(1);
-
-            root.left = new TreeNode(2);
-            root.right = new TreeNode(3);
-            root.left.left = new TreeNode(4);
-            root.left.right = new TreeNode(5);
+             PrintNumbers(5);                    
 
         }
 
-        public TreeNode SearchBST(TreeNode root, int val)
+        public static void PrintNumbers(int n)
         {
-            //Base case
-            if (root == null && root.val == val)
+            if (n == 0)
             {
-                return root;
+                return;
             }
-
-            if (val > root.val)
-            {
-                root = root.right;
-                return SearchBST(root, val);
-            }
-            else if (val < root.val)
-            {
-                root = root.left;
-                return SearchBST(root, val);
-            }
+            Console.WriteLine(n);
+            PrintNumbers(n-1);
+            Console.WriteLine(n);
         }
 
     }
