@@ -23,27 +23,33 @@ namespace Challenges
 
         public static void Main(String[] args)
         {
-            for (int i = 0; i <= 5; i++)
-            {
-                Console.WriteLine(Fib(i));
-            }           
+            int[] arr = { 1, 2, 3, 4, 5 };
+            Console.WriteLine(BinarySeacrh(arr, 5, 0, arr.Length - 1));
         }
 
-        static int Fib(int n)
-        {
-            if (n == 0)
+        static int BinarySeacrh(int[] arr, int target, int start, int end)
+          {
+            if (start > end)
             {
-
-                return 0;
-            }
-            if (n == 1)
-            {
-
-                return 1;
+                return -1;
             }
 
-            return Fib(n - 1) + Fib(n - 2);
-
+            int middle = start + (end - start) / 2;
+            if(arr[middle] == target)
+            {
+                return middle;
+            }
+            else if (target < arr[middle])
+            {
+                end = middle - 1;
+                return BinarySeacrh(arr, target, start, end);
+            }
+            else
+            {
+                start = middle + 1;
+                return BinarySeacrh(arr, target, start, end);
+            }
+          
         }
 
     }
