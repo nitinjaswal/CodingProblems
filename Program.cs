@@ -23,33 +23,17 @@ namespace Challenges
 
         public static void Main(String[] args)
         {
-            int[] arr = { 1, 2, 3, 4, 5 };
-            Console.WriteLine(BinarySeacrh(arr, 5, 0, arr.Length - 1));
+            int number = 1342;
+            Console.WriteLine(SumOfDigits(number));
         }
 
-        static int BinarySeacrh(int[] arr, int target, int start, int end)
-          {
-            if (start > end)
+        static int SumOfDigits(int num)
+           {
+            if (num == 0)
             {
-                return -1;
+                return num;
             }
-
-            int middle = start + (end - start) / 2;
-            if(arr[middle] == target)
-            {
-                return middle;
-            }
-            else if (target < arr[middle])
-            {
-                end = middle - 1;
-                return BinarySeacrh(arr, target, start, end);
-            }
-            else
-            {
-                start = middle + 1;
-                return BinarySeacrh(arr, target, start, end);
-            }
-          
+            return SumOfDigits(num / 10) + num % 10;
         }
 
     }

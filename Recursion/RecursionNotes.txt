@@ -2,4 +2,5 @@
 1)Linear recurrence relation _ eg fib series
 2)Divide and conquer recurrence relation - Binary search	
 
+-Whatever we pass in the function argument will paas to recursion call
 Memoization
