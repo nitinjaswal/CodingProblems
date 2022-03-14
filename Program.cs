@@ -28,12 +28,12 @@ namespace Challenges
         }
 
         static int SumOfDigits(int num)
-           {
+        {
             if (num == 0)
             {
-                return num;
+                return 1;
             }
-            return SumOfDigits(num / 10) + num % 10;
+            return SumOfDigits(num / 10) * (num % 10);
         }
 
     }
