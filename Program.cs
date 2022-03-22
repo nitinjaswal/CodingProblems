@@ -23,8 +23,21 @@ namespace Challenges
 
         public static void Main(String[] args)
         {
-            int number = 1342;
-            Console.WriteLine(ReverseNumber(number));
+            string[] sentences = { "alice and bob love leetcode", "i think so too", "this is great thanks very much" };
+            string[] currentBig = new string[sentences.Length-1];
+            int newBig = 0;
+
+
+            for (int i = 0; i < sentences.Length; i++)
+            {
+                currentBig = sentences[i].Split(" ");
+                if (newBig < currentBig.Length)
+                {
+                    newBig = currentBig.Length;
+                }
+            }
+            
+            Console.WriteLine(newBig);
         }
 
         static long ReverseNumber(int num)
