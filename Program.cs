@@ -23,22 +23,33 @@ namespace Challenges
 
         public static void Main(String[] args)
         {
-            string[] sentences = { "alice and bob love leetcode", "i think so too", "this is great thanks very much" };
-            string[] currentBig = new string[sentences.Length-1];
-            int newBig = 0;
+            //string[] sentences = { "alice and bob love leetcode", "i think so too", "this is great thanks very much" };
+            //string[] currentBig = new string[sentences.Length-1];
+            //int newBig = 0;
 
 
-            for (int i = 0; i < sentences.Length; i++)
-            {
-                currentBig = sentences[i].Split(" ");
-                if (newBig < currentBig.Length)
-                {
-                    newBig = currentBig.Length;
-                }
-            }
-            
-            Console.WriteLine(newBig);
+            //for (int i = 0; i < sentences.Length; i++)
+            //{
+            //    currentBig = sentences[i].Split(" ");
+            //    if (newBig < currentBig.Length)
+            //    {
+            //        newBig = currentBig.Length;
+            //    }
+            //}
+
+            //Console.WriteLine(newBig);
+            var result = IsPalindrome(-1);
         }
+
+        static bool IsPalindrome(int x)
+        {
+            if (x < 0)
+            {
+                return false;
+            }
+            return x == ReverseNumber(x);
+        }
+
 
         static long ReverseNumber(int num)
         {
@@ -48,7 +59,7 @@ namespace Challenges
 
         private static long helper(int n, int digits)
         {
-            if (n % 10 == 0)
+            if (n % 10 == n)
             {
                 return n;
             }
