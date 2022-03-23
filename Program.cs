@@ -24,10 +24,10 @@ namespace Challenges
         public static void Main(String[] args)
         {
 
-            var result = Count(30204);
+            var result = NumberOfSteps(123);
         }
 
-        static int Count(int x)
+        static int NumberOfSteps(int x)
         {
             return helper(x, 0);
         }
@@ -38,15 +38,13 @@ namespace Challenges
             {
                 return count;
             }
-
-            int rem = n % 10;
-            if(rem == 0)
+            if (n % 2 == 0)
             {
-                return helper(n / 10, count + 1);
+                return helper(n/2, count+1);
             }
             else
             {
-                return helper(n / 10, count);
+                return helper(n = n - 1, count + 1);
             }
         }
 
