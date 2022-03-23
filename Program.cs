@@ -20,34 +20,42 @@ namespace Challenges
     }
     class LinkedList
     {
-
+        static ArrayList list = new ArrayList();
         public static void Main(String[] args)
         {
+            int[] arr = { 3, 2, 18, 18, 9 };
+            var index = FindAllIndex(arr, 18, 0,list);        }
 
-            var result = NumberOfSteps(123);
-        }
+       
 
-        static int NumberOfSteps(int x)
+        static ArrayList FindAllIndex(int[] arr, int target, int i, ArrayList list)
         {
-            return helper(x, 0);
-        }
-
-        private static int helper(int n, int count)
-        {
-            if (n == 0)
+            if (i == arr.Length)
             {
-                return count;
+                return list;
             }
-            if (n % 2 == 0)
+            if (arr[i] == target)
             {
-                return helper(n/2, count+1);
+                list.Add(i);
+            }
+            return FindAllIndex(arr, target, i + 1, list);
+        }
+
+        static int FindIndex(int[] arr, int target, int i)
+        {
+            if (i == arr.Length)
+            {
+                return -1;
+            }
+            if (arr[i] == target)
+            {
+                return i;
             }
             else
             {
-                return helper(n = n - 1, count + 1);
+                return FindIndex(arr, target, i + 1);
             }
         }
-
     }
 
 }
