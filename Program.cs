@@ -23,27 +23,10 @@ namespace Challenges
 
         public static void Main(String[] args)
         {
-            triangle2(4, 0);
+            int[] arr = { 2, 0, 2, 1, 1, 0 };
+            BubbleSort(arr, arr.Length - 1, c: 0);
         }
-
-        static void triangle1(int r, int c)
-        {
-            if (r == 0)
-            {
-                return;
-            }
-             if (c < r)
-            {
-                Console.Write("*");
-                triangle1(r, c:c+1);
-            }
-            else
-            {
-                Console.WriteLine();
-                triangle1(r:r-1, c:0);
-            }
-        }
-        static void triangle2(int r, int c)
+        public static void BubbleSort(int[] arr, int r, int c)
         {
             if (r == 0)
             {
@@ -51,16 +34,20 @@ namespace Challenges
             }
             if (c < r)
             {
-                triangle2(r, c: c + 1);
-                Console.Write("*");
+                if (arr[c] > arr[c + 1])
+                {
+                    int temp = arr[c];
+                    arr[c] = arr[c + 1];
+                    arr[c + 1] = temp;
+                    BubbleSort(arr, r, c: c + 1);
+                }
             }
             else
             {
-     
-                triangle2(r: r - 1, c: 0);
-                Console.WriteLine();
+                BubbleSort(arr, r: r - 1, c: 0);
             }
         }
+
     }
 
 }
