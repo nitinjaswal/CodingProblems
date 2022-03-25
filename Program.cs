@@ -20,53 +20,47 @@ namespace Challenges
     }
     class LinkedList
     {
-        static ArrayList list = new ArrayList();
+
         public static void Main(String[] args)
         {
-            int[] arr = { 3, 2, 18, 18, 9 };
-            var index = FindElement(arr, 18, 0, arr.Length - 1);
+            triangle2(4, 0);
         }
 
-        static int FindElement(int[] arr, int target)
+        static void triangle1(int r, int c)
         {
-            int start = 0;
-            int end = arr.Length - 1;
-            while (start <= end)
+            if (r == 0)
             {
-                int mid = start + (end - start) / 2;
-
-                if (target == arr[mid])
-                {
-                    return mid;
-                }
-                //case 1: If array element at start is less than element at array mid
-                if (arr[start] <= arr[mid])
-                {
-                    //Check if target element is in this range
-                    if (target >= arr[start] && target <= arr[mid])
-                    {
-                        end = mid - 1;
-                    }
-                    else
-                    {
-                        start = mid + 1;
-                    }
-                }
-                else
-                {
-                    if (target >= arr[mid] && target <= arr[end])
-                    {
-                        start = mid + 1;
-                    }
-                    else
-                    {
-                        end = mid - 1;
-                    }
-                }
+                return;
             }
-            return -1;
+             if (c < r)
+            {
+                Console.Write("*");
+                triangle1(r, c:c+1);
+            }
+            else
+            {
+                Console.WriteLine();
+                triangle1(r:r-1, c:0);
+            }
         }
-
+        static void triangle2(int r, int c)
+        {
+            if (r == 0)
+            {
+                return;
+            }
+            if (c < r)
+            {
+                triangle2(r, c: c + 1);
+                Console.Write("*");
+            }
+            else
+            {
+     
+                triangle2(r: r - 1, c: 0);
+                Console.WriteLine();
+            }
+        }
     }
 
 }
