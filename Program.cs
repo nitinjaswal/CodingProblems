@@ -23,62 +23,65 @@ namespace Challenges
 
         public static void Main(String[] args)
         {
-            int[] arr = { -2, 3, -5 };
-            arr = SortArray(arr);
+            int[] arr = { 5, 4, 3, 2, 1 };
+            SortArray(arr);
 
         }
-        public static int[] SortArray(int[] nums)
+        public static void SortArray(int[] nums)
         {
-            return MergeSort(nums, 0, nums.Length - 1);
+            MergeSort(nums, 0, nums.Length - 1);
         }
 
-        public static int[] MergeSort(int[] arr, int low, int high)
+        public static void MergeSort(int[] arr, int low, int high)
         {
             if (low < high)
             {
                 int mid = low + (high - low) / 2;
-                int[] left = MergeSort(arr, low, mid);
-                int[] right = MergeSort(arr, mid + 1, high);
-                return Merge(left, right);
+                MergeSort(arr, low, mid);
+                MergeSort(arr, mid + 1, high);
+                Merge(arr, low, mid, high);
             }
-
-            return new int[] { arr[low] };
         }
 
-        private static int[] Merge(int[] first, int[] second)
+        private static void Merge(int[] A, int low, int mid, int high)
         {
-            int[] newArr = new int[first.Length + second.Length];
+            int[] b = new int[high + 1];
 
-            int i = 0;
-            int j = 0;
-            int k = 0;
-            while (i < first.Length && j < second.Length)
+            int i = low;
+            int j = mid+1;
+            int k = low;
+
+            while (i <= mid && j <= high)
             {
-                if (first[i] < second[j])
+                if (A[i] < A[j])
                 {
-                    newArr[k] = first[i];
+                    b[k] = A[i];
                     i++;
                 }
                 else
                 {
-                    newArr[k] = second[j];
+                    b[k] = A[j];
                     j++;
                 }
                 k++;
             }
 
             //add remaining elements in new array. Either one of the loop will work
-            for (; i < first.Length; i++)
+            while (i <= mid)
             {
-                newArr[k] = first[i];
-                k++;
+                b[k++] = A[i++];
             }
-            for (; j < second.Length; j++)
+            while (j <= high)
             {
-                newArr[k] = second[j];
-                k++;
+                b[k++] = A[j++];
             }
-            return newArr;
+
+            for (i = low; i <= high; i++)
+            {
+                A[i] = b[i];
+            }
+
+            
         }
 
     }
