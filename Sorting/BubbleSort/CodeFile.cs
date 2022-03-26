@@ -1,4 +1,4 @@
-﻿public class SolutionRecursiveBubbleSort
+﻿public class SolutionRecursiveBubbleSort1
 {
     public void BubbleSort(int[] arr, int r, int c)
     {

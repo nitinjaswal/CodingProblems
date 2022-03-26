@@ -1,23 +1,23 @@
-﻿public class SolutionMergeSortRecursive
+﻿public class SolutionMergeSortRecursive1
 {
-    public int[] SortArray(int[] nums)
+    public  int[] SortArrayMerge(int[] nums)
     {
-        return MergeSort(nums, 0, nums.Length - 1);
+        return MergeSortRecursive(nums, 0, nums.Length - 1);
     }
 
-    public int[] MergeSort(int[] nums, int low, int high)
+    public int[] MergeSortRecursive(int[] nums, int low, int high)
     {
         if (low < high)
         {
             int mid = low + (high - low) / 2;
-            int[] left = MergeSort(nums, low, mid);
-            int[] right = MergeSort(nums, mid + 1, high);
-            return Merge(left, right);
+            int[] left = MergeSortRecursive(nums, low, mid);
+            int[] right = MergeSortRecursive(nums, mid + 1, high);
+            return MergeSort(left, right);
         }
 
         return new int[] { nums[low] };
     }
-    private int[] Merge(int[] first, int[] second)
+    private int[] MergeSort(int[] first, int[] second)
     {
         int[] newArr = new int[first.Length + second.Length];
 
