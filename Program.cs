@@ -23,29 +23,62 @@ namespace Challenges
 
         public static void Main(String[] args)
         {
-            int[] arr = { 2, 0, 2, 1, 1, 0 };
-            BubbleSort(arr, arr.Length - 1, c: 0);
+            int[] arr = { -2, 3, -5 };
+            arr = SortArray(arr);
+
         }
-        public static void BubbleSort(int[] arr, int r, int c)
+        public static int[] SortArray(int[] nums)
         {
-            if (r == 0)
+            return MergeSort(nums, 0, nums.Length - 1);
+        }
+
+        public static int[] MergeSort(int[] arr, int low, int high)
+        {
+            if (low < high)
             {
-                return;
+                int mid = low + (high - low) / 2;
+                int[] left = MergeSort(arr, low, mid);
+                int[] right = MergeSort(arr, mid + 1, high);
+                return Merge(left, right);
             }
-            if (c < r)
+
+            return new int[] { arr[low] };
+        }
+
+        private static int[] Merge(int[] first, int[] second)
+        {
+            int[] newArr = new int[first.Length + second.Length];
+
+            int i = 0;
+            int j = 0;
+            int k = 0;
+            while (i < first.Length && j < second.Length)
             {
-                if (arr[c] > arr[c + 1])
+                if (first[i] < second[j])
                 {
-                    int temp = arr[c];
-                    arr[c] = arr[c + 1];
-                    arr[c + 1] = temp;
-                    BubbleSort(arr, r, c: c + 1);
+                    newArr[k] = first[i];
+                    i++;
                 }
+                else
+                {
+                    newArr[k] = second[j];
+                    j++;
+                }
+                k++;
             }
-            else
+
+            //add remaining elements in new array. Either one of the loop will work
+            for (; i < first.Length; i++)
             {
-                BubbleSort(arr, r: r - 1, c: 0);
+                newArr[k] = first[i];
+                k++;
             }
+            for (; j < second.Length; j++)
+            {
+                newArr[k] = second[j];
+                k++;
+            }
+            return newArr;
         }
 
     }
