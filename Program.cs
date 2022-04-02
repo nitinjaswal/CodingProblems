@@ -16,95 +16,71 @@ namespace Challenges
     {
         public static void Main(String[] args)
         {
-            ListNode head = new ListNode(4);
-            head.next = new ListNode(3);
-            head.next.next = new ListNode(2);
-            head.next.next.next = new ListNode(1);
-            head.next.next.next.next = new ListNode(-1);
+            int result = 5;
+            int[] arr = { 4, 6, 2, 5, 7, 9, 1, 3 };
+            QuickSort(arr, 0, arr.Length - 1);
 
-            var list = MergeSort(head);
         }
 
-        private static ListNode MiddleElement(ListNode head)
+        private static void QuickSort(int[] nums, int low, int high)
         {
-            //To check middle element in linked list we use slow and fast pointer(it will move by 2 steps)
-            var slowPointer = head;
-            var fastPointer = head.next;
-            while (fastPointer != null && fastPointer.next != null)
+            if (low < high)
             {
-                fastPointer = fastPointer.next.next;
-                slowPointer = slowPointer.next;
-            }
-
-            return slowPointer;
-        }
-
-        public static ListNode MergeSort(ListNode head)
-        {
-            if(head == null || head.next==null)
-            {
-                return head;
-            }
-            //breaking list into 2 parts after finding mid element
-            var midNode = MiddleElement(head);
-            var leftList = head;
-            var rightList = midNode.next;
-            midNode.next = null;
-
-            //recursive calls to sort
-            leftList = MergeSort(leftList);
-            rightList = MergeSort(rightList);
-
-            //Merge 2 sorted lists
-            var result = MergeTwoLists(leftList, rightList);
-            return result;
-        }
-
-        public static ListNode MergeTwoLists(ListNode l1, ListNode l2)
-        {
-            var head = new ListNode(0);
-            var dummyNode = head;
-            var list1 = l1;
-            var list2 = l2;
-
-            //if first list is empty then return second list and vice versa
-            if (l1 == null)
-            {
-                return l2;
-            }
-            if (l2 == null)
-            {
-                return l1;
-            }
-            while (list1 != null && list2 != null)
-            {
-                if (list1.val < list2.val)
+                int start = low;
+                int end = high;
+                int pivot = nums[low];
+                while (start < end)
                 {
-                    dummyNode.next = list1;
-                    dummyNode = dummyNode.next;
-                    list1 = list1.next;
-                }
-                else
-                {
-                    dummyNode.next = list2;
-                    dummyNode = dummyNode.next;
-                    list2 = list2.next;
-                }
-            }
+                    while (nums[start] <= pivot)//When start is less than pivot 
+                    {
+                        start++;
+                    }
+                    while (nums[end] > pivot)//When end is greater than pivot
+                    {
+                        end--;
+                    }
 
-            while (list1 != null)
-            {
-                dummyNode.next = list1;
-                dummyNode = dummyNode.next;
-                list1 = list1.next;
+                    if (start < end)
+                    {
+                        int temp = nums[start];
+                        nums[start] = nums[end];
+                        nums[end] = temp;
+                    }
+                }
+
+                //place pivot at its right position
+
+                int temp1 = nums[end];
+                nums[end] = nums[low];
+                nums[low] = temp1;
+
+                pivot = end;
+                QuickSort(nums, low, pivot - 1);
+                QuickSort(nums, pivot + 1, high);
             }
-            while (list2 != null)
+        }
+
+        public static int ClimbStairs(int n)
+        {
+            if (n == 0)
             {
-                dummyNode.next = list2;
-                dummyNode = dummyNode.next;
-                list2 = list2.next;
+                return 1;
             }
-            return head.next;
+            if (n == 1)
+            {
+                return 1;
+            }
+            if (n == 2)
+            {
+                return 2;
+            }
+            var r = ClimbStairs(n - 1) + ClimbStairs(n - 2);
+
+            return r;
+        }
+        private static void Sort(int[] nums, int low, int high)//low and high is used to figure out what parts of array we are working on
+        {
+
         }
     }
 
