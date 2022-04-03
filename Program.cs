@@ -20,49 +20,41 @@ namespace Challenges
         static List<List<int>> output = new List<List<int>>();
         public static void Main(String[] args)
         {
-            int[] arr = { 7, 1, 5, 3, 6, 4 };
-            int maxProfit = MaxProfit(arr);
+            int[] nums1 = { 1,2,2,1 };
+            int[] nums2 = { 2,2 };
+            var array = Intersect(nums1, nums2);
 
         }
 
-        //brute force approach:O(n^2)
-        public static int MaxProfit1(int[] prices)
+        public static int[] Intersect(int[] nums1, int[] nums2)
         {
-            //using 2 loops and checking max profit 
-            int maxProfit = 0;
-            for (int i = 0; i < prices.Length - 1; i++)
+            HashSet<int> set = new HashSet<int>();
+
+            int count = 0;
+            foreach (int i in nums1)
             {
-                for (int j = i + 1; j <= prices.Length - 1; j++)
+                set.Add(i);
+            }
+
+            HashSet<int> intersection = new HashSet<int>();
+
+            foreach(int i in nums2)
+            {
+                if(set.Contains(i))
                 {
-                    int currentProfit = prices[j] - prices[i];
-                    if (currentProfit > maxProfit)
-                    {
-                        maxProfit = currentProfit;
-                    }
+                    intersection.Add(i);
                 }
             }
-            return maxProfit;
+            //int[] intersectedArray = new int[intersection.Count];
+            //for (int i = 0; i <= intersectedArray.Length - 1; i++)
+            //{
+            //   intersectedArray[i] = intersection.ToArray();
+            //}
+            /* return intersection.ToArray(); */
+            ;
+         //   return intersection.ToArray();
+            return null;
         }
-
-        //Optimal approach : in O(n)
-        public static int MaxProfit(int[] prices)
-        {
-            int min = prices[0];
-            int maxProfit = 0;
-            for (int i = 0; i < prices.Length - 1; i++)
-            {
-                if (prices[i] < min)
-                {
-                    min = prices[i];
-                }
-                else if (maxProfit < prices[i] - min)
-                {
-                    maxProfit  = prices[i]- min;
-                }
-            }
-            return maxProfit;
-        }
-
 
     }
 
