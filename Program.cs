@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Challenges
 {
@@ -14,26 +17,53 @@ namespace Challenges
     }
     class LinkedList
     {
+        static List<List<int>> output = new List<List<int>>();
         public static void Main(String[] args)
         {
-
-            SubSets("abc", "");
+            int[] arr = { 7, 1, 5, 3, 6, 4 };
+            int maxProfit = MaxProfit(arr);
 
         }
 
-        private static void SubSets(string originalString, string newString)
+        //brute force approach:O(n^2)
+        public static int MaxProfit1(int[] prices)
         {
-            if (string.IsNullOrEmpty(originalString))
+            //using 2 loops and checking max profit 
+            int maxProfit = 0;
+            for (int i = 0; i < prices.Length - 1; i++)
             {
-                Console.WriteLine(newString);
-                return;
+                for (int j = i + 1; j <= prices.Length - 1; j++)
+                {
+                    int currentProfit = prices[j] - prices[i];
+                    if (currentProfit > maxProfit)
+                    {
+                        maxProfit = currentProfit;
+                    }
+                }
             }
-
-            string ch = originalString.Substring(0, 1);
-
-            SubSets(originalString.Substring(1), newString + ch);
-            SubSets(originalString.Substring(1), newString);
+            return maxProfit;
         }
+
+        //Optimal approach : in O(n)
+        public static int MaxProfit(int[] prices)
+        {
+            int min = prices[0];
+            int maxProfit = 0;
+            for (int i = 0; i < prices.Length - 1; i++)
+            {
+                if (prices[i] < min)
+                {
+                    min = prices[i];
+                }
+                else if (maxProfit < prices[i] - min)
+                {
+                    maxProfit  = prices[i]- min;
+                }
+            }
+            return maxProfit;
+        }
+
+
     }
 
 }
