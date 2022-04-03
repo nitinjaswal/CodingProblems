@@ -20,40 +20,43 @@ namespace Challenges
         static List<List<int>> output = new List<List<int>>();
         public static void Main(String[] args)
         {
-            int[] nums1 = { 1,2,2,1 };
-            int[] nums2 = { 2,2 };
-            var array = Intersect(nums1, nums2);
+            int[] nums1 = { 1, 2, 2, 1 };
+            int[] nums2 = { 2, 2 };
+            int index = FirstUniqChar("loveleetcode");
 
         }
 
-        public static int[] Intersect(int[] nums1, int[] nums2)
+        public static int FirstUniqChar(string s)
         {
-            HashSet<int> set = new HashSet<int>();
+            var charArr = s.ToCharArray();
+            Dictionary<char, int> set = new Dictionary<char, int>();
 
-            int count = 0;
-            foreach (int i in nums1)
+            //create hashtable and maintain count of each character
+            for (int i = 0; i <= charArr.Length - 1; i++)
             {
-                set.Add(i);
-            }
-
-            HashSet<int> intersection = new HashSet<int>();
-
-            foreach(int i in nums2)
-            {
-                if(set.Contains(i))
+                if (!set.ContainsKey(charArr[i]))
                 {
-                    intersection.Add(i);
+                    set.Add(charArr[i], 1);
+                }
+                else
+                {
+                    //if element exist more than once, then update count
+                    int old = (int)set[charArr[i]];
+                    set[charArr[i]] = old + 1;
                 }
             }
-            //int[] intersectedArray = new int[intersection.Count];
-            //for (int i = 0; i <= intersectedArray.Length - 1; i++)
-            //{
-            //   intersectedArray[i] = intersection.ToArray();
-            //}
-            /* return intersection.ToArray(); */
-            ;
-         //   return intersection.ToArray();
-            return null;
+
+           
+            for (int i = 0; i <= charArr.Length - 1; i++)
+            {
+                if (set[charArr[i]].Equals(1))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+
         }
 
     }
