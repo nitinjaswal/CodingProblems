@@ -23,23 +23,65 @@ namespace Challenges
             int[] nums1 = { 1, 2, 2, 1 };
             int[] nums2 = { 2, 2 };
             // int index = FirstUniqChar("loveleetcode");
-            int result = ClimbStairs(6);
+            double result = MyPowRec(2, -2);
 
         }
-
-        public static int ClimbStairs(int n)
+        //Recursive
+        public static double MyPowRec(double x, int n)
         {
-            if (map.ContainsKey(n))
-                return map[n];
+            int power = n;
+            double result = 1;
 
-            if (n == 0 || n == 1)
+            //Edge case if power is -ve
+            if (power < 0)
+            {
+                x = 1 / x;
+                power = -power;
+            }
+
+            if (n == 0)
             {
                 return 1;
             }
-            int sum = ClimbStairs(n - 1) + ClimbStairs(n - 2);
+            else if (power % 2 == 1)
+            {
+                result = MyPowRec(x, power - 1);
+                return result * result;
+            }
+            else
+            {
+                return x * MyPowRec(x, power / 2);
+            }
 
-            map[n] = sum;
-            return sum;
+
+        }
+        //Iterative
+        public static double MyPow(double x, int n)
+        {
+            double power = n;
+            double result = 1;
+
+            //Edge case if power is -ve
+            if (power < 0)
+            {
+                x = 1 / x;
+                power = -power;
+            }
+
+            while (power > 0)
+            {
+                if (power % 2 == 1)
+                {
+                    power = power - 1;
+                    result = result * x;
+                }
+                else //if power is even
+                {
+                    power = power / 2;
+                    x = x * x;
+                }
+            }
+            return result;
         }
     }
 
