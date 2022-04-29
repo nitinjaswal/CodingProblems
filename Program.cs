@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Challenges
 {
@@ -23,66 +24,38 @@ namespace Challenges
             int[] nums1 = { 1, 2, 2, 1 };
             int[] nums2 = { 2, 2 };
             // int index = FirstUniqChar("loveleetcode");
-            double result = MyPowRec(2, -2);
 
+            int length = LengthOfLongestSubstring("abcabcbb");
         }
-        //Recursive
-        public static double MyPowRec(double x, int n)
+
+        public static int LengthOfLongestSubstring(string s)
         {
-            int power = n;
-            double result = 1;
+            int maxLength = 0;
 
-            //Edge case if power is -ve
-            if (power < 0)
+            if (s == "")
             {
-                x = 1 / x;
-                power = -power;
+                return 0;
             }
-
-            if (n == 0)
+            for (int i = 0; i <= s.Length-1; i++)
             {
-                return 1;
-            }
-            else if (power % 2 == 1)
-            {
-                result = MyPowRec(x, power - 1);
-                return result * result;
-            }
-            else
-            {
-                return x * MyPowRec(x, power / 2);
-            }
-
-
-        }
-        //Iterative
-        public static double MyPow(double x, int n)
-        {
-            double power = n;
-            double result = 1;
-
-            //Edge case if power is -ve
-            if (power < 0)
-            {
-                x = 1 / x;
-                power = -power;
-            }
-
-            while (power > 0)
-            {
-                if (power % 2 == 1)
+                string subString = "";
+                for (int j = i; j <= s.Length-1 ; j++)
                 {
-                    power = power - 1;
-                    result = result * x;
-                }
-                else //if power is even
-                {
-                    power = power / 2;
-                    x = x * x;
-                }
+                    if (!subString.Contains(s[j]))
+                    {
+                        subString = subString + s[j];
+                        maxLength = Math.Max(maxLength, subString.Length);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }               
+
             }
-            return result;
+            return maxLength;
         }
+
     }
 
 }
