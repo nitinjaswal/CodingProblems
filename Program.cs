@@ -18,17 +18,12 @@ namespace Challenges
     }
     class LinkedList
     {
-        static Dictionary<int, int> map = new Dictionary<int, int>();
         public static void Main(String[] args)
         {
-            int[] nums1 = { 1, 2, 2, 1 };
-            int[] nums2 = { 2, 2 };
-            // int index = FirstUniqChar("loveleetcode");
-
-            int length = GuessNumber(8);
+            int length = FirstBadVersion(8);
         }
 
-        public static int GuessNumber(int n)
+        public int FirstBadVersion(int n)
         {
             int low = 0;
             int high = n;
@@ -36,44 +31,19 @@ namespace Challenges
             while (low <= high)
             {
                 mid = low + (high - low) / 2;
-                int guess = guess(mid);
-                if (guess == 0)
-                {
-                    return mid;
-                }
-                else if (guess == 1)
-                {
-                    low = mid + 1;
-                }
-                else
+
+                if (IsBadVersion(mid))
                 {
                     high = mid - 1;
                 }
-            }
-            return 0;
-        }
-
-        public class Solution : GuessGame
-        {
-            public int GuessNumber(int n)
-            {
-                int num = n, diff = (int)(num / 2);
-                do
+                else
                 {
-                    if (guess(num) == -1)
-                        num = num - diff;
-                    else if (guess(num) == 1)
-                        num = num + diff;
-
-                    diff = (int)(diff / 2);
-                    if (diff == 0) diff = 1;
-
-                } while (guess(num) != 0);
-                return num;
+                    low = mid + 1;
+                }
             }
+            return low;
         }
     }
-
 }
 
 
