@@ -25,38 +25,52 @@ namespace Challenges
             int[] nums2 = { 2, 2 };
             // int index = FirstUniqChar("loveleetcode");
 
-            int length = MySqrt(8);
+            int length = GuessNumber(8);
         }
 
-
-        public static int MySqrt(int x)
+        public static int GuessNumber(int n)
         {
-            if (x < 2)
-            {
-                return x;
-            }
-
-            long low = 0;
-            long high = x;
-            long mid = 0;
+            int low = 0;
+            int high = n;
+            int mid = 0;
             while (low <= high)
             {
-                mid = low + ((high - low) / 2);
-                long square = mid * mid;
-                if (square == x)
+                mid = low + (high - low) / 2;
+                int guess = guess(mid);
+                if (guess == 0)
                 {
-                    return (int)mid;
+                    return mid;
                 }
-                else if (square > x)
-                {
-                    high = mid - 1;
-                }
-                else
+                else if (guess == 1)
                 {
                     low = mid + 1;
                 }
+                else
+                {
+                    high = mid - 1;
+                }
             }
-            return (int)high;
+            return 0;
+        }
+
+        public class Solution : GuessGame
+        {
+            public int GuessNumber(int n)
+            {
+                int num = n, diff = (int)(num / 2);
+                do
+                {
+                    if (guess(num) == -1)
+                        num = num - diff;
+                    else if (guess(num) == 1)
+                        num = num + diff;
+
+                    diff = (int)(diff / 2);
+                    if (diff == 0) diff = 1;
+
+                } while (guess(num) != 0);
+                return num;
+            }
         }
     }
 
