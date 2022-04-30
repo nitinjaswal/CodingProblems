@@ -25,37 +25,39 @@ namespace Challenges
             int[] nums2 = { 2, 2 };
             // int index = FirstUniqChar("loveleetcode");
 
-            int length = LengthOfLongestSubstring("abcabcbb");
+            int length = MySqrt(8);
         }
 
-        public static int LengthOfLongestSubstring(string s)
+
+        public static int MySqrt(int x)
         {
-            int maxLength = 0;
-
-            if (s == "")
+            if (x < 2)
             {
-                return 0;
+                return x;
             }
-            for (int i = 0; i <= s.Length-1; i++)
+
+            long low = 0;
+            long high = x;
+            long mid = 0;
+            while (low <= high)
             {
-                string subString = "";
-                for (int j = i; j <= s.Length-1 ; j++)
+                mid = low + ((high - low) / 2);
+                long square = mid * mid;
+                if (square == x)
                 {
-                    if (!subString.Contains(s[j]))
-                    {
-                        subString = subString + s[j];
-                        maxLength = Math.Max(maxLength, subString.Length);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }               
-
+                    return (int)mid;
+                }
+                else if (square > x)
+                {
+                    high = mid - 1;
+                }
+                else
+                {
+                    low = mid + 1;
+                }
             }
-            return maxLength;
+            return (int)high;
         }
-
     }
 
 }
