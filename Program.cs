@@ -20,25 +20,32 @@ namespace Challenges
     {
         public static void Main(String[] args)
         {
-            int length = FirstBadVersion(8);
+            int[] nums = { 3, 4, 3, 2, 1 };
+            int index = FindPeakElement(nums);
         }
 
-        public int FirstBadVersion(int n)
+        public static int FindPeakElement(int[] nums)
         {
-            int low = 0;
-            int high = n;
-            int mid = 0;
-            while (low <= high)
+            if (nums.Length == 1)
             {
-                mid = low + (high - low) / 2;
+                return 0;
+            }
 
-                if (IsBadVersion(mid))
-                {
-                    high = mid - 1;
-                }
-                else
+            int low = 0;
+            int high = nums.Length - 1;
+
+            while (low < high)
+            {
+                int mid = low + (high - low) / 2;
+
+                //if number in mid is less than its next element, then move towards greater element
+                if (nums[mid] < nums[mid + 1])
                 {
                     low = mid + 1;
+                }
+                else //
+                {
+                    high = mid;
                 }
             }
             return low;
