@@ -20,35 +20,70 @@ namespace Challenges
     {
         public static void Main(String[] args)
         {
-            int[] nums = { 3, 4, 3, 2, 1 };
-            int index = FindPeakElement(nums);
+            int[] nums = { 5, 7, 7, 8, 8, 10 };
+            var index = SearchRange(nums, 8);
         }
 
-        public static int FindPeakElement(int[] nums)
+        public static int[] SearchRange(int[] nums, int target)
         {
-            if (nums.Length == 1)
-            {
-                return 0;
-            }
-
+           
             int low = 0;
             int high = nums.Length - 1;
 
-            while (low < high)
+            int firstIndex = ReturnFirstIndex(nums, target);
+            int lastIndex = ReturnLastIndex(nums, target);
+            int[] arr = { firstIndex, lastIndex };
+            return arr;
+
+        }
+
+        private static int ReturnFirstIndex(int[] nums, int target)
+        {
+            int low = 0;
+            int high = nums.Length - 1;
+            int index = -1;
+
+            while (low <= high)
             {
                 int mid = low + (high - low) / 2;
-
-                //if number in mid is less than its next element, then move towards greater element
-                if (nums[mid] < nums[mid + 1])
+                if (nums[mid] >= target)
+                {
+                    high = mid - 1;
+                }
+                else
                 {
                     low = mid + 1;
                 }
-                else //
+                if (nums[mid] == target)
                 {
-                    high = mid;
+                    index = mid;
                 }
             }
-            return low;
+            return index;
+        }
+        private static int ReturnLastIndex(int[] nums, int target)
+        {
+            int low = 0;
+            int high = nums.Length - 1;
+            int index = -1;
+
+            while (low <= high)
+            {
+                int mid = low + (high - low) / 2;
+                if (nums[mid] <= target)            
+                {
+                    low = mid + 1;
+                }
+                else
+                {
+                    high = mid - 1;
+                }
+                if (nums[mid] == target)
+                {
+                    index = mid;
+                }
+            }
+            return index;
         }
     }
 }
