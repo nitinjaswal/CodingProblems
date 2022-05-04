@@ -13,7 +13,7 @@
 //            mid = low + (high - low) / 2;
 
 //            if (IsBadVersion(mid))
-//            {
+//            { 
 //                high = mid - 1;
 //            }
 //            else

@@ -20,57 +20,25 @@ namespace Challenges
     {
         public static void Main(String[] args)
         {
-            int[] nums = { 5, 7, 7, 8, 8, 10 };
-            var index = SearchRange(nums, 8);
+            int[] nums = { 1, 5, 10 };
+            var index = FindClosestElements(nums, 1, 4);
         }
 
-        public static int[] SearchRange(int[] nums, int target)
-        {
-           
-            int low = 0;
-            int high = nums.Length - 1;
-
-            int firstIndex = ReturnFirstIndex(nums, target);
-            int lastIndex = ReturnLastIndex(nums, target);
-            int[] arr = { firstIndex, lastIndex };
-            return arr;
-
-        }
-
-        private static int ReturnFirstIndex(int[] nums, int target)
+        public static IList<int> FindClosestElements(int[] arr, int k, int x)
         {
             int low = 0;
-            int high = nums.Length - 1;
-            int index = -1;
+            int high = arr.Length - 1;
+            int mid = 0;
 
-            while (low <= high)
+            //Step 1:Calculate mid in sorted array
+            while (low < high)
             {
-                int mid = low + (high - low) / 2;
-                if (nums[mid] >= target)
+                mid = low + (high - low) / 2;
+                if (arr[mid] == x)
                 {
-                    high = mid - 1;
+                    break;
                 }
-                else
-                {
-                    low = mid + 1;
-                }
-                if (nums[mid] == target)
-                {
-                    index = mid;
-                }
-            }
-            return index;
-        }
-        private static int ReturnLastIndex(int[] nums, int target)
-        {
-            int low = 0;
-            int high = nums.Length - 1;
-            int index = -1;
-
-            while (low <= high)
-            {
-                int mid = low + (high - low) / 2;
-                if (nums[mid] <= target)            
+                if (arr[mid] < x)
                 {
                     low = mid + 1;
                 }
@@ -78,12 +46,53 @@ namespace Challenges
                 {
                     high = mid - 1;
                 }
-                if (nums[mid] == target)
-                {
-                    index = mid;
-                }
+
             }
-            return index;
+            var result = new List<int>();
+
+            
+            if (mid >= 1)
+            {
+                low = mid - 1;
+                high = mid;
+            }
+            else
+            {
+                low = mid;
+                high = mid + 1;
+            }
+            //Step 2: now compare both sides of mid as in merge sorted array
+            while (low >= 0 && high <= arr.Length - 1 && k > 0)
+            {
+                if (x - arr[low] <= arr[high] - x)
+                {
+                    result.Add(arr[low]);
+                    low--;
+                }
+                else
+                {
+                    result.Add(arr[high]);
+                    high++;
+                }
+                k--;
+            }
+
+            //adding pending element if any
+            while (k > 0 && low >= 0)
+            {
+                result.Add(arr[low]);
+                k--;
+                low--;
+            }
+
+            while (k > 0 && high <= arr.Length - 1)
+            {
+                result.Add(arr[high]);
+                k--;
+                high++;
+            }
+            result.Sort();
+            return result;
         }
     }
 }

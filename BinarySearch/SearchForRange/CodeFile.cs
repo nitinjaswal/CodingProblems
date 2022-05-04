@@ -19,7 +19,6 @@
             if (nums[mid] >= target)
             {
                 high = mid - 1;
-
             }
             else
             {
@@ -43,7 +42,6 @@
             int mid = low + (high - low) / 2;
             if (nums[mid] <= target)
             {
-
                 low = mid + 1;
             }
             else
