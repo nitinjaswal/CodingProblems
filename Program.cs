@@ -20,79 +20,46 @@ namespace Challenges
     {
         public static void Main(String[] args)
         {
-            int[] nums = { 1, 5, 10 };
-            var index = FindClosestElements(nums, 1, 4);
+            char[] letters = { 'c', 'f', 'j' };
+            char smallestCharacter = NextGreatestLetter(letters, 'a');
+        }
+        public static char NextGreatestLetter1(char[] letters, char target)
+        {
+            int i;
+            for (i = 0; i <= letters.Length - 1; i++)
+            {
+                if (letters[i] > target)
+                {
+                    return letters[i];
+                }
+            }
+            return letters[0];
         }
 
-        public static IList<int> FindClosestElements(int[] arr, int k, int x)
+        public static char NextGreatestLetter(char[] letters, char target)
         {
             int low = 0;
-            int high = arr.Length - 1;
-            int mid = 0;
-
-            //Step 1:Calculate mid in sorted array
-            while (low < high)
+            int high = letters.Length-1;
+            while (low <= high)
             {
-                mid = low + (high - low) / 2;
-                if (arr[mid] == x)
-                {
-                    break;
-                }
-                if (arr[mid] < x)
+                int mid = low + (high - low) / 2;
+                if (letters[mid] <= target)
                 {
                     low = mid + 1;
                 }
                 else
                 {
-                    high = mid - 1;
+                    high = mid-1;
                 }
-
             }
-            var result = new List<int>();
-
-            
-            if (mid >= 1)
+            if (low == letters.Length)
             {
-                low = mid - 1;
-                high = mid;
+                return letters[0];
             }
             else
             {
-                low = mid;
-                high = mid + 1;
+                return letters[low];
             }
-            //Step 2: now compare both sides of mid as in merge sorted array
-            while (low >= 0 && high <= arr.Length - 1 && k > 0)
-            {
-                if (x - arr[low] <= arr[high] - x)
-                {
-                    result.Add(arr[low]);
-                    low--;
-                }
-                else
-                {
-                    result.Add(arr[high]);
-                    high++;
-                }
-                k--;
-            }
-
-            //adding pending element if any
-            while (k > 0 && low >= 0)
-            {
-                result.Add(arr[low]);
-                k--;
-                low--;
-            }
-
-            while (k > 0 && high <= arr.Length - 1)
-            {
-                result.Add(arr[high]);
-                k--;
-                high++;
-            }
-            result.Sort();
-            return result;
         }
     }
 }
