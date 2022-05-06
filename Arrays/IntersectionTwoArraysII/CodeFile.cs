@@ -1,27 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class SolutionIntersectII
 {
     public int[] Intersect(int[] nums1, int[] nums2)
     {
-        var dict = new Dictionary<int, int>();
-        foreach (var item in nums1)
-        {
-            if (!dict.ContainsKey(item))
-            {
-                dict.Add(item, 0);
-            }
+        var i = 0;
+        var j = 0;
 
-            dict[item] = 1;
-        }
-
+        Array.Sort(nums1);
+        Array.Sort(nums2);
         var result = new List<int>();
-        foreach (var item in nums2)
+        while (i < nums1.Length && j < nums2.Length)
         {
-            if (dict.ContainsKey(item) && dict[item] > 0)
+            if (nums1[i] < nums2[j])
             {
-                result.Add(item);
-                dict[item] = -1;
+                i++;
+            }
+            else if (nums1[i] > nums2[j])
+            {
+                j++;
+            }
+            else
+            {
+                result.Add(nums1[i]);
+                i++;
+                j++;
             }
         }
 
