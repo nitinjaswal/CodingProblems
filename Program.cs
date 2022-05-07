@@ -20,47 +20,73 @@ namespace Challenges
     {
         public static void Main(String[] args)
         {
-            int[] nums = { 3, 1, 3, 4, 2 };
-            var list = FindDuplicate(nums);
+            int[] nums1 = { 1, 3 };
+            int[] nums2 = { 2 };
+            var list = FindMedianSortedArrays(nums1, nums2);
         }
 
-        public static int FindDuplicate(int[] nums)
+        public static double FindMedianSortedArrays(int[] nums1, int[] nums2)
         {
-            Array.Sort(nums);
-            for (int i = 0; i <= nums.Length - 1; i++)
-            {
-                if(nums[i]==nums[i+1])
-                {
-                    return nums[i];
-                }
-            }
-            return -1;
+            double median = 0;
+            int[] sortedArray = MergeArrays(nums1, nums2);
+            median = Median(sortedArray);
+            return median;
         }
-        public static int[] TwoSum(int[] numbers, int target)
+
+        private static double Median(int[] arr)
         {
-            var output = new List<int>();
             int low = 0;
-            int high = numbers.Length - 1;
-            while (low < high)
+            int high = arr.Length - 1;
+            double median = 0.0;
+
+            int mid = low + (high - low) / 2;
+
+            if (arr.Length % 2 == 0)
             {
-                int sum = numbers[low] + numbers[high];
-                if (sum == target)
+                median = (arr[mid]+arr[mid+1])/2.0;
+            }
+            else
+            {
+                median = arr[mid];
+            }
+            return median;
+
+        }
+        private static int[] MergeArrays(int[] nums1, int[] nums2)
+        {
+            int[] mergeSortedArray = new int[nums1.Length + nums2.Length];
+            int left = 0;
+            int right = 0;
+            int k = 0;
+            while (left < nums1.Length && right < nums2.Length)
+            {
+                if (nums1[left] < nums2[right])
                 {
-                    output.Add(low + 1);
-                    output.Add(high + 1);
-                    return output.ToArray();
-                }
-                else if (sum > target)
-                {
-                    high--;
+                    mergeSortedArray[k] = nums1[left];
+                    left++;
                 }
                 else
                 {
-                    low++;
+                    mergeSortedArray[k] = nums2[right];
+                    right++;
                 }
+                k++;
             }
-            return output.ToArray();
+
+            for (; left < nums1.Length; left++)
+            {
+                mergeSortedArray[k] = nums1[left];
+                k++;
+            }
+            for (; right < nums2.Length; right++)
+            {
+                mergeSortedArray[k] = nums2[right];
+                k++;
+            }
+            return mergeSortedArray;
         }
+
+
     }
 }
 
