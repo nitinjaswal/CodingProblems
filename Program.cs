@@ -20,73 +20,43 @@ namespace Challenges
     {
         public static void Main(String[] args)
         {
-            int[] nums1 = { 1, 3 };
-            int[] nums2 = { 2 };
-            var list = FindMedianSortedArrays(nums1, nums2);
+            var listNode = new ListNode(1);
+            listNode.next = new ListNode(1);
+            listNode.next.next = new ListNode(2);
+            listNode.next.next.next = new ListNode(3);
+            listNode.next.next.next.next = new ListNode(3);
+
+            var list = DeleteDuplicates(listNode);
         }
-
-        public static double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        public static ListNode DeleteDuplicates(ListNode head)
         {
-            double median = 0;
-            int[] sortedArray = MergeArrays(nums1, nums2);
-            median = Median(sortedArray);
-            return median;
-        }
-
-        private static double Median(int[] arr)
-        {
-            int low = 0;
-            int high = arr.Length - 1;
-            double median = 0.0;
-
-            int mid = low + (high - low) / 2;
-
-            if (arr.Length % 2 == 0)
+            Dictionary<ListNode, int> dictionary = new Dictionary<ListNode, int>();
+            var currentNode = head;
+          
+            while (currentNode != null && currentNode.next != null)
             {
-                median = (arr[mid]+arr[mid+1])/2.0;
-            }
-            else
-            {
-                median = arr[mid];
-            }
-            return median;
-
-        }
-        private static int[] MergeArrays(int[] nums1, int[] nums2)
-        {
-            int[] mergeSortedArray = new int[nums1.Length + nums2.Length];
-            int left = 0;
-            int right = 0;
-            int k = 0;
-            while (left < nums1.Length && right < nums2.Length)
-            {
-                if (nums1[left] < nums2[right])
+                if (currentNode.val == currentNode.next.val)
                 {
-                    mergeSortedArray[k] = nums1[left];
-                    left++;
+                    currentNode.next = currentNode.next.next;
                 }
                 else
                 {
-                    mergeSortedArray[k] = nums2[right];
-                    right++;
+                    currentNode = currentNode.next;
                 }
-                k++;
             }
+            return head;
 
-            for (; left < nums1.Length; left++)
-            {
-                mergeSortedArray[k] = nums1[left];
-                k++;
-            }
-            for (; right < nums2.Length; right++)
-            {
-                mergeSortedArray[k] = nums2[right];
-                k++;
-            }
-            return mergeSortedArray;
+            //while (currentNode != null && currentNode.next != null)
+            //{
+            //    if (!dictionary.ContainsValue(currentNode.val))
+            //    {
+            //        dictionary.Add(currentNode, currentNode.val);
+            //    }
+            //    currentNode = currentNode.next;
+            //}
+
+            //return head;
         }
-
-
     }
 }
 
