@@ -21,41 +21,39 @@ namespace Challenges
         public static void Main(String[] args)
         {
             var listNode = new ListNode(1);
-            listNode.next = new ListNode(1);
-            listNode.next.next = new ListNode(2);
+            listNode.next = new ListNode(2);
+            listNode.next.next = new ListNode(3);
             listNode.next.next.next = new ListNode(3);
-            listNode.next.next.next.next = new ListNode(3);
-
+            listNode.next.next.next.next = new ListNode(4);
+            listNode.next.next.next.next.next = new ListNode(4);
+            listNode.next.next.next.next.next.next = new ListNode(5);
             var list = DeleteDuplicates(listNode);
         }
         public static ListNode DeleteDuplicates(ListNode head)
         {
-            Dictionary<ListNode, int> dictionary = new Dictionary<ListNode, int>();
-            var currentNode = head;
-          
-            while (currentNode != null && currentNode.next != null)
+            var dummyNode = new ListNode(0,head);
+            var prevNode = dummyNode;
+            var currNode = head;
+            while (currNode != null)
             {
-                if (currentNode.val == currentNode.next.val)
+                if (currNode.next != null && currNode.val == currNode.next.val)
                 {
-                    currentNode.next = currentNode.next.next;
+                    //Skip the nodes when values are equal
+                    while (currNode.next != null && currNode.val == currNode.next.val)
+                    {
+                        currNode = currNode.next;
+                    }
+                    //When loop finishes we found duplicate range
+                    //Simply point prev pointer to duplicate next
+                    prevNode.next = currNode.next;
                 }
                 else
                 {
-                    currentNode = currentNode.next;
+                    prevNode = prevNode.next;
                 }
+                currNode = currNode.next;
             }
-            return head;
-
-            //while (currentNode != null && currentNode.next != null)
-            //{
-            //    if (!dictionary.ContainsValue(currentNode.val))
-            //    {
-            //        dictionary.Add(currentNode, currentNode.val);
-            //    }
-            //    currentNode = currentNode.next;
-            //}
-
-            //return head;
+            return dummyNode.next;
         }
     }
 }
