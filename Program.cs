@@ -21,19 +21,39 @@ namespace Challenges
         static ListNode listNode = null;
         public static void Main(String[] args)
         {
-            listNode = new ListNode(4);
-            listNode.next = new ListNode(5);
-            listNode.next.next = new ListNode(1);
-            listNode.next.next.next = new ListNode(9);
-            //listNode.next.next.next.next = new ListNode(4);
+            listNode = new ListNode(1);
+            listNode.next = new ListNode(2);
+            listNode.next.next = new ListNode(3);
+            listNode.next.next.next = new ListNode(4);
+            listNode.next.next.next.next = new ListNode(5);
             //listNode.next.next.next.next.next = new ListNode(4);
             //listNode.next.next.next.next.next.next = new ListNode(5);
-            DeleteNode(listNode.next);
+            var list = ReverseBetween(listNode, 2, 4);
         }
-        public static void DeleteNode(ListNode node)
+        public static ListNode ReverseBetween(ListNode head, int left, int right)
         {
-            node.val = node.next.val;
-            node.next = node.next.next;
+            var dummyNode = new ListNode(0, head);
+            var prev = dummyNode;
+            var currentNode = head;
+
+            for (int i = 1; i < left; i++)
+            {
+                prev = currentNode;
+                currentNode = currentNode.next;
+            }
+
+            //reverse
+            ListNode prevNode = null;
+            for (int i = left; i <= right; i++)
+            {
+                ListNode temp = currentNode.next;
+                currentNode.next = prevNode;
+                prevNode = currentNode;
+                currentNode = temp;
+            }
+            prev.next.next = currentNode;
+            prev.next = prevNode;
+            return dummyNode.next;
         }
     }
 }
