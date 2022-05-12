@@ -10,18 +10,19 @@
  * }
  */
 
-public class ListNode
-{
-    public int val;
-    public ListNode next;
-    public ListNode(int val = 0, ListNode next = null)
-    {
-        this.val = val;
-        this.next = next;
-    }
-}
+
 public class SolutionReverseBetween
 {
+    public class ListNode
+    {
+        public int val;
+        public ListNode next;
+        public ListNode(int val = 0, ListNode next = null)
+        {
+            this.val = val;
+            this.next = next;
+        }
+    }
     public ListNode ReverseBetween(ListNode head, int left, int right)
     {
         var dummyNode = new ListNode(0, head);

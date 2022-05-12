@@ -51,6 +51,8 @@ namespace Challenges
                 prevNode = currentNode;
                 currentNode = temp;
             }
+
+            //Connecting nodes
             prev.next.next = currentNode;
             prev.next = prevNode;
             return dummyNode.next;
