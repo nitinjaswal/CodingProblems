@@ -21,6 +21,8 @@ namespace Challenges
         static ListNode listNode = null;
         public static void Main(String[] args)
         {
+            string s = "a";
+            int length = LengthOfLastWord(s);
             listNode = new ListNode(1);
             listNode.next = new ListNode(2);
             listNode.next.next = new ListNode(3);
@@ -28,34 +30,37 @@ namespace Challenges
             listNode.next.next.next.next = new ListNode(5);
             //listNode.next.next.next.next.next = new ListNode(4);
             //listNode.next.next.next.next.next.next = new ListNode(5);
-            var list = ReverseBetween(listNode, 2, 4);
+            //var list = ReverseBetween(listNode, 2, 4);
         }
-        public static ListNode ReverseBetween(ListNode head, int left, int right)
+        public static int LengthOfLastWord(string s)
         {
-            var dummyNode = new ListNode(0, head);
-            var prev = dummyNode;
-            var currentNode = head;
-
-            for (int i = 1; i < left; i++)
+            char[] charArray = s.ToCharArray();
+            int length = 0;
+            for (int i = charArray.Length - 1; i > 0; i--)
             {
-                prev = currentNode;
-                currentNode = currentNode.next;
+                if (charArray[i] != ' ')
+                {
+                    length++;
+                }
+                else
+                {
+                    if (length > 0)
+                    {
+                        return length;
+                    }
+                }
             }
-
-            //reverse
-            ListNode prevNode = null;
-            for (int i = left; i <= right; i++)
-            {
-                ListNode temp = currentNode.next;
-                currentNode.next = prevNode;
-                prevNode = currentNode;
-                currentNode = temp;
-            }
-
-            //Connecting nodes
-            prev.next.next = currentNode;
-            prev.next = prevNode;
-            return dummyNode.next;
+            return length;
+            //var list = s.Split();
+            //var result = new List<string>();
+            //foreach (var item in list)
+            //{
+            //    if (item.Length > 0)
+            //    {
+            //        result.Add(item);
+            //    }
+            //}
+            //return result.Last().Length;
         }
     }
 }
