@@ -21,8 +21,10 @@ namespace Challenges
         static ListNode listNode = null;
         public static void Main(String[] args)
         {
-            string s = "a";
-            int length = LengthOfLastWord(s);
+            string s = "xywrrmp";
+
+            string t = "xywrrmu#p";
+            bool length = BackspaceCompare(s, t);
             listNode = new ListNode(1);
             listNode.next = new ListNode(2);
             listNode.next.next = new ListNode(3);
@@ -32,35 +34,35 @@ namespace Challenges
             //listNode.next.next.next.next.next.next = new ListNode(5);
             //var list = ReverseBetween(listNode, 2, 4);
         }
-        public static int LengthOfLastWord(string s)
+        public static bool BackspaceCompare(string s, string t)
         {
-            char[] charArray = s.ToCharArray();
-            int length = 0;
-            for (int i = charArray.Length - 1; i > 0; i--)
+            return BuildString(s).Equals(BuildString(t));
+        }
+        public static string BuildString(string s)
+        {
+            Stack<string> stack = new Stack<string>();
+
+            for (int i = 0; i <= s.Length - 1; i++)
             {
-                if (charArray[i] != ' ')
+                if (s[i].ToString() == "#")
                 {
-                    length++;
+                    if (stack.Count > 0)
+                    {
+                        stack.Pop();
+                    }
                 }
                 else
                 {
-                    if (length > 0)
-                    {
-                        return length;
-                    }
+                    stack.Push(s[i].ToString());
                 }
             }
-            return length;
-            //var list = s.Split();
-            //var result = new List<string>();
-            //foreach (var item in list)
-            //{
-            //    if (item.Length > 0)
-            //    {
-            //        result.Add(item);
-            //    }
-            //}
-            //return result.Last().Length;
+            StringBuilder sb1 = new StringBuilder();
+            while (stack.Count > 0)
+            {
+                sb1.Append(stack.Peek());
+                stack.Pop();
+            }
+            return sb1.ToString();
         }
     }
 }
