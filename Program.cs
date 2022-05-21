@@ -21,11 +21,9 @@ namespace Challenges
         static ListNode listNode = null;
         public static void Main(String[] args)
         {
-            string s = "xywrrmp";
-
-            string t = "xywrrmu#p";
-            bool length = BackspaceCompare(s, t);
-            listNode = new ListNode(1);
+            int[] nums = { 1, 7, 3, 6, 5, 6 };
+            int pivot = PivotIndex(nums);
+            listNode = new ListNode(1);  
             listNode.next = new ListNode(2);
             listNode.next.next = new ListNode(3);
             listNode.next.next.next = new ListNode(4);
@@ -34,35 +32,29 @@ namespace Challenges
             //listNode.next.next.next.next.next.next = new ListNode(5);
             //var list = ReverseBetween(listNode, 2, 4);
         }
-        public static bool BackspaceCompare(string s, string t)
+        public static int PivotIndex(int[] nums)
         {
-            return BuildString(s).Equals(BuildString(t));
-        }
-        public static string BuildString(string s)
-        {
-            Stack<string> stack = new Stack<string>();
+            int totalSum = 0;
+            int leftSum = 0;
 
-            for (int i = 0; i <= s.Length - 1; i++)
+            for (int i = 0; i <= nums.Length - 1; i++)
             {
-                if (s[i].ToString() == "#")
+                totalSum = totalSum + (nums[i]);
+            }
+            int rightSum = totalSum;
+            for (int i = 0; i < nums.Length - 1; i++)
+            {
+                rightSum = rightSum - nums[i];
+                if (leftSum == rightSum)
                 {
-                    if (stack.Count > 0)
-                    {
-                        stack.Pop();
-                    }
+                    return i;
                 }
                 else
                 {
-                    stack.Push(s[i].ToString());
+                    leftSum = leftSum + nums[i];
                 }
             }
-            StringBuilder sb1 = new StringBuilder();
-            while (stack.Count > 0)
-            {
-                sb1.Append(stack.Peek());
-                stack.Pop();
-            }
-            return sb1.ToString();
+            return -1;
         }
     }
 }
