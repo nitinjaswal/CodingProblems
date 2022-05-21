@@ -21,9 +21,9 @@ namespace Challenges
         static ListNode listNode = null;
         public static void Main(String[] args)
         {
-            int[] nums = { 1, 7, 3, 6, 5, 6 };
-            int pivot = PivotIndex(nums);
-            listNode = new ListNode(1);  
+            int[] nums = { 3, 6, 1, 0 };
+            int pivot = DominantIndex(nums);
+            listNode = new ListNode(1);
             listNode.next = new ListNode(2);
             listNode.next.next = new ListNode(3);
             listNode.next.next.next = new ListNode(4);
@@ -32,29 +32,41 @@ namespace Challenges
             //listNode.next.next.next.next.next.next = new ListNode(5);
             //var list = ReverseBetween(listNode, 2, 4);
         }
-        public static int PivotIndex(int[] nums)
+        public static int DominantIndex(int[] nums)
         {
-            int totalSum = 0;
-            int leftSum = 0;
-
+            int largestNum = 0;
+            int maxIndex = 0;
             for (int i = 0; i <= nums.Length - 1; i++)
             {
-                totalSum = totalSum + (nums[i]);
-            }
-            int rightSum = totalSum;
-            for (int i = 0; i < nums.Length - 1; i++)
-            {
-                rightSum = rightSum - nums[i];
-                if (leftSum == rightSum)
+                if (nums[i] > largestNum)
                 {
-                    return i;
+                    largestNum = nums[i];
+                    maxIndex = i;
+                }
+            }
+            bool islargest = false;
+            for (int i = 0; i <= nums.Length - 1; i++)
+            {
+                if (nums[i] != largestNum && nums[i] * 2 > largestNum)
+                {
+                    islargest = false;
+                    return -1;
                 }
                 else
                 {
-                    leftSum = leftSum + nums[i];
+                    islargest = true;
                 }
+            }           
+
+            if (islargest)
+            {
+                return maxIndex;
             }
-            return -1;
+            else
+            {
+                return -1;
+            }
+
         }
     }
 }
