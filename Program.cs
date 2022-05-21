@@ -21,8 +21,8 @@ namespace Challenges
         static ListNode listNode = null;
         public static void Main(String[] args)
         {
-            int[] nums = { 7, 1, 5, 3, 6, 4 };
-            int pivot = MaxProfit(nums);
+            int[] nums = { 1, 1, 1, 1, 1 };
+            int pivot = SumOfUnique(nums);
             listNode = new ListNode(1);
             listNode.next = new ListNode(2);
             listNode.next.next = new ListNode(3);
@@ -32,56 +32,25 @@ namespace Challenges
             //listNode.next.next.next.next.next.next = new ListNode(5);
             //var list = ReverseBetween(listNode, 2, 4);
         }
-        public static  int MaxProfit(int[] prices)
+        public static int SumOfUnique(int[] nums)
         {
-
-            int maxProfit = 0;
-            int left = 0;
-            int right = 1;
-            while (right <= prices.Length - 1)
+            var result = 0;
+            Dictionary<int,int> set = new Dictionary<int,int>();
+            for (int i = 0; i <= nums.Length - 1; i++)
             {
-                if (prices[left] < prices[right])
+                if(!set.ContainsKey(nums[i]))
                 {
-                    int profit = prices[right] - prices[left];
-                    if(profit > maxProfit)
-                    {
-                        maxProfit = profit;
-                    }
+                    set.Add(nums[i], 1);
                 }
                 else
                 {
-                    left= right;
-                }
-                right++;
-            }
-            return maxProfit;
-
-        }
-        public static int DominantIndex(int[] nums)
-        {
-            int largestNum = 0;
-            int maxIndex = 0;
-            for (int i = 0; i <= nums.Length - 1; i++)
-            {
-                if (nums[i] > largestNum)
-                {
-                    largestNum = nums[i];
-                    maxIndex = i;
+                    //if element exist more than once, then update count
+                    int oldCount = (int)set[nums[i]];
+                    set[nums[i]] = oldCount + 1;
                 }
             }
-            for (int i = 0; i <= nums.Length - 1; i++)
-            {
-                if (nums[i] != largestNum && nums[i] * 2 > largestNum)
-                {
-                    return -1;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            return maxIndex;
-
+            result = set.Where(x => x.Value == 1).Select(x => x.Key).Sum();
+            return result;
         }
     }
 }
