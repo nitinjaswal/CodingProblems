@@ -21,8 +21,8 @@ namespace Challenges
         static ListNode listNode = null;
         public static void Main(String[] args)
         {
-            int[] nums = { 1, 1, 1, 1, 1 };
-            int pivot = SumOfUnique(nums);
+            int[] nums = { 4,8,9,9 };
+            var array = PlusOne(nums);
             listNode = new ListNode(1);
             listNode.next = new ListNode(2);
             listNode.next.next = new ListNode(3);
@@ -32,25 +32,29 @@ namespace Challenges
             //listNode.next.next.next.next.next.next = new ListNode(5);
             //var list = ReverseBetween(listNode, 2, 4);
         }
-        public static int SumOfUnique(int[] nums)
+        public static int[] PlusOne(int[] digits)
         {
-            var result = 0;
-            Dictionary<int,int> set = new Dictionary<int,int>();
-            for (int i = 0; i <= nums.Length - 1; i++)
+
+            int n = digits.Length;
+            for (int i = n - 1; i >= 0; i--)
             {
-                if(!set.ContainsKey(nums[i]))
+                if (digits[i] != 9)
                 {
-                    set.Add(nums[i], 1);
+                    digits[i] = digits[i] + 1;
+                    break;
                 }
                 else
                 {
-                    //if element exist more than once, then update count
-                    int oldCount = (int)set[nums[i]];
-                    set[nums[i]] = oldCount + 1;
+                    digits[i] = 0;
                 }
             }
-            result = set.Where(x => x.Value == 1).Select(x => x.Key).Sum();
-            return result;
+            if (digits[0] == 0)
+            {
+                int[] result = new int[n + 1];
+                result[0] = 1;
+                return result;
+            }
+            return digits;
         }
     }
 }
