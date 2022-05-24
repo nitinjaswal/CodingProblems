@@ -21,8 +21,7 @@ namespace Challenges
         static ListNode listNode = null;
         public static void Main(String[] args)
         {
-            int[] nums = { 4,8,9,9 };
-            var array = PlusOne(nums);
+
             listNode = new ListNode(1);
             listNode.next = new ListNode(2);
             listNode.next.next = new ListNode(3);
@@ -31,31 +30,65 @@ namespace Challenges
             //listNode.next.next.next.next.next = new ListNode(4);
             //listNode.next.next.next.next.next.next = new ListNode(5);
             //var list = ReverseBetween(listNode, 2, 4);
-        }
-        public static int[] PlusOne(int[] digits)
-        {
 
-            int n = digits.Length;
-            for (int i = n - 1; i >= 0; i--)
+            int numberToFind = 6;
+            int[,] array = new int[3, 3]
             {
-                if (digits[i] != 9)
+                {1, 2, 3 },
+                {4,5,6 },
+                {7,8,9 }
+            };
+            int[] arr = new int[] { 2, 3, 3, 4, 3 };
+            var list = MajorityElement(arr);
+
+        }
+
+        public static int SingleNumber(int[] nums)
+        {
+            var result = 0;
+            foreach (var num in nums)
+            {
+                result = result ^ num;
+            }
+            return result;
+        }
+
+        public static int SingleNumberIII(int[] nums)
+        {
+            var result = 0;
+            foreach (var num in nums)
+            {
+                result = result ^ num;
+            }
+            return result;
+        }
+
+        public static int MajorityElement(int[] nums)
+        {
+            int res = nums[0];//Be default we are assuming that first element is the majority element
+            int count = 1;//Default occurence is 1
+            for (int i = 1; i < nums.Length; i++)
+            {
+                //if number is same then increment its occurence
+                if (res == nums[i])
                 {
-                    digits[i] = digits[i] + 1;
-                    break;
-                }
+                    count++;
+                }//if number is changed,then decrement the occurence of the number
                 else
                 {
-                    digits[i] = 0;
+                    count--;
+                }
+
+                //if count is zero, means there is no majority element , then take new element as new majority element
+                if (count == 0)
+                {
+                    res = nums[i];
+                    count = 1;
                 }
             }
-            if (digits[0] == 0)
-            {
-                int[] result = new int[n + 1];
-                result[0] = 1;
-                return result;
-            }
-            return digits;
+            return res;
         }
+
     }
 }
 
