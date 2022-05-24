@@ -38,59 +38,39 @@ namespace Challenges
                 {4,5,6 },
                 {7,8,9 }
             };
-            int[] arr = new int[] { 2, 3, 3, 4, 3 };
-            var list = MajorityElement(arr);
-
+            int[] arr = new int[] { 1,4,45,6,10,19 };
+            var list = AddBinary("11", "1");
+            string[] str = new string[] { "flower", "flow", "flight" };
+            var result = MinSubArrayLen(51, arr);
         }
 
-        public static int SingleNumber(int[] nums)
+        public static string AddBinary(string a, string b)
         {
-            var result = 0;
-            foreach (var num in nums)
-            {
-                result = result ^ num;
-            }
-            return result;
+            int a1 = Convert.ToInt32(a);
+            string binary = Convert.ToString(a1, 2);
+            return binary;
         }
 
-        public static int SingleNumberIII(int[] nums)
+        public static int MinSubArrayLen(int target, int[] nums)
         {
-            var result = 0;
-            foreach (var num in nums)
+            int start = nums[0];
+            int sum = 0;
+            int ans = int.MaxValue; ;
+            for (int i = 0; i < nums.Length;i++)
             {
-                result = result ^ num;
+                sum = sum + nums[i];
+                while (sum >= target)
+                {
+                    sum = sum - nums[start];
+                    start++;
+                }             
             }
-            return result;
+            return ans;
         }
-
-        public static int MajorityElement(int[] nums)
-        {
-            int res = nums[0];//Be default we are assuming that first element is the majority element
-            int count = 1;//Default occurence is 1
-            for (int i = 1; i < nums.Length; i++)
-            {
-                //if number is same then increment its occurence
-                if (res == nums[i])
-                {
-                    count++;
-                }//if number is changed,then decrement the occurence of the number
-                else
-                {
-                    count--;
-                }
-
-                //if count is zero, means there is no majority element , then take new element as new majority element
-                if (count == 0)
-                {
-                    res = nums[i];
-                    count = 1;
-                }
-            }
-            return res;
-        }
-
     }
+
 }
+
 
 
 
