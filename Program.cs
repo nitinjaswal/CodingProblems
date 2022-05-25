@@ -39,54 +39,47 @@ namespace Challenges
                 {7,8,9 }
             };
             int[] arr = new int[] { 1, 4, 45, 6, 10, 19 };
-            var list = AddBinary("11", "1");
-            string str = "the blue";
-            reverseWords(str.ToCharArray());
+
+            string str = "abcdefg";//"s'teL ekat edoCteeL tsetnoc"
+            string s = ReverseStr(str,2);
 
         }
 
-        public static string AddBinary(string a, string b)
+        public static string ReverseStr(string s, int k)
         {
-            int a1 = Convert.ToInt32(a);
-            string binary = Convert.ToString(a1, 2);
-            return binary;
+
         }
-
-        public static void reverseWords(char[] str)
+        public static string ReverseWords(string s)
         {
-            // reverse the whole input 
-            Reverse(str, 0, str.Length - 1);
-            int start = 0;
 
-            //Reverse each individual word
-            for (int i = 0; i <= str.Length - 1; i++)
+            StringBuilder sb = new StringBuilder();
+            var words = s.Split(' ');
+
+            for (int i = 0; i <= words.Length - 1; i++)
             {
-                //when whitespace is encountered, means we have found one string(and pass its indices to reverse)
-                if (str[i] == ' ')
+                if (words[i] != "")
                 {
-                    Reverse(str, start, i - 1);
-                    start = i + 1;
-                }
-                // if i reaches to last word in string
-                if (i == str.Length - 1)
-                {
-                    Reverse(str, start, i);
+                    string reversedString = ReverseString(words[i].ToCharArray());
+                    sb.Append(reversedString);
+                    sb.Append(' ');
                 }
             }
-        }
 
-        private static void Reverse(char[] res, int start, int end)
+            return sb.ToString().TrimEnd();
+        }
+        public static string ReverseString(char[] s)
         {
-            while (start < end)
+            int i = 0;
+            for (int j = s.Length - 1; i < j; j--)
             {
-                char temp = res[start];
-                res[start] = res[end];
-                res[end] = temp;
-                start++;
-                end--;
+                var temp = s[j];
+                s[j] = s[i];
+                s[i] = temp;
+                i++;
             }
+            string str = new string(s);
+            return str.ToString();
         }
-
     }
 
 }
