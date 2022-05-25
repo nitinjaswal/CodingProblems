@@ -38,16 +38,31 @@ namespace Challenges
                 {4,5,6 },
                 {7,8,9 }
             };
-            int[] arr = new int[] { 1, 4, 45, 6, 10, 19 };
+            int[] arr = new int[] { 0, 10, 5, 2 };
 
             string str = "abcdefg";//"s'teL ekat edoCteeL tsetnoc"
-            string s = ReverseStr(str,2);
+            int s = PeakIndexInMountainArray(arr);
 
         }
 
-        public static string ReverseStr(string s, int k)
+        public static int PeakIndexInMountainArray(int[] arr)
         {
-
+            int low = 0;
+            int high = arr.Length - 1;
+            while (low < high)
+            {
+                int mid = low + (high - low) / 2;
+                // it means high element must be on left sidde of the mid
+                if (arr[mid] > arr[mid + 1])
+                {
+                    high = mid;
+                }
+                else
+                {
+                    low = mid+1;
+                }
+            }
+            return low;
         }
         public static string ReverseWords(string s)
         {
