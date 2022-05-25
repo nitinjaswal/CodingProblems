@@ -38,10 +38,11 @@ namespace Challenges
                 {4,5,6 },
                 {7,8,9 }
             };
-            int[] arr = new int[] { 1,4,45,6,10,19 };
+            int[] arr = new int[] { 1, 4, 45, 6, 10, 19 };
             var list = AddBinary("11", "1");
-            string[] str = new string[] { "flower", "flow", "flight" };
-            var result = MinSubArrayLen(51, arr);
+            string str = "the blue";
+            reverseWords(str.ToCharArray());
+
         }
 
         public static string AddBinary(string a, string b)
@@ -51,22 +52,41 @@ namespace Challenges
             return binary;
         }
 
-        public static int MinSubArrayLen(int target, int[] nums)
+        public static void reverseWords(char[] str)
         {
-            int start = nums[0];
-            int sum = 0;
-            int ans = int.MaxValue; ;
-            for (int i = 0; i < nums.Length;i++)
+            // reverse the whole input 
+            Reverse(str, 0, str.Length - 1);
+            int start = 0;
+
+            //Reverse each individual word
+            for (int i = 0; i <= str.Length - 1; i++)
             {
-                sum = sum + nums[i];
-                while (sum >= target)
+                //when whitespace is encountered, means we have found one string(and pass its indices to reverse)
+                if (str[i] == ' ')
                 {
-                    sum = sum - nums[start];
-                    start++;
-                }             
+                    Reverse(str, start, i - 1);
+                    start = i + 1;
+                }
+                // if i reaches to last word in string
+                if (i == str.Length - 1)
+                {
+                    Reverse(str, start, i);
+                }
             }
-            return ans;
         }
+
+        private static void Reverse(char[] res, int start, int end)
+        {
+            while (start < end)
+            {
+                char temp = res[start];
+                res[start] = res[end];
+                res[end] = temp;
+                start++;
+                end--;
+            }
+        }
+
     }
 
 }
