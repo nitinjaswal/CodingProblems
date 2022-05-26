@@ -1,7 +1,13 @@
 ﻿public class SolutionFloorCeil
 {
+    //return the index of smallest number >=target
     public  int FindCeil(int[] arr, int target)
     {
+        //if target number is greater than the greatest number in the array
+        if(target>arr.Length-1)
+        {
+            return -1;
+        }
         int low = 0;
         int high = arr.Length - 1;
         while (low <= high)

@@ -38,13 +38,95 @@ namespace Challenges
                 {4,5,6 },
                 {7,8,9 }
             };
-            int[] arr = new int[] { 2, 3, 5, 9, 14, 16, 17, 18 };
+            int[] arr = new int[] { 2, 5, 6, 0, 0, 1, 2 };
 
-            string str = "abcdefg";//"s'teL ekat edoCteeL tsetnoc"
-            int s = FindFloor(arr, 15);
+            string[] str = { "flower", "flow", "flight" };
+            string s = LongestCommonPrefix(str);
 
         }
 
+        public int MinDepth(TreeNode root)
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+            int minDepth = 1;
+            int currentDepth = 1;
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while (queue.Count > 0)
+            {
+                int size = queue.Count();
+                //looping all the item level order(which are present in queue)
+                for (int i = 0; i < size; i++)
+                {
+                    var item = queue.Dequeue();
+                    //as soon as leaf node is found we return the depth count as there is no need to traverse whole tree
+                    if (item.left == null && item.right == null)
+                    {
+                        return minDepth;
+                    }
+                    if (item.left != null)
+                    {
+                        currentDepth++;
+                        queue.Enqueue(item.left);
+
+                    }
+                    if (item.right != null)
+                    {
+
+                        queue.Enqueue(item.right);
+                    }
+                }
+                minDepth++;
+            }
+            return minDepth;
+        }
+        public static string LongestCommonPrefix(string[] strs)
+        {
+            Array.Sort(strs, StringComparer.InvariantCulture);
+            return "";
+        }
+        public static bool Search(int[] arr, int target)
+        {
+            int start = 0;
+            int end = arr.Length - 1;
+            while (start <= end)
+            {
+                int mid = start + (end - start) / 2;
+
+                if (target == arr[mid])
+                {
+                    return true;
+                }
+                //case 1: If array element at start is less than element at array mid
+                if (arr[start] <= arr[mid])
+                {
+                    //Check if target element is in this range
+                    if (target >= arr[start] && target <= arr[mid])
+                    {
+                        end = mid - 1;
+                    }
+                    else
+                    {
+                        start = mid + 1;
+                    }
+                }
+                else
+                {
+                    if (target >= arr[mid] && target <= arr[end])
+                    {
+                        start = mid + 1;
+                    }
+                    else
+                    {
+                        end = mid - 1;
+                    }
+                }
+            }
+            return false;
+        }
         public static int FindCeil(int[] arr, int target)
         {
             int low = 0;

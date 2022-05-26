@@ -12,10 +12,10 @@
             {
                 return mid;
             }
-            //case 1: If array element at start is less than element at array mid
+            //case 1: Left side is sorted
             if (arr[start] <= arr[mid])
             {
-                //Check if target element is in this range
+                //Check if elements lies on left half or not
                 if (target >= arr[start] && target <= arr[mid])
                 {
                     end = mid - 1;
@@ -25,6 +25,7 @@
                     start = mid + 1;
                 }
             }
+            //Right half is sorted
             else
             {
                 if (target >= arr[mid] && target <= arr[end])
