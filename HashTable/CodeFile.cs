@@ -1,4 +1,6 @@
-﻿public class MyHashSet
+﻿using System.Collections.Generic;
+
+public class MyHashSet
 {
     List<int> set = new List<int>();
     public MyHashSet()
