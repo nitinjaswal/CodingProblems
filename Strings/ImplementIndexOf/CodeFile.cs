@@ -1,4 +1,4 @@
-﻿public class Solution
+﻿public class SolutionStrStr
 {
     public int StrStr(string haystack, string needle)
     {

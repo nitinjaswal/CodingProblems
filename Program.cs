@@ -21,76 +21,30 @@ namespace Challenges
 
     public class MyHashSet
     {
-    
-        
+        static int[,] matrix = { { 1, 3, 5, 7 },
+                        { 10, 11, 16, 20 },
+                        { 23, 30, 34, 50 } };
+        int K = 3;
 
-     
         public static void Main(String[] args)
-        {
-            int i = 0;
-            //testmethod(out i);
-           
-            MyHashSet myHashSet = new MyHashSet();
-            myHashSet.Add(1);      // set = [1]
-            myHashSet.Add(2);      // set = [1, 2]
-            myHashSet.Contains(1); // return True
-            myHashSet.Contains(3); // return False, (not found)
-            myHashSet.Add(2);      // set = [1, 2]
-            myHashSet.Contains(2); // return True
-            myHashSet.Remove(2);   // set = [1]
-            myHashSet.Contains(2); // return False, (already removed)
-            string[] str = { "flow", "flower", "flight","cir" };
-            string longest = LongestCommonPrefix(str);
+        {  
+            string longest = SearchMatrix(matrix, 3);
         }
 
-        public static string LongestCommonPrefix(string[] strs)
+        public static bool SearchMatrix(int[][] matrix, int target)
         {
-            Array.Sort(strs);
-            char[] first = strs[0].ToCharArray();
-            char[] last = strs[strs.Length - 1].ToCharArray();
-            StringBuilder longestCommonPrefix = new StringBuilder();
-            for (int i = 0; i < first.Length; i++)
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                if(first[i]!=last[i])
+                for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    break;
-                }
-                else
-                {
-                    longestCommonPrefix.Append(first[i]);
+                    if (matrix[i][j] == target)
+                    {
+                        return true;
+                    }
 
                 }
             }
-            return longestCommonPrefix.ToString();
-        }
-        List<int> set = new List<int>();
-        private int[] hashSet;
-        public MyHashSet()
-        {
-            hashSet = new int[100000];
-
-        }
-
-        public void Add(int key)
-        {
-            hashSet[key] = key;
-        }
-
-        public void Remove(int key)
-        {
-            hashSet[key] = -1;
-        }
-
-        public bool Contains(int key)
-        {
-            if (hashSet[key] != -1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 
