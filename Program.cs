@@ -16,7 +16,7 @@ namespace Challenges
             this.next = next;
         }
     }
-    
+
 
 
     public class MyHashSet
@@ -26,9 +26,16 @@ namespace Challenges
                         { 23, 30, 34, 50 } };
         int K = 3;
 
+        static int[][] arr = new int[][]
+ {
+    new int[] {1, 2, 3, 4},
+    new int[] {11, 34, 67},
+    new int[] {89, 23},
+    new int[] {0, 45, 78, 53, 99}
+ };
         public static void Main(String[] args)
-        {  
-            string longest = SearchMatrix(matrix, 3);
+        {
+             SearchMatrix(arr, 3);
         }
 
         public static bool SearchMatrix(int[][] matrix, int target)
