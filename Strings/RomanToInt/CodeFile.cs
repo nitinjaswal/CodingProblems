@@ -1,8 +1,10 @@
-﻿public class SolutionRomanToInt
+﻿using System.Collections.Generic;
+
+public class SolutionRomanToInt
 {
     public int RomanToInt(string s)
     {
-        Dictionary<Char, int> set = new Dictionary<char, int>();
+        Dictionary<char, int> set = new Dictionary<char, int>();
         set.Add('I', 1);
         set.Add('V', 5);
         set.Add('X', 10);
