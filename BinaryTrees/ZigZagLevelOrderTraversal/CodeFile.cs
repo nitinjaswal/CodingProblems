@@ -62,11 +62,9 @@ public class SolutionZigzagLevelOrder
                 }
                 else
                 {
-
                     levelOrder.Add(list);
                     traversalDirection = 0;
                 }
-
             }
         }
 

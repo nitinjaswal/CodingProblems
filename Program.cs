@@ -35,112 +35,78 @@ namespace Challenges
         public static void Main(String[] args)
         {
             // SearchMatrix(arr, 3);
-            var p = new TreeNode(10);
-            //p.left = new TreeNode(5);
-            //p.right = new TreeNode(15);
+            var root = new TreeNode(3);
+            root.left = new TreeNode(9);
+            root.right = new TreeNode(20);
+            root.left.right = null;
+            root.left.left = null;
+            root.right.right = new TreeNode(7);
+            root.right.left = new TreeNode(15);
 
-            var q = new TreeNode(10);
-            //q.left = new TreeNode(5);
-            q.right = new TreeNode(2);
-            bool isSame = IsSameTree(p, q);
-            var result = Transpose(arr);
+            int[] arr = { 9, 6, 4, 2, 3, 5, 7, 0, 1 };
+            MissingNumber(arr);
         }
 
-        public static int[][] Transpose(int[][] matrix)
-        {
-            int R = matrix.Length;
-            int C = matrix[0].Length;
-            int[][] ans = new int[C][];
 
-            for (int i = 0; i < C; i++)
+        public static int MissingNumber(int[] arr)
+        {
+            for (int i = 0; i <= arr.Length - 1;)
             {
-                ans[i] = new int[R];
-                for (int j = 0; j < R; j++)
+                //if i==n : ignore the number
+                if (arr[i] == arr.Length)
                 {
-                    ans[i][j] = matrix[j][i];
-                }
-            }
-            return ans;
-        }
-        public static string AddBinary(string a, string b)
-        {
-            int num1 = Convert.ToInt32(a);
-            int num2 = Convert.ToInt32(b);
-            int sum = 0;
-            int i = a.Length;
-            int j = b.Length;
-            int carry = 0;
-            //while (i >= 0 && j >= 0)
-            //{
-            //    if (a[i] + b[j] >= 1)
-            //}
-            return "";
-        }
-
-        public static bool IsSameTree(TreeNode p, TreeNode q)
-        {
-            if (p == null && q == null) return true;
-
-            if (q == null || p == null) return false;
-            if (p.val != q.val)
-            {
-                return false;
-            }
-
-            Queue<TreeNode> queue = new Queue<TreeNode>();
-            queue.Enqueue(p);
-            queue.Enqueue(q);
-            while (queue.Count > 0)
-            {
-                var itemP = queue.Peek();
-                queue.Dequeue();
-                var itemQ = queue.Peek();
-                queue.Dequeue();
-                if (itemP == null && itemQ == null)
-                {
+                    i++;
                     continue;
                 }
-                if (itemP != null && itemQ == null)
+                //Here numbers are starting from 0:so correct position of each number in sorted array is at its index
+                
+                int correctIndex = arr[i];
+                if (arr[i] != arr[correctIndex])
                 {
-                    return false;
-                }
-                if (itemP == null && itemQ != null)
-                {
-                    return false;
-                }
-                if (itemP.val != itemQ.val)
-                {
-                    return false;
+                    int temp = arr[i];
+                    arr[i] = arr[correctIndex];
+                    arr[correctIndex] = temp;
                 }
                 else
                 {
-                    queue.Enqueue(itemP.left);
-                    queue.Enqueue(itemQ.left);
-                    queue.Enqueue(itemP.right);
-                    queue.Enqueue(itemQ.right);
+                    i++;
                 }
             }
-
-            return true;
-        }
-        public static bool SearchMatrix(int[][] matrix, int target)
-        {
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            int j= 0;
+            for (; j <= arr.Length - 1;j++)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                if (arr[j] != j)
                 {
-                    if (matrix[i][j] == target)
-                    {
-                        return true;
-                    }
-
+                    break;
                 }
             }
-            return false;
+            return j;
+        }
+        private static void CyclicSort(int[] arr)
+        {
+            for (int i = 0; i <= arr.Length - 1;)
+            {
+                //correct index for number is i-1;
+                //eg: 3 will be at 3-1 inde
+                int correctIndex = arr[i] - 1;
+                if (arr[i] != arr[correctIndex])
+                {
+                    int temp = arr[i];
+                    arr[i] = arr[correctIndex];
+                    arr[correctIndex] = temp;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
         }
     }
 
 }
+
+
 
 
 
