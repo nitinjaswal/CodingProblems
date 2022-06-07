@@ -28,10 +28,9 @@ namespace Challenges
 
         static int[][] arr = new int[][]
            {
-                new int[] {1, 2, 3, 4},
+                new int[] {1, 2, 3},
                 new int[] {11, 34, 67},
-                new int[] {89, 23},
-                new int[] {0, 45, 78, 53, 99}
+                new int[] {89, 23,33}
           };
         public static void Main(String[] args)
         {
@@ -44,8 +43,25 @@ namespace Challenges
             //q.left = new TreeNode(5);
             q.right = new TreeNode(2);
             bool isSame = IsSameTree(p, q);
+            var result = Transpose(arr);
         }
 
+        public static int[][] Transpose(int[][] matrix)
+        {
+            int R = matrix.Length;
+            int C = matrix[0].Length;
+            int[][] ans = new int[C][];
+
+            for (int i = 0; i < C; i++)
+            {
+                ans[i] = new int[R];
+                for (int j = 0; j < R; j++)
+                {
+                    ans[i][j] = matrix[j][i];
+                }
+            }
+            return ans;
+        }
         public static string AddBinary(string a, string b)
         {
             int num1 = Convert.ToInt32(a);
