@@ -43,11 +43,35 @@ namespace Challenges
             root.right.right = new TreeNode(7);
             root.right.left = new TreeNode(15);
 
-            int[] arr = { 9, 6, 4, 2, 3, 5, 7, 0, 1 };
-            MissingNumber(arr);
+            int[] arr = { 7, 8, 9, 11, 12 };
+            int number = FirstMissingPositive(arr);
         }
 
-
+        public static int FirstMissingPositive(int[] nums)
+        {
+            for (int i = 0; i <= nums.Length - 1;)
+            {
+                int correctIndex = nums[i] - 1;
+                if (nums[i] > 0 && nums[i] <= nums.Length && nums[i] != nums[correctIndex])
+                {
+                    int temp = nums[i];
+                    nums[i] = nums[correctIndex];
+                    nums[correctIndex] = temp;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            for (int i = 0; i <= nums.Length - 1; i++)
+            {
+                if (nums[i] != i + 1)
+                {
+                    return i + 1;
+                }
+            }
+            return nums.Length + 1;
+        }
         public static int MissingNumber(int[] arr)
         {
             for (int i = 0; i <= arr.Length - 1;)
@@ -59,7 +83,7 @@ namespace Challenges
                     continue;
                 }
                 //Here numbers are starting from 0:so correct position of each number in sorted array is at its index
-                
+
                 int correctIndex = arr[i];
                 if (arr[i] != arr[correctIndex])
                 {
@@ -72,8 +96,8 @@ namespace Challenges
                     i++;
                 }
             }
-            int j= 0;
-            for (; j <= arr.Length - 1;j++)
+            int j = 0;
+            for (; j <= arr.Length - 1; j++)
             {
                 if (arr[j] != j)
                 {
