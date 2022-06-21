@@ -34,6 +34,8 @@ namespace Challenges
           };
         public static void Main(String[] args)
         {
+            //PrintHollowSquare(4, 4);
+            PrintPattern1();
             // SearchMatrix(arr, 3);
             var root = new TreeNode(3);
             root.left = new TreeNode(9);
@@ -42,89 +44,46 @@ namespace Challenges
             root.left.left = null;
             root.right.right = new TreeNode(7);
             root.right.left = new TreeNode(15);
-
-            int[] arr = { 7, 8, 9, 11, 12 };
-            int number = FirstMissingPositive(arr);
+    
         }
 
-        public static int FirstMissingPositive(int[] nums)
+        private static void PrintHollowSquare(int row, int col)
         {
-            for (int i = 0; i <= nums.Length - 1;)
+            for (int i = 0; i < row; i++)
             {
-                int correctIndex = nums[i] - 1;
-                if (nums[i] > 0 && nums[i] <= nums.Length && nums[i] != nums[correctIndex])
+                for (int j = 0; j < col; j++)
                 {
-                    int temp = nums[i];
-                    nums[i] = nums[correctIndex];
-                    nums[correctIndex] = temp;
-                }
-                else
-                {
-                    i++;
-                }
-            }
-            for (int i = 0; i <= nums.Length - 1; i++)
-            {
-                if (nums[i] != i + 1)
-                {
-                    return i + 1;
-                }
-            }
-            return nums.Length + 1;
-        }
-        public static int MissingNumber(int[] arr)
-        {
-            for (int i = 0; i <= arr.Length - 1;)
-            {
-                //if i==n : ignore the number
-                if (arr[i] == arr.Length)
-                {
-                    i++;
-                    continue;
-                }
-                //Here numbers are starting from 0:so correct position of each number in sorted array is at its index
+                    if ((i == 0 || i == row - 1) || (j == 0 || j == col - 1))
+                    {
+                        Console.Write("*");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
 
-                int correctIndex = arr[i];
-                if (arr[i] != arr[correctIndex])
-                {
-                    int temp = arr[i];
-                    arr[i] = arr[correctIndex];
-                    arr[correctIndex] = temp;
-                }
-                else
-                {
-                    i++;
-                }
+                 }
+                Console.WriteLine();
             }
-            int j = 0;
-            for (; j <= arr.Length - 1; j++)
-            {
-                if (arr[j] != j)
-                {
-                    break;
-                }
-            }
-            return j;
+            Console.ReadKey();
         }
-        private static void CyclicSort(int[] arr)
-        {
-            for (int i = 0; i <= arr.Length - 1;)
-            {
-                //correct index for number is i-1;
-                //eg: 3 will be at 3-1 inde
-                int correctIndex = arr[i] - 1;
-                if (arr[i] != arr[correctIndex])
-                {
-                    int temp = arr[i];
-                    arr[i] = arr[correctIndex];
-                    arr[correctIndex] = temp;
-                }
-                else
-                {
-                    i++;
-                }
-            }
 
+        private static void PrintPattern1()
+        {
+            int row = 4;
+            int col = 4;
+
+            //outer loop will run for number of lines yo want to print
+            //no of lines = no of rows = no of times outer loop will run
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j <= i; j++)
+                {
+                    Console.Write("*");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadKey();
         }
     }
 
