@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class SolutionFindDisappearedNumbersCyclicSort
+public class SolutionFindDisappearedNumbersCyclicSorts
 {
     public IList<int> FindDisappearedNumbers(int[] arr)
     {
