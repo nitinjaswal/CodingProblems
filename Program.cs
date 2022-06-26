@@ -36,7 +36,6 @@ namespace Challenges
             ListNode node = new ListNode(1);
             node.next = new ListNode(2);
             node.next.next = new ListNode(4);
-
             ListNode node1 = new ListNode(1);
             node1.next = new ListNode(3);
             node1.next.next = new ListNode(4);
@@ -48,41 +47,22 @@ namespace Challenges
             //root.right.right = new TreeNode(7);
             //root.right.left = new TreeNode(15);
             //var list = InsertUsingRecursion(node, 3, 7);
-            bool isHappyNumber = IsHappy(19);
+            var middleNode = MiddleNode(node);
+
+        }
+        public static ListNode MiddleNode(ListNode head)
+        {
+            var slowPointer = head;
+            var fastPointer = head;
+            while (fastPointer != null && fastPointer.next != null)
+            {
+                slowPointer = slowPointer.next;
+                fastPointer = fastPointer.next.next;
+            }
+            return slowPointer;
         }
 
-        private static bool IsHappy(int n)
-        {
-            //using o(n) without extra space: Slow and fast pointer
-            int slow = n;
-            int fast = n;
-            do
-            {
-                slow = GetSquare(slow);
-                fast = GetSquare(GetSquare(fast));               
-            }
-            while (slow != fast) ;
-            if (slow == 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
-        private static int GetSquare(int n)
-        {
-            int result = 0;
-            while (n > 0)
-            {
-                int digit = n % 10;
-                n = n / 10;
-                result = result + (digit * digit);
-            }
-            return result;
-        }
 
     }
 
