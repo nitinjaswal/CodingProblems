@@ -17,8 +17,6 @@ namespace Challenges
         }
     }
 
-
-
     public class MyHashSet
     {
         static int[,] matrix = { { 1, 3, 5, 7 },
@@ -34,185 +32,91 @@ namespace Challenges
           };
         public static void Main(String[] args)
         {
-            //PrintHollowSquare(4, 4);
-            PrintPattern7();
-            // SearchMatrix(arr, 3);
-            var root = new TreeNode(3);
-            root.left = new TreeNode(9);
-            root.right = new TreeNode(20);
-            root.left.right = null;
-            root.left.left = null;
-            root.right.right = new TreeNode(7);
-            root.right.left = new TreeNode(15);
 
+            ListNode node = new ListNode(12);
+            node.next = new ListNode(11);
+            node.next.next = new ListNode(12);
+            node.next.next.next = new ListNode(21);
+            node.next.next.next.next = new ListNode(41);
+            node.next.next.next.next.next = new ListNode(43);
+            node.next.next.next.next.next.next = new ListNode(21);
+            //var root = new TreeNode(3);
+            //root.left = new TreeNode(9);
+            //root.right = new TreeNode(20);
+            //root.left.right = null;
+            //root.left.left = null;
+            //root.right.right = new TreeNode(7);
+            //root.right.left = new TreeNode(15);
+            //var list = InsertUsingRecursion(node, 3, 7);
+            var list = DeleteDuplicatesUnsortedList(node);
         }
 
-        private static void PrintHollowSquare(int row, int col)
+        private static ListNode DeleteDuplicatesUnsortedList(ListNode head)
         {
-            for (int i = 0; i < row; i++)
+            var currentNode = head;
+            var previousNode = new ListNode(0);
+            HashSet<int> map = new HashSet<int>();
+            while (currentNode != null)
             {
-                for (int j = 0; j < col; j++)
+                if (!map.Contains(currentNode.val))
                 {
-                    if ((i == 0 || i == row - 1) || (j == 0 || j == col - 1))
-                    {
-                        Console.Write("*");
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
-
+                    map.Add(currentNode.val);
+                    previousNode = currentNode;
                 }
-                Console.WriteLine();
+                else
+                {
+                    previousNode.next=currentNode.next;
+                }
+                currentNode = currentNode.next;
             }
-            Console.ReadKey();
+            return head;
+        }
+        private static ListNode DeleteDuplicatesSortedList(ListNode head)
+        {
+            var currentNode = head;
+            while (currentNode != null && currentNode.next != null)
+            {
+                if (currentNode.val == currentNode.next.val)
+                {
+                    currentNode.next = currentNode.next.next;
+                }
+                else
+                {
+                    currentNode = currentNode.next;
+                }
+            }
+            return head;
+        }
+        private static void Insert(ListNode rootNode, int index, int val)
+        {
+            var currentNode = rootNode;
+            for (int i = 0; i < index - 1; i++)
+            {
+                currentNode = currentNode.next;
+            }
+            var temp = currentNode.next;
+            currentNode.next = new ListNode(7);
+            currentNode.next.next = temp;
         }
 
-        private static void PrintPattern1()
+        private static ListNode InsertUsingRecursion(ListNode rootNode, int index, int val)
         {
-            int row = 4;
-            int col = 4;
-
-
-            //outer loop will run for number of lines yo want to print
-            //no of lines = no of rows = no of times outer loop will run
-            for (int i = 0; i < row; i++)
+            if (index == 0)
             {
-                //for every row run the column
-                for (int j = 0; j <= i; j++)
-                {
-                    Console.Write("*");
-                }
-                //when one row is printed, we need to add a new line
-                Console.WriteLine();
+                ListNode temp = new ListNode(val, rootNode);
+                return temp;
             }
-            Console.ReadKey();
-        }
+            rootNode.next = InsertUsingRecursion(rootNode.next, index: index - 1, val);
+            return rootNode;
 
-        private static void PrintPattern2()
-        {
-            int row = 4;
-            //outer loop will run for number of lines yo want to print
-            //no of lines = no of rows = no of times outer loop will run
-            for (int i = 0; i < row; i++)
-            {
-                //for every row run the column
-                for (int j = 0; j < row - i; j++)
-                {
-                    Console.Write("*");
-                }
-                //when one row is printed, we need to add a new line
-                Console.WriteLine();
-            }
-            Console.ReadKey();
-        }
-
-        private static void PrintPattern3()
-        {
-            int row = 4;
-            //outer loop will run for number of lines yo want to print
-            //no of lines = no of rows = no of times outer loop will run
-            for (int i = 1; i <= row; i++)
-            {
-                //for every row run the column
-                for (int j = 1; j <= i; j++)
-                {
-                    Console.Write(j);
-                }
-                //when one row is printed, we need to add a new line
-                Console.WriteLine();
-            }
-            Console.ReadKey();
-        }
-        private static void PrintPattern4()
-        {
-            int row = 4;
-            //outer loop will run for number of lines yo want to print
-            //no of lines = no of rows = no of times outer loop will run
-            for (int i = 0; i < row * 2; i++)
-            {
-                int totalColsInRow = i > row ? 2 * row - i : i;
-                //for every row run the column
-                for (int j = 0; j < totalColsInRow; j++)
-                {
-                    Console.Write("*");
-                }
-                //when one row is printed, we need to add a new line
-                Console.WriteLine();
-            }
-            Console.ReadKey();
-        }
-
-        private static void PrintPattern5()
-        {
-            int row = 4;
-
-            for (int i = 0; i < 2 * row; i++)
-            {
-                int totalColsInRow = i > row ? 2 * row - i : i;
-                int noOfSpaces = row - totalColsInRow;
-                for (int s = 0; s < noOfSpaces; s++)
-                {
-                    Console.Write(" ");
-                }
-
-                //for every row run the column
-                for (int j = 0; j < totalColsInRow; j++)
-                {
-                    Console.Write("* ");
-                }
-                //when one row is printed, we need to add a new line
-                Console.WriteLine();
-            }
-            Console.ReadKey();
-        }
-
-        private static void PrintPattern6()
-        {
-            int row = 4;
-
-            for (int i = 0; i <= row; i++)
-            {
-                int totalColsInRow = i;
-                int noOfSpaces = row - totalColsInRow;
-                for (int s = 0; s < noOfSpaces; s++)
-                {
-                    Console.Write(" ");
-                }
-
-                //for every row run the column
-                for (int j = 0; j < totalColsInRow; j++)
-                {
-                    Console.Write("* ");
-                }
-                //when one row is printed, we need to add a new line
-                Console.WriteLine();
-            }
-            Console.ReadKey();
-        }
-
-        private static void PrintPattern7()
-        {
-            int n = 4;
-
-            for (int row = 1; row <= n; row++)
-            {
-                int spacesToPrint = n - row;
-                for (int s = 0; s < spacesToPrint; s++)
-                {
-                    Console.Write(" ");
-                }
-                for (int col = row; col >= 1; col--)
-                {
-                    Console.Write(col);
-                }
-                for (int col = 2; col <= row; col++)
-                {
-                    Console.Write(col);
-                }
-                Console.WriteLine();
-            }
-            Console.ReadKey();
+            //if (index == 1)
+            //{
+            //    var temp = rootNode.next;
+            //    rootNode.next = new ListNode(7);
+            //    rootNode.next.next = temp;
+            //    return;
+            //}
+            //InsertUsingRecursion(rootNode.next, index: index - 1, val);
         }
     }
 
