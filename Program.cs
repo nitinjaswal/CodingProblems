@@ -33,13 +33,13 @@ namespace Challenges
         public static void Main(String[] args)
         {
 
-            ListNode node = new ListNode(12);
-            node.next = new ListNode(11);
-            node.next.next = new ListNode(12);
-            node.next.next.next = new ListNode(21);
-            node.next.next.next.next = new ListNode(41);
-            node.next.next.next.next.next = new ListNode(43);
-            node.next.next.next.next.next.next = new ListNode(21);
+            ListNode node = new ListNode(1);
+            node.next = new ListNode(2);
+            node.next.next = new ListNode(4);
+
+            ListNode node1 = new ListNode(1);
+            node1.next = new ListNode(3);
+            node1.next.next = new ListNode(4);
             //var root = new TreeNode(3);
             //root.left = new TreeNode(9);
             //root.right = new TreeNode(20);
@@ -48,9 +48,54 @@ namespace Challenges
             //root.right.right = new TreeNode(7);
             //root.right.left = new TreeNode(15);
             //var list = InsertUsingRecursion(node, 3, 7);
-            var list = DeleteDuplicatesUnsortedList(node);
+            var list = MergeTwoLists(node,node1);
         }
 
+        public static ListNode MergeTwoLists(ListNode l1, ListNode l2)
+        {
+            var dummyNode = new ListNode(0);
+            var head = dummyNode;
+
+            if (l1 == null)
+            {
+                return l2;
+            }
+            if (l2 == null)
+            {
+                return l1;
+            }
+            while (l1 != null && l2 != null)
+            {
+                if (l1.val <= l2.val)
+                {
+                    dummyNode.next = l1;
+                    l1 = l1.next;
+                }
+                else
+                {
+                    dummyNode.next = l2;
+ 
+                    l2 = l2.next;
+                }
+                dummyNode = dummyNode.next;
+            }
+
+            //while (l1 != null)
+            //{
+            //    dummyNode.next = l1;
+            //    dummyNode = dummyNode.next;
+            //    l1 = l1.next;
+            //}
+            //while (l2 != null)
+            //{
+            //    dummyNode.next = l2;
+            //    dummyNode = dummyNode.next;
+            //    l2 = l2.next;
+            //}
+            dummyNode.next = l1 == null ? l2 : l1;
+            return head.next;
+
+        }
         private static ListNode DeleteDuplicatesUnsortedList(ListNode head)
         {
             var currentNode = head;
@@ -65,7 +110,7 @@ namespace Challenges
                 }
                 else
                 {
-                    previousNode.next=currentNode.next;
+                    previousNode.next = currentNode.next;
                 }
                 currentNode = currentNode.next;
             }
