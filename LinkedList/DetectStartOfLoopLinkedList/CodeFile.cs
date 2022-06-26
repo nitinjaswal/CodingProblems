@@ -47,5 +47,25 @@ public class SolutionDetectCycle
             fastPointer = fastPointer.next;//fast pointer will move 2 step ahead
         }
         return slowPointer;
+
+        //var slowPointer = head;
+        //var fastPointer = head;
+        //while (fastPointer != null && fastPointer.next != null)
+        //{
+        //    slowPointer = slowPointer.next;
+        //    fastPointer = fastPointer.next.next;
+        //    if (slowPointer == fastPointer)
+        //    {
+        //        //There is a loop
+        //        slowPointer = head;
+        //        while (slowPointer != fastPointer)
+        //        {
+        //            slowPointer = slowPointer.next;
+        //            fastPointer = fastPointer.next;
+        //        }
+        //        return slowPointer;
+        //    }
+        //}
+        //return null;
     }
 }

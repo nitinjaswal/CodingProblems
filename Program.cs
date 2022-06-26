@@ -48,9 +48,45 @@ namespace Challenges
             //root.right.right = new TreeNode(7);
             //root.right.left = new TreeNode(15);
             //var list = InsertUsingRecursion(node, 3, 7);
-            var list = MergeTwoLists(node,node1);
+            var list = MergeTwoLists(node, node1);
         }
-
+        public ListNode DetectCycle(ListNode head)
+        {
+            var slowPointer = head;
+            var fastPointer = head;
+            while (fastPointer != null && fastPointer.next != null)
+            {
+                slowPointer = slowPointer.next;
+                fastPointer = fastPointer.next.next;
+                if (slowPointer == fastPointer)
+                {
+                    //There is a loop
+                    slowPointer = head;
+                    while (slowPointer != fastPointer)
+                    {
+                        slowPointer = slowPointer.next;
+                        fastPointer = fastPointer.next;
+                    }
+                    return slowPointer;
+                }
+            }
+            return null;
+        }
+        public bool HasCycle(ListNode head)
+        {
+            var slowPointer = head;
+            var fastPointer = head;
+            while (fastPointer != null && fastPointer.next != null)
+            {
+                slowPointer = slowPointer.next;
+                fastPointer = fastPointer.next.next;
+                if (slowPointer == fastPointer)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public static ListNode MergeTwoLists(ListNode l1, ListNode l2)
         {
             var dummyNode = new ListNode(0);
@@ -74,7 +110,7 @@ namespace Challenges
                 else
                 {
                     dummyNode.next = l2;
- 
+
                     l2 = l2.next;
                 }
                 dummyNode = dummyNode.next;
