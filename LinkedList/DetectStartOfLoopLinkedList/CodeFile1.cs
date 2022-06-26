@@ -29,7 +29,5 @@ public class SolutionDetectCycleHashSet
         }
 
         return null;
-
     }
-
 }

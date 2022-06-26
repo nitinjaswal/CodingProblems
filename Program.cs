@@ -48,157 +48,44 @@ namespace Challenges
             //root.right.right = new TreeNode(7);
             //root.right.left = new TreeNode(15);
             //var list = InsertUsingRecursion(node, 3, 7);
-            var list = MergeTwoLists(node, node1);
+            bool isHappyNumber = IsHappy(19);
         }
-        public ListNode DetectCycle(ListNode head)
+
+        private static bool IsHappy(int n)
         {
-            var slowPointer = head;
-            var fastPointer = head;
-            while (fastPointer != null && fastPointer.next != null)
+            HashSet<int> map = new HashSet<int>();
+            while (n > 0)
             {
-                slowPointer = slowPointer.next;
-                fastPointer = fastPointer.next.next;
-                if (slowPointer == fastPointer)
-                {
-                    //There is a loop
-                    slowPointer = head;
-                    while (slowPointer != fastPointer)
-                    {
-                        slowPointer = slowPointer.next;
-                        fastPointer = fastPointer.next;
-                    }
-                    return slowPointer;
-                }
-            }
-            return null;
-        }
-        public bool HasCycle(ListNode head)
-        {
-            var slowPointer = head;
-            var fastPointer = head;
-            while (fastPointer != null && fastPointer.next != null)
-            {
-                slowPointer = slowPointer.next;
-                fastPointer = fastPointer.next.next;
-                if (slowPointer == fastPointer)
+                if (n == 1)
                 {
                     return true;
                 }
-            }
-            return false;
-        }
-        public static ListNode MergeTwoLists(ListNode l1, ListNode l2)
-        {
-            var dummyNode = new ListNode(0);
-            var head = dummyNode;
-
-            if (l1 == null)
-            {
-                return l2;
-            }
-            if (l2 == null)
-            {
-                return l1;
-            }
-            while (l1 != null && l2 != null)
-            {
-                if (l1.val <= l2.val)
+                if (!map.Contains(n))
                 {
-                    dummyNode.next = l1;
-                    l1 = l1.next;
+                    map.Add(n);
+                    int square = GetSquare(n);
+                    n = square;
                 }
                 else
                 {
-                    dummyNode.next = l2;
-
-                    l2 = l2.next;
+                    return false;
                 }
-                dummyNode = dummyNode.next;
             }
-
-            //while (l1 != null)
-            //{
-            //    dummyNode.next = l1;
-            //    dummyNode = dummyNode.next;
-            //    l1 = l1.next;
-            //}
-            //while (l2 != null)
-            //{
-            //    dummyNode.next = l2;
-            //    dummyNode = dummyNode.next;
-            //    l2 = l2.next;
-            //}
-            dummyNode.next = l1 == null ? l2 : l1;
-            return head.next;
-
+            return true;
         }
-        private static ListNode DeleteDuplicatesUnsortedList(ListNode head)
+
+        private static int GetSquare(int n)
         {
-            var currentNode = head;
-            var previousNode = new ListNode(0);
-            HashSet<int> map = new HashSet<int>();
-            while (currentNode != null)
+            int result = 0;
+            while (n > 0)
             {
-                if (!map.Contains(currentNode.val))
-                {
-                    map.Add(currentNode.val);
-                    previousNode = currentNode;
-                }
-                else
-                {
-                    previousNode.next = currentNode.next;
-                }
-                currentNode = currentNode.next;
+                int digit = n % 10;
+                n = n / 10;
+                result = result + (digit * digit);
             }
-            return head;
-        }
-        private static ListNode DeleteDuplicatesSortedList(ListNode head)
-        {
-            var currentNode = head;
-            while (currentNode != null && currentNode.next != null)
-            {
-                if (currentNode.val == currentNode.next.val)
-                {
-                    currentNode.next = currentNode.next.next;
-                }
-                else
-                {
-                    currentNode = currentNode.next;
-                }
-            }
-            return head;
-        }
-        private static void Insert(ListNode rootNode, int index, int val)
-        {
-            var currentNode = rootNode;
-            for (int i = 0; i < index - 1; i++)
-            {
-                currentNode = currentNode.next;
-            }
-            var temp = currentNode.next;
-            currentNode.next = new ListNode(7);
-            currentNode.next.next = temp;
+            return result;
         }
 
-        private static ListNode InsertUsingRecursion(ListNode rootNode, int index, int val)
-        {
-            if (index == 0)
-            {
-                ListNode temp = new ListNode(val, rootNode);
-                return temp;
-            }
-            rootNode.next = InsertUsingRecursion(rootNode.next, index: index - 1, val);
-            return rootNode;
-
-            //if (index == 1)
-            //{
-            //    var temp = rootNode.next;
-            //    rootNode.next = new ListNode(7);
-            //    rootNode.next.next = temp;
-            //    return;
-            //}
-            //InsertUsingRecursion(rootNode.next, index: index - 1, val);
-        }
     }
 
 }
