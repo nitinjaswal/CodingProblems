@@ -53,25 +53,23 @@ namespace Challenges
 
         private static bool IsHappy(int n)
         {
-            HashSet<int> map = new HashSet<int>();
-            while (n > 0)
+            //using o(n) without extra space: Slow and fast pointer
+            int slow = n;
+            int fast = n;
+            do
             {
-                if (n == 1)
-                {
-                    return true;
-                }
-                if (!map.Contains(n))
-                {
-                    map.Add(n);
-                    int square = GetSquare(n);
-                    n = square;
-                }
-                else
-                {
-                    return false;
-                }
+                slow = GetSquare(slow);
+                fast = GetSquare(GetSquare(fast));               
             }
-            return true;
+            while (slow != fast) ;
+            if (slow == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private static int GetSquare(int n)
