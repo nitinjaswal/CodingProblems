@@ -25,27 +25,66 @@ public class SolutionReverseBetween
     }
     public ListNode ReverseBetween(ListNode head, int left, int right)
     {
-        var dummyNode = new ListNode(0, head);
-        var prev = dummyNode;
-        var currentNode = head;
+        if (left == right)
+        {
+            return head;
+        }
 
+        var dummyNode = new ListNode(0, head);
+        //skip the first left-1 nodes
+
+        ListNode previousNodeBeforeReverse = dummyNode;
+        ListNode currentNode = head;
         for (int i = 1; i < left; i++)
         {
-            prev = currentNode;
+            previousNodeBeforeReverse = currentNode;
             currentNode = currentNode.next;
         }
 
-        //reverse
-        ListNode prevNode = null;
+        ListNode previousNode = null;
         for (int i = left; i <= right; i++)
         {
-            ListNode temp = currentNode.next;
-            currentNode.next = prevNode;
-            prevNode = currentNode;
+            var temp = currentNode.next;
+            currentNode.next = previousNode;
+            previousNode = currentNode;
             currentNode = temp;
         }
-        prev.next.next = currentNode;
-        prev.next = prevNode;
+
+        previousNodeBeforeReverse.next.next = currentNode;
+        previousNodeBeforeReverse.next = previousNode;
         return dummyNode.next;
+    }
+
+    //This code not working
+    public ListNode ReverseBetweenNotWorking(ListNode head, int left, int right)
+    {
+        if (left == right)
+        {
+            return head;
+        }
+
+        //skip the first left-1 nodes
+
+        ListNode previousNodeBeforeReverse = null;
+        ListNode currentNode = head;
+        for (int i = 1; i < left; i++)
+        {
+            previousNodeBeforeReverse = currentNode;
+            currentNode = currentNode.next;
+        }
+
+        //Reverse list
+        //previousNode = null;
+        ListNode previousNode = null;
+        for (int i = left; i <= right; i++)
+        {
+            var temp = currentNode.next;
+            currentNode.next = previousNode;
+            previousNode = currentNode;
+            currentNode = temp;
+        }
+        previousNodeBeforeReverse.next.next = currentNode;
+        previousNodeBeforeReverse.next = previousNode;
+        return previousNodeBeforeReverse;
     }
 }

@@ -33,9 +33,12 @@ namespace Challenges
         public static void Main(String[] args)
         {
 
-            ListNode node = new ListNode(1);
-            node.next = new ListNode(2);
-            node.next.next = new ListNode(4);
+            ListNode node = new ListNode(3);
+            node.next = new ListNode(5);
+            //node.next.next = new ListNode(3);
+            //node.next.next.next = new ListNode(4);
+            //node.next.next.next.next = new ListNode(5);
+
             ListNode node1 = new ListNode(1);
             node1.next = new ListNode(3);
             node1.next.next = new ListNode(4);
@@ -47,22 +50,56 @@ namespace Challenges
             //root.right.right = new TreeNode(7);
             //root.right.left = new TreeNode(15);
             //var list = InsertUsingRecursion(node, 3, 7);
-            var middleNode = MiddleNode(node);
+            var middleNode = ReverseBetween(node, 1, 2);
 
         }
-        public static ListNode MiddleNode(ListNode head)
+        public static ListNode ReverseBetween(ListNode head, int left, int right)
         {
-            var slowPointer = head;
-            var fastPointer = head;
-            while (fastPointer != null && fastPointer.next != null)
+            
+            if (left == right)
             {
-                slowPointer = slowPointer.next;
-                fastPointer = fastPointer.next.next;
+                return head;
             }
-            return slowPointer;
+
+            var dummyNode = new ListNode(0, head);
+            //skip the first left-1 nodes
+
+            ListNode previousNodeBeforeReverse = dummyNode;
+            ListNode currentNode = head;
+            for (int i = 1; i < left; i++)
+            {
+                previousNodeBeforeReverse = currentNode;
+                currentNode = currentNode.next;
+            }
+
+            ListNode previousNode = null;
+            for (int i = left; i <= right; i++)
+            {
+                var temp = currentNode.next;
+                currentNode.next = previousNode;
+                previousNode = currentNode;
+                currentNode = temp;
+            }
+
+            previousNodeBeforeReverse.next.next = currentNode;
+            previousNodeBeforeReverse.next = previousNode;
+            return previousNodeBeforeReverse.next;
         }
+        public static ListNode Reverse(ListNode head)
+        {
+            var currentNode = head;
+            ListNode previousNode = null;
 
+            while (currentNode != null)
+            {
+                var tempNode = currentNode.next;
+                currentNode.next = previousNode;
+                previousNode = currentNode;
+                currentNode = tempNode;
 
+            }
+            return previousNode;
+        }
 
     }
 
