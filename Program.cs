@@ -33,11 +33,11 @@ namespace Challenges
         public static void Main(String[] args)
         {
 
-            ListNode node = new ListNode(3);
-            node.next = new ListNode(5);
-            //node.next.next = new ListNode(3);
-            //node.next.next.next = new ListNode(4);
-            //node.next.next.next.next = new ListNode(5);
+            ListNode node = new ListNode(1);
+            node.next = new ListNode(2);
+            node.next.next = new ListNode(3);
+            node.next.next.next = new ListNode(4);
+            node.next.next.next.next = new ListNode(5);
 
             ListNode node1 = new ListNode(1);
             node1.next = new ListNode(3);
@@ -50,57 +50,59 @@ namespace Challenges
             //root.right.right = new TreeNode(7);
             //root.right.left = new TreeNode(15);
             //var list = InsertUsingRecursion(node, 3, 7);
-            var middleNode = ReverseBetween(node, 1, 2);
+            ReorderList(node);
 
         }
-        public static ListNode ReverseBetween(ListNode head, int left, int right)
+        public static void ReorderList(ListNode head)
         {
-            
-            if (left == right)
+            if (head == null && head.next == null)
             {
-                return head;
+                return;
             }
+            var currentNode = head;
+            var middleNode = GetMiddleNode(head);
+            var lastNode = Reverse(middleNode);
 
-            var dummyNode = new ListNode(0, head);
-            //skip the first left-1 nodes
-
-            ListNode previousNodeBeforeReverse = dummyNode;
-            ListNode currentNode = head;
-            for (int i = 1; i < left; i++)
+            while (currentNode != null && lastNode != null)
             {
-                previousNodeBeforeReverse = currentNode;
-                currentNode = currentNode.next;
-            }
+                var temp = currentNode.next;
+                currentNode.next = lastNode;
+                currentNode = temp;
 
+                temp = lastNode.next;
+                lastNode.next = currentNode;
+                lastNode=temp;
+            }
+            if (currentNode != null)
+            {
+                currentNode.next = null;
+            }
+        }
+        private static ListNode GetMiddleNode(ListNode head)
+        {
+            var slowPointer = head;
+            var fastPointer = head;
+            while (fastPointer != null && fastPointer.next != null)
+            {
+                slowPointer = slowPointer.next;
+                fastPointer = fastPointer.next.next;
+            }
+            return slowPointer;
+        }
+
+        private static ListNode Reverse(ListNode midNode)
+        {
             ListNode previousNode = null;
-            for (int i = left; i <= right; i++)
+            var currentNode = midNode;
+            while (currentNode != null)
             {
                 var temp = currentNode.next;
                 currentNode.next = previousNode;
                 previousNode = currentNode;
                 currentNode = temp;
             }
-
-            previousNodeBeforeReverse.next.next = currentNode;
-            previousNodeBeforeReverse.next = previousNode;
-            return previousNodeBeforeReverse.next;
-        }
-        public static ListNode Reverse(ListNode head)
-        {
-            var currentNode = head;
-            ListNode previousNode = null;
-
-            while (currentNode != null)
-            {
-                var tempNode = currentNode.next;
-                currentNode.next = previousNode;
-                previousNode = currentNode;
-                currentNode = tempNode;
-
-            }
             return previousNode;
         }
-
     }
 
 }
