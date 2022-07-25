@@ -16,7 +16,21 @@ namespace Challenges
             this.next = next;
         }
     }
+    public class ListNodeDoubly
+    {
+        public int val;
+        public ListNodeDoubly prev;
+        public ListNodeDoubly next;
+        public ListNodeDoubly child;
 
+        public ListNodeDoubly(int d)
+        {
+            val = d;
+            next = null;
+            prev = null;
+            child = null;
+        }
+    }
     public class MyHashSet
     {
         static int[,] matrix = { { 1, 3, 5, 7 },
@@ -24,85 +38,84 @@ namespace Challenges
                         { 23, 30, 34, 50 } };
         int K = 3;
 
-        static int[][] arr = new int[][]
+        static char[][] arr = new char[][]
            {
-                new int[] {1, 2, 3},
-                new int[] {11, 34, 67},
-                new int[] {89, 23,33}
+                new char[] {'1','1','1','1','0' },
+                new char[] {'1','1','0','1','0' },
+                new char[] {'1','1','0','0','0' },
+                new char[] {'0','0','0','0','0' },
           };
         public static void Main(String[] args)
         {
 
-            ListNode node = new ListNode(1);
-            node.next = new ListNode(2);
-            node.next.next = new ListNode(3);
-            node.next.next.next = new ListNode(4);
-            node.next.next.next.next = new ListNode(5);
+            //ListNode node = new ListNode(1);
+            //node.next = new ListNode(2);
+            //node.next.next = new ListNode(3);
+            //node.next.next.next = new ListNode(4);
+            //node.next.next.next.next = new ListNode(5);
 
-            ListNode node1 = new ListNode(1);
-            node1.next = new ListNode(3);
-            node1.next.next = new ListNode(4);
-            //var root = new TreeNode(3);
-            //root.left = new TreeNode(9);
-            //root.right = new TreeNode(20);
-            //root.left.right = null;
-            //root.left.left = null;
-            //root.right.right = new TreeNode(7);
-            //root.right.left = new TreeNode(15);
-            //var list = InsertUsingRecursion(node, 3, 7);
-            ReorderList(node);
+            //ListNode node1 = new ListNode(1);
+            //node1.next = new ListNode(3);
+            //node1.next.next = new ListNode(4);
+       //     int count = NumIslands(arr);
+            var list = Generate(0);
 
         }
-        public static void ReorderList(ListNode head)
+        public static IList<int> Generate(int numRows)
         {
-            if (head == null && head.next == null)
-            {
-                return;
-            }
-            var currentNode = head;
-            var middleNode = GetMiddleNode(head);
-            var lastNode = Reverse(middleNode);
+            var previousList = new List<int>();
+            previousList.Add(1);
 
-            while (currentNode != null && lastNode != null)
+            for (int i = 1; i <=numRows; i++)
             {
-                var temp = currentNode.next;
-                currentNode.next = lastNode;
-                currentNode = temp;
+                var currentList = new List<int>();//Constructing new liust for every row
+                int c = 0;
+                foreach (var item in previousList)
+                {
+                    currentList.Add(item + c);//First element will always be 1
+                    c = item;
+                }
 
-                temp = lastNode.next;
-                lastNode.next = currentNode;
-                lastNode=temp;
+                currentList.Add(1);//Last element will always be 1
+                previousList = currentList;
             }
-            if (currentNode != null)
-            {
-                currentNode.next = null;
-            }
+            return previousList;
         }
-        private static ListNode GetMiddleNode(ListNode head)
+        public static int NumIslands(char[][] grid)
         {
-            var slowPointer = head;
-            var fastPointer = head;
-            while (fastPointer != null && fastPointer.next != null)
+            if (grid.Length == 0)
             {
-                slowPointer = slowPointer.next;
-                fastPointer = fastPointer.next.next;
+                return 0;
             }
-            return slowPointer;
+            int count = 0;
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[i].Length; j++)
+                {
+                    if (grid[i][j] == '1')
+                    {
+                        DFS(grid, i, j);
+                    }
+                }
+            }
+            return count;
         }
 
-        private static ListNode Reverse(ListNode midNode)
+        private static void DFS(char[][] grid, int row, int col)
         {
-            ListNode previousNode = null;
-            var currentNode = midNode;
-            while (currentNode != null)
+            if (row >= 0 && col >= 0 && row < grid.Length && col < grid[0].Length && grid[row][col] == '1')
             {
-                var temp = currentNode.next;
-                currentNode.next = previousNode;
-                previousNode = currentNode;
-                currentNode = temp;
+                //if element is 1 then set to '0'
+                grid[row][col] = '0';
+
+                //Call in all 4 directions
+                DFS(grid, row + 1, col);
+                DFS(grid, row - 1, col);
+                DFS(grid, row, col + 1);
+                DFS(grid, row, col - 1);
             }
-            return previousNode;
         }
+
     }
 
 }
