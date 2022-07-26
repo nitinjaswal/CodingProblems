@@ -47,39 +47,47 @@ namespace Challenges
           };
         public static void Main(String[] args)
         {
-
             //ListNode node = new ListNode(1);
             //node.next = new ListNode(2);
             //node.next.next = new ListNode(3);
             //node.next.next.next = new ListNode(4);
             //node.next.next.next.next = new ListNode(5);
-
-            //ListNode node1 = new ListNode(1);
-            //node1.next = new ListNode(3);
-            //node1.next.next = new ListNode(4);
-       //     int count = NumIslands(arr);
-            var list = Generate(0);
-
         }
-        public static IList<int> Generate(int numRows)
+        public static bool IsSymmetric(TreeNode root)
         {
-            var previousList = new List<int>();
-            previousList.Add(1);
-
-            for (int i = 1; i <=numRows; i++)
+            if (root == null)
             {
-                var currentList = new List<int>();//Constructing new liust for every row
-                int c = 0;
-                foreach (var item in previousList)
+                return true;
+            }
+            Queue<TreeNode> leftQ = new Queue<TreeNode>();
+            Queue<TreeNode> rightQ = new Queue<TreeNode>();
+            leftQ.Enqueue(root);
+            rightQ.Enqueue(root);
+            while (leftQ.Count > 0)
+            {
+                var left = leftQ.Dequeue();
+                var right = rightQ.Dequeue();
+
+                if (left == null && right == null)
                 {
-                    currentList.Add(item + c);//First element will always be 1
-                    c = item;
+                    continue;//both null: continue to check further
+                }
+                if (left == null || right == null)
+                {
+                    return false;
+                }
+                else if (left.val != right.val)
+                {
+                    return false;//If value is different
                 }
 
-                currentList.Add(1);//Last element will always be 1
-                previousList = currentList;
+                leftQ.Enqueue(left.left);
+                rightQ.Enqueue(right.right);
+
+                leftQ.Enqueue(left.right);
+                rightQ.Enqueue(right.left);
             }
-            return previousList;
+            return true;
         }
         public static int NumIslands(char[][] grid)
         {
