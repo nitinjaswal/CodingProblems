@@ -52,42 +52,59 @@ namespace Challenges
             //node.next.next = new ListNode(3);
             //node.next.next.next = new ListNode(4);
             //node.next.next.next.next = new ListNode(5);
+            int[] arr = { 100, 4, 200, 1, 3, 2 };
+            int len = LongestConsecutive(arr);
+            //var count = NumIslands(arr);
         }
-        public static bool IsSymmetric(TreeNode root)
+        public static int LongestConsecutive(int[] arr)
         {
-            if (root == null)
+            if (arr.Length == 0)
             {
-                return true;
+                return 0;
             }
-            Queue<TreeNode> leftQ = new Queue<TreeNode>();
-            Queue<TreeNode> rightQ = new Queue<TreeNode>();
-            leftQ.Enqueue(root);
-            rightQ.Enqueue(root);
-            while (leftQ.Count > 0)
+
+            Array.Sort(arr);
+            int longestStreak = 1;
+            int currentStreak = 1;
+            for (int i = 1; i < arr.Length; i++)
             {
-                var left = leftQ.Dequeue();
-                var right = rightQ.Dequeue();
-
-                if (left == null && right == null)
+                if (arr[i] != arr[i - 1])
                 {
-                    continue;//both null: continue to check further
+                    if (arr[i] == arr[i - 1] + 1)
+                    {
+                        //If numbers are consecutive then increment
+                        currentStreak++;                                               
+                    }
+                    else
+                    {
+                        //Reset the streakcount if numbers are not equal
+                        longestStreak = Math.Max(longestStreak, currentStreak);
+                        currentStreak = 1;
+                    }
                 }
-                if (left == null || right == null)
-                {
-                    return false;
-                }
-                else if (left.val != right.val)
-                {
-                    return false;//If value is different
-                }
-
-                leftQ.Enqueue(left.left);
-                rightQ.Enqueue(right.right);
-
-                leftQ.Enqueue(left.right);
-                rightQ.Enqueue(right.left);
             }
-            return true;
+            return Math.Max(longestStreak, currentStreak);
+            Array.Sort(arr);
+            int longestStreak = 1;
+            int currentStreak = 1;
+            for (int i = 1; i < arr.Length; i++)
+            {
+                if (arr[i] != arr[i - 1])
+                {
+                    if (arr[i] == arr[i - 1] + 1)
+                    {
+                        //If numbers are consecutive then increment
+                        currentStreak++;                                               
+                    }
+                    else
+                    {
+                        //Reset the streakcount if numbers are not equal
+                        longestStreak = Math.Max(longestStreak, currentStreak);
+                        currentStreak = 1;
+                    }
+                }
+            }
+            return Math.Max(longestStreak, currentStreak);
         }
         public static int NumIslands(char[][] grid)
         {
