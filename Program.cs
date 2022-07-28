@@ -45,66 +45,64 @@ namespace Challenges
                 new char[] {'1','1','0','0','0' },
                 new char[] {'0','0','0','0','0' },
           };
+
+
+        static int[][] intMatrix = new int[][]
+           {
+                new int[] {1,1,1 },
+                new int[] {1,0,1 },
+                new int[] {1,1,1 },
+          };
+
         public static void Main(String[] args)
         {
+            SetZeroes(intMatrix);
             //ListNode node = new ListNode(1);
             //node.next = new ListNode(2);
             //node.next.next = new ListNode(3);
             //node.next.next.next = new ListNode(4);
             //node.next.next.next.next = new ListNode(5);
-            int[] arr = { 100, 4, 200, 1, 3, 2 };
-            int len = LongestConsecutive(arr);
+
+
             //var count = NumIslands(arr);
         }
-        public static int LongestConsecutive(int[] arr)
+        public static void SetZeroes(int[][] matrix)
         {
-            if (arr.Length == 0)
+            int row = matrix.Length;//matrix row length
+            int col = matrix[0].Length;//matrix column lenght
+
+            HashSet<int> rows = new HashSet<int>();
+            HashSet<int> cols = new HashSet<int>();
+
+            //mark each row and col when it is ZERO and add row and col in Hash
+            for (int i = 0; i < row; i++)
             {
-                return 0;
+                for (int j = 0; j < col; j++)
+                {
+                    if (matrix[i][j] == 0)
+                    {
+                        rows.Add(i);
+                        cols.Add(j);
+                    }
+                }
             }
 
-            Array.Sort(arr);
-            int longestStreak = 1;
-            int currentStreak = 1;
-            for (int i = 1; i < arr.Length; i++)
+            //Now for added row and col in hash we check for [i][j]
+            for (int i = 0; i < row; i++)
             {
-                if (arr[i] != arr[i - 1])
+                for (int j = 0; j < col; j++)
                 {
-                    if (arr[i] == arr[i - 1] + 1)
+                    if (rows.Contains(i) || cols.Contains(j))
                     {
-                        //If numbers are consecutive then increment
-                        currentStreak++;                                               
-                    }
-                    else
-                    {
-                        //Reset the streakcount if numbers are not equal
-                        longestStreak = Math.Max(longestStreak, currentStreak);
-                        currentStreak = 1;
+                        matrix[i][j] = 0;
+                        //eg
+                        //matrix[0][1]=0;
+                        //matrix[1][0]=0
+                        //matrix[1][1]=0
+                        //matrix[1][2]=0
                     }
                 }
             }
-            return Math.Max(longestStreak, currentStreak);
-            Array.Sort(arr);
-            int longestStreak = 1;
-            int currentStreak = 1;
-            for (int i = 1; i < arr.Length; i++)
-            {
-                if (arr[i] != arr[i - 1])
-                {
-                    if (arr[i] == arr[i - 1] + 1)
-                    {
-                        //If numbers are consecutive then increment
-                        currentStreak++;                                               
-                    }
-                    else
-                    {
-                        //Reset the streakcount if numbers are not equal
-                        longestStreak = Math.Max(longestStreak, currentStreak);
-                        currentStreak = 1;
-                    }
-                }
-            }
-            return Math.Max(longestStreak, currentStreak);
         }
         public static int NumIslands(char[][] grid)
         {
