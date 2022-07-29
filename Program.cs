@@ -56,72 +56,37 @@ namespace Challenges
 
         public static void Main(String[] args)
         {
-            SetZeroes(intMatrix);
             //ListNode node = new ListNode(1);
             //node.next = new ListNode(2);
             //node.next.next = new ListNode(3);
             //node.next.next.next = new ListNode(4);
             //node.next.next.next.next = new ListNode(5);
-
-
             //var count = NumIslands(arr);
+            int[] arr = { 1, 1, 1 };
+            bool check = ThreeConsecutiveOdds(arr);
         }
-        public static void SetZeroes(int[][] matrix)
+
+        public static bool ThreeConsecutiveOdds(int[] arr)
         {
-            int row = matrix.Length;//matrix row length
-            int col = matrix[0].Length;//matrix column lenght
-            bool isCol = false;
-            int[] rows = new int[] { row };
-
-
-            for (int i = 0; i < row; i++)
+            int oddStreak = 0;
+            for (int i = 0; i < arr.Length; i++)
             {
-                if (matrix[i][0] == 0)
-                {
-                    isCol = true;
-                }
-
-                // If an element is zero, we set the first element of the corresponding row and column to 0
-                for (int j = 1; j < col; j++)
-                {
-                    if (matrix[i][j] == 0)
+                if (arr[i] % 2 != 0 || arr[i] == 1)
+                {                    
+                    oddStreak++;
+                    if (oddStreak == 3)
                     {
-                        matrix[i][0] = 0;
-                        matrix[0][j] = 0;
+                        return true;
                     }
-                }
-            }
-
-            // Iterate over the array once again and using the first row and first column, update the elements.
-            for (int i = 1; i < row; i++)
-            {
-                for (int j = 1; j < col; j++)
+                 }
+                else
                 {
-                    if (matrix[i][0] == 0 || matrix[0][j] == 0)
-                    {
-                        matrix[i][j] = 0;
-                    }
+                    oddStreak = 0;
                 }
             }
-
-            // See if the first row needs to be set to zero as well
-            if (matrix[0][0] == 0)
-            {
-                for (int j = 0; j < col; j++)
-                {
-                    matrix[0][j] = 0;
-                }
-            }
-
-            // See if the first column needs to be set to zero as well
-            if (isCol)
-            {
-                for (int i = 0; i < row; i++)
-                {
-                    matrix[i][0] = 0;
-                }
-            }
+            return false;
         }
+
         public static int NumIslands(char[][] grid)
         {
             if (grid.Length == 0)

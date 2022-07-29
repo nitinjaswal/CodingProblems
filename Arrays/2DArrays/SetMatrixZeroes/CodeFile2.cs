@@ -1,4 +1,4 @@
-﻿public class SolutionSetZeroes
+﻿public class SolutionSetZeroesBetter
 {
     public void SetZeroes(int[][] matrix)
     {
