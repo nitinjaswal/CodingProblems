@@ -1,4 +1,4 @@
-﻿public class Solution
+﻿public class SolutionSortColorsDutchNationalFlagAlgo
 {
     public void SortColors(int[] nums)
     {

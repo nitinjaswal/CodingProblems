@@ -38,12 +38,11 @@ namespace Challenges
                         { 23, 30, 34, 50 } };
         int K = 3;
 
-        static char[][] arr = new char[][]
+        static int[][] arr = new int[][]
            {
-                new char[] {'1','1','1','1','0' },
-                new char[] {'1','1','0','1','0' },
-                new char[] {'1','1','0','0','0' },
-                new char[] {'0','0','0','0','0' },
+                new int[] {1,2,3 },
+                new int[] {4,5,6 },
+                new int[] {7,8,9 }
           };
 
 
@@ -51,48 +50,50 @@ namespace Challenges
         {
             //ListNode node = new ListNode(1);
             //node.next = new ListNode(2);
-            int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
-            SortColors(arr);
+            //int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
+            Rotate(arr);
+
         }
 
-        public static void SortColors(int[] nums)
+        public static void RotateUsingSecondmatrix(int[][] arr)
         {
-            //Dutch national flag algo
-            //We assume that al the lement to the low are 0 ie: a[0...low-1]==0
-            //and all the element to right of high are 2 ie: a[high+1...]==2
-            //and [low...mid-1} ie: 1
-            int low = 0;
-            int mid = 0;
-            int high = nums.Length - 1;
-            while (mid <= high)
+            //int[][] nums = new int[arr.Length][arr[0].Length];
+
+        }
+        public static void Rotate(int[][] matrix)
+        {
+            //Transpose a matrix
+            int rows = matrix.Length;
+            int cols = matrix[0].Length;
+
+            for (int i = 0; i < rows; i++)
             {
-                if (nums[mid] == 0)//When mid is zero: Swap values at (nums[low] & nums[mid])
+                for (int j = i; j < cols; j++)
                 {
-                    int temp = nums[low];
-                    nums[low] = nums[mid];
-                    nums[mid] = temp;
-                    low++;
-                    mid++;
+                    int temp = matrix[i][j];
+                    matrix[i][j] = matrix[j][i];
+                    matrix[j][i] = temp;
                 }
-                else if (nums[mid] == 1)//if Mid is zero then simply increment Mid pointer
+
+            }
+
+            //Reverse  matrix rows with Swap
+            int firstColumn = 0;
+            int lastColumn = matrix[0].Length - 1;
+            while (firstColumn < lastColumn)
+            {
+                //swapping of first column with last column
+                for (int k = 0; k < matrix.Length; k++)
                 {
-                    mid++;
+                    int temp = matrix[k][firstColumn];
+                    matrix[k][firstColumn] = matrix[k][lastColumn];
+                    matrix[k][lastColumn] = temp;
                 }
-                else
-                {
-                    int temp = nums[mid];
-                    nums[mid] = nums[high];
-                    nums[high] = temp;
-                    high--;
-                }
+                firstColumn++;
+                lastColumn--;
             }
         }
-        private static void Swap(int a, int b)
-        {
-            int c = a;
-            a = b;
-            b = c;
-        }
+
         public static int NumIslands(char[][] grid)
         {
             if (grid.Length == 0)
