@@ -1,4 +1,6 @@
-﻿public class SolutionMaxSubArray
+﻿using System;
+
+public class SolutionMaxSubArray
 {
     public int MaxSubArray(int[] nums)
     {
@@ -29,4 +31,22 @@
         }
         return overAllBest;
     }
+
+    public static int MaxSubArray1(int[] nums)
+    {
+        int sum = 0;
+        int max = int.MinValue;
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            sum = sum + nums[i];
+            max = Math.Max(max, sum);
+            if (sum < 0)
+            {
+                sum = 0;
+            }
+        }
+        return max;
+    }
+
 }

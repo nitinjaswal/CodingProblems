@@ -62,21 +62,25 @@ namespace Challenges
             //node.next.next.next = new ListNode(4);
             //node.next.next.next.next = new ListNode(5);
             //var count = NumIslands(arr);
-            int[] arr = { 1, 1, 1 };
-            bool check = ThreeConsecutiveOdds(arr);
-        }
+            int[] arr = { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
+            int maxSum = MaxSubArray(arr);
 
-        public static bool ThreeConsecutiveOdds(int[] arr)
+        }
+        public static int MaxSubArray(int[] nums)
         {
-            bool isConsecutiveOdd = false; ;
-            for (int i = 0; i < arr.Length - 2; i++)
+            int sum = 0;
+            int max = int.MinValue;
+
+            for (int i = 0; i < nums.Length; i++)
             {
-                if (arr[i] % 2 != 0 && arr[i + 1] % 2 != 0 && arr[i + 2] % 2 != 0)
+                sum = sum + nums[i];
+                max = Math.Max(max, sum);
+                if (sum < 0)
                 {
-                    isConsecutiveOdd = true;
+                    sum = 0;
                 }
             }
-            return isConsecutiveOdd;
+            return max;
         }
 
         public static int NumIslands(char[][] grid)
