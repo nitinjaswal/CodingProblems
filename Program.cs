@@ -47,42 +47,52 @@ namespace Challenges
           };
 
 
-        static int[][] intMatrix = new int[][]
-           {
-                new int[] {0,1,0 },
-                new int[] {1,5,1 },
-                new int[] {1,1,1 },
-          };
-
         public static void Main(String[] args)
         {
             //ListNode node = new ListNode(1);
             //node.next = new ListNode(2);
-            //node.next.next = new ListNode(3);
-            //node.next.next.next = new ListNode(4);
-            //node.next.next.next.next = new ListNode(5);
-            //var count = NumIslands(arr);
-            int[] arr = { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
-            int maxSum = MaxSubArray(arr);
-
+            int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
+            SortColors(arr);
         }
-        public static int MaxSubArray(int[] nums)
-        {
-            int sum = 0;
-            int max = int.MinValue;
 
-            for (int i = 0; i < nums.Length; i++)
+        public static void SortColors(int[] nums)
+        {
+            //Dutch national flag algo
+            //We assume that al the lement to the low are 0 ie: a[0...low-1]==0
+            //and all the element to right of high are 2 ie: a[high+1...]==2
+            //and [low...mid-1} ie: 1
+            int low = 0;
+            int mid = 0;
+            int high = nums.Length - 1;
+            while (mid <= high)
             {
-                sum = sum + nums[i];
-                max = Math.Max(max, sum);
-                if (sum < 0)
+                if (nums[mid] == 0)//When mid is zero: Swap values at (nums[low] & nums[mid])
                 {
-                    sum = 0;
+                    int temp = nums[low];
+                    nums[low] = nums[mid];
+                    nums[mid] = temp;
+                    low++;
+                    mid++;
+                }
+                else if (nums[mid] == 1)//if Mid is zero then simply increment Mid pointer
+                {
+                    mid++;
+                }
+                else
+                {
+                    int temp = nums[mid];
+                    nums[mid] = nums[high];
+                    nums[high] = temp;
+                    high--;
                 }
             }
-            return max;
         }
-
+        private static void Swap(int a, int b)
+        {
+            int c = a;
+            a = b;
+            b = c;
+        }
         public static int NumIslands(char[][] grid)
         {
             if (grid.Length == 0)
