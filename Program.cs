@@ -40,9 +40,10 @@ namespace Challenges
 
         static int[][] arr = new int[][]
            {
-                new int[] {1,2,3 },
-                new int[] {4,5,6 },
-                new int[] {7,8,9 }
+                new int[] {1,4 },
+                new int[] {2,3 }
+                //new int[] {8,10 },
+                //new int[] {1,3 }
           };
 
 
@@ -51,7 +52,7 @@ namespace Challenges
             //ListNode node = new ListNode(1);
             //node.next = new ListNode(2);
             //int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
-            Rotate(arr);
+            var list = Merge(arr);
 
         }
 
@@ -60,38 +61,35 @@ namespace Challenges
             //int[][] nums = new int[arr.Length][arr[0].Length];
 
         }
-        public static void Rotate(int[][] matrix)
+        public static int[][] Merge(int[][] intervals)
         {
-            //Transpose a matrix
-            int rows = matrix.Length;
-            int cols = matrix[0].Length;
+            Array.Sort(intervals, (a, b) => a[0] - b[0]);
 
-            for (int i = 0; i < rows; i++)
+            List<int[]> result = new List<int[]>();
+
+            //Get previous interval array
+            int[] prev = intervals[0];
+
+            for (int i = 1; i < intervals.Length; i++)
             {
-                for (int j = i; j < cols; j++)
-                {
-                    int temp = matrix[i][j];
-                    matrix[i][j] = matrix[j][i];
-                    matrix[j][i] = temp;
-                }
+                //Current array
+                int[] curr = intervals[i];
 
-            }
-
-            //Reverse  matrix rows with Swap
-            int firstColumn = 0;
-            int lastColumn = matrix[0].Length - 1;
-            while (firstColumn < lastColumn)
-            {
-                //swapping of first column with last column
-                for (int k = 0; k < matrix.Length; k++)
+                //comparing first element of curr array with value
+                //at index 1 of prev array
+                if (curr[0] <= prev[1])
                 {
-                    int temp = matrix[k][firstColumn];
-                    matrix[k][firstColumn] = matrix[k][lastColumn];
-                    matrix[k][lastColumn] = temp;
+                    prev[1] = Math.Max(curr[1], prev[1]);//copy larger value from interval
                 }
-                firstColumn++;
-                lastColumn--;
+                else
+                {
+                    result.Add(prev);
+                    prev = curr;
+                }
             }
+            //if there is no else case
+            result.Add(prev);
+            return result.ToArray();
         }
 
         public static int NumIslands(char[][] grid)

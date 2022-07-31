@@ -14,7 +14,6 @@
                 matrix[i][j] = matrix[j][i];
                 matrix[j][i] = temp;
             }
-
         }
 
         //Reverse  matrix rows with Swap
