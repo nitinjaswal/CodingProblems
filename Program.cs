@@ -38,12 +38,12 @@ namespace Challenges
                         { 23, 30, 34, 50 } };
         int K = 3;
 
-        static int[][] arr = new int[][]
+        static char[][] arr = new char[][]
            {
-                new int[] {1,4 },
-                new int[] {2,3 }
-                //new int[] {8,10 },
-                //new int[] {1,3 }
+ new char[]{'1', '1', '0', '0','0' },
+      new char[]{'1', '1', '0', '0', '0' },
+        new char[]{'0', '0', '1' ,'0', '0' },
+      new char[]{'0', '0', '0', '1', '1' },
           };
 
 
@@ -53,27 +53,10 @@ namespace Challenges
             //node.next = new ListNode(2);
             //int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
             //var list = Merge(arr);
-            int[] nums1 = { 9, 6, 4, 2, 3, 5, 7, 0, 1 };
-            int[] nums2 = { 2, 3, 9 };
-            int s = MissingNumber(nums1);
-
+            var n = NumIslands(arr);
         }
 
-        public static int MissingNumber(int[] arr)
-        {
-            
-            //we know sum of n conseutive numbers  is (n * (n+1))/2.
 
-            //STEP1: Find sum of n CONSECUTIVE numbers
-            int n = arr.Length;
-            int sum = (n * (n + 1)) / 2;
-
-            //STEP2: Find sum of all the elements in array
-            int arraySum = arr.Sum();
-           
-            //Return the difference adnd we will get missing number
-            return sum - arraySum;
-        }
 
         public static int NumIslands(char[][] grid)
         {
@@ -89,6 +72,7 @@ namespace Challenges
                     if (grid[i][j] == '1')
                     {
                         DFS(grid, i, j);
+                        count++;
                     }
                 }
             }
