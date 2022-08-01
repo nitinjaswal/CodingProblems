@@ -2,16 +2,16 @@
 {
     public int MissingNumber(int[] arr)
     {
-        for (int i = 0; i <= arr.Length - 1;)
+        //Cyclic sort
+        for (int i = 0; i < arr.Length;)
         {
-            //if i==n : ignore the number
+            //if element in array ie equal to length of array then skip it
             if (arr[i] == arr.Length)
             {
                 i++;
                 continue;
             }
-            //correct index for number is i-1;
-            //eg: 3 will be at 3-1 inde
+            //Element correct index
             int correctIndex = arr[i];
             if (arr[i] != arr[correctIndex])
             {
@@ -24,12 +24,15 @@
                 i++;
             }
         }
+
+        //Once each element is at correct position after cycic sort
+        //then check for element at wrong position 
         int j = 0;
-        for (; j <= arr.Length - 1;)
+        for (; j < arr.Length;)
         {
             if (arr[j] != j)
             {
-                break;
+                return j;
             }
             else
             {

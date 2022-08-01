@@ -53,31 +53,26 @@ namespace Challenges
             //node.next = new ListNode(2);
             //int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
             //var list = Merge(arr);
-            int[] nums1 = { 2,6,4,1,3,1,5 };
+            int[] nums1 = { 9, 6, 4, 2, 3, 5, 7, 0, 1 };
             int[] nums2 = { 2, 3, 9 };
-            int s = FindDuplicate(nums1);
+            int s = MissingNumber(nums1);
 
         }
 
-        public static int FindDuplicate(int[] nums)
+        public static int MissingNumber(int[] arr)
         {
-            int slow = nums[0];
-            int fast = nums[0];
+            
+            //we know sum of n conseutive numbers  is (n * (n+1))/2.
 
-            do
-            {
-                slow = nums[slow];//slow pointer will move one step
-                fast = nums[nums[fast]];//fast pointer will move 2 steps
-            }
-            while (slow != fast);//loop until slow and fast meet
+            //STEP1: Find sum of n CONSECUTIVE numbers
+            int n = arr.Length;
+            int sum = (n * (n + 1)) / 2;
 
-            fast = nums[0];
-            while (slow!=fast)
-            {
-                slow = nums[slow];
-                fast = nums[fast];
-            }
-            return slow;
+            //STEP2: Find sum of all the elements in array
+            int arraySum = arr.Sum();
+           
+            //Return the difference adnd we will get missing number
+            return sum - arraySum;
         }
 
         public static int NumIslands(char[][] grid)
