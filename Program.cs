@@ -38,64 +38,47 @@ namespace Challenges
                         { 23, 30, 34, 50 } };
         int K = 3;
 
-        static char[][] arr = new char[][]
+        static int[][] arr = new int[][]
            {
- new char[]{'1', '1', '0', '0','0' },
-      new char[]{'1', '1', '0', '0', '0' },
-        new char[]{'0', '0', '1' ,'0', '0' },
-      new char[]{'0', '0', '0', '1', '1' },
-          };
+               new int[]{7,34,45,10,12,27,13 },
+               new int[]{27,21,45,10,12,13 },
+               //new int[]{3,4,5,6 },
+           };
 
 
         public static void Main(String[] args)
         {
             //ListNode node = new ListNode(1);
             //node.next = new ListNode(2);
-            //int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
-            //var list = Merge(arr);
-            var n = NumIslands(arr);
+
+            var list = Intersection(arr);
         }
 
-
-
-        public static int NumIslands(char[][] grid)
+        public static IList<int> Intersection(int[][] nums)
         {
-            if (grid.Length == 0)
+            int row = nums.Length;
+            int col = nums[0].Length;
+
+            Dictionary<int, int> set = new Dictionary<int, int>();
+
+            for (int i = 0; i < row; i++)
             {
-                return 0;
-            }
-            int count = 0;
-            for (int i = 0; i < grid.Length; i++)
-            {
-                for (int j = 0; j < grid[i].Length; j++)
+                for (int j = 0; j < nums[i].Length; j++)
                 {
-                    if (grid[i][j] == '1')
+                    if (!set.ContainsKey(nums[i][j]))
                     {
-                        DFS(grid, i, j);
-                        count++;
+                        set.Add(nums[i][j], 1);
+                    }
+                    else
+                    {
+                        set[nums[i][j]]++;
                     }
                 }
             }
-            return count;
+            var result = set.Where(x => x.Value == nums.Length).Select(x => x.Key).OrderBy(x => x);
+            return result.ToList();
         }
-
-        private static void DFS(char[][] grid, int row, int col)
-        {
-            if (row >= 0 && col >= 0 && row < grid.Length && col < grid[0].Length && grid[row][col] == '1')
-            {
-                //if element is 1 then set to '0'
-                grid[row][col] = '0';
-
-                //Call in all 4 directions
-                DFS(grid, row + 1, col);
-                DFS(grid, row - 1, col);
-                DFS(grid, row, col + 1);
-                DFS(grid, row, col - 1);
-            }
-        }
-
     }
-
 }
 
 
