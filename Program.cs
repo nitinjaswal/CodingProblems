@@ -52,44 +52,32 @@ namespace Challenges
             //ListNode node = new ListNode(1);
             //node.next = new ListNode(2);
             //int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
-            var list = Merge(arr);
+            //var list = Merge(arr);
+            int[] nums1 = { 2,6,4,1,3,1,5 };
+            int[] nums2 = { 2, 3, 9 };
+            int s = FindDuplicate(nums1);
 
         }
 
-        public static void RotateUsingSecondmatrix(int[][] arr)
+        public static int FindDuplicate(int[] nums)
         {
-            //int[][] nums = new int[arr.Length][arr[0].Length];
+            int slow = nums[0];
+            int fast = nums[0];
 
-        }
-        public static int[][] Merge(int[][] intervals)
-        {
-            Array.Sort(intervals, (a, b) => a[0] - b[0]);
-
-            List<int[]> result = new List<int[]>();
-
-            //Get previous interval array
-            int[] prev = intervals[0];
-
-            for (int i = 1; i < intervals.Length; i++)
+            do
             {
-                //Current array
-                int[] curr = intervals[i];
-
-                //comparing first element of curr array with value
-                //at index 1 of prev array
-                if (curr[0] <= prev[1])
-                {
-                    prev[1] = Math.Max(curr[1], prev[1]);//copy larger value from interval
-                }
-                else
-                {
-                    result.Add(prev);
-                    prev = curr;
-                }
+                slow = nums[slow];//slow pointer will move one step
+                fast = nums[nums[fast]];//fast pointer will move 2 steps
             }
-            //if there is no else case
-            result.Add(prev);
-            return result.ToArray();
+            while (slow != fast);//loop until slow and fast meet
+
+            fast = nums[0];
+            while (slow!=fast)
+            {
+                slow = nums[slow];
+                fast = nums[fast];
+            }
+            return slow;
         }
 
         public static int NumIslands(char[][] grid)
