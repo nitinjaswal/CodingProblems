@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-public class SolutionMajorityElementHashtable
+public class SolutionMajorityElementII
 {
-    public int MajorityElement(int[] nums)
+    public IList<int> MajorityElementII(int[] nums)
     {
         Dictionary<int, int> set = new Dictionary<int, int>();
         for (int i = 0; i < nums.Length; i++)
@@ -17,8 +17,8 @@ public class SolutionMajorityElementHashtable
                 set[nums[i]]++;
             }
         }
-        int n = nums.Length / 2;
-        int result = set.FirstOrDefault(x => x.Value > n).Key;
+        int n = nums.Length / 3;
+        var result = set.Where(x => x.Value > n).Select(x => x.Key).ToList();
         return result;
     }
 }

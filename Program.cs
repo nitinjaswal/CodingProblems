@@ -50,12 +50,13 @@ namespace Challenges
         {
             //ListNode node = new ListNode(1);
             //node.next = new ListNode(2);
-            int[] nums = { 2, 2, 1, 1, 1, 2, 2 };
-            int check = MajorityElement(nums);
+            int[] nums = { 3, 2, 3 };
+            var check = MajorityElement(nums);
 
         }
-        public static int MajorityElement(int[] nums)
+        public static IList<int> MajorityElement(int[] nums)
         {
+            
             Dictionary<int, int> set = new Dictionary<int, int>();
             for (int i = 0; i < nums.Length; i++)
             {
@@ -68,8 +69,8 @@ namespace Challenges
                     set[nums[i]]++;
                 }
             }
-            int n = nums.Length / 2;
-            int result = set.FirstOrDefault(x => x.Value > n).Key;
+            int n = nums.Length / 3;
+            var result = set.Where(x => x.Value > n).Select(x=>x.Key).ToList();
             return result;
         }
     }
