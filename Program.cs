@@ -40,9 +40,9 @@ namespace Challenges
 
         static int[][] arr = new int[][]
            {
-               new int[]{1,3,5,7 },
-               new int[]{10,11,16,20 },
-               new int[]{23,30,34,60},
+               new int[]{1,5,9 },
+               new int[]{10,11,13 },
+               new int[]{12,13,15},
            };
 
 
@@ -50,29 +50,12 @@ namespace Challenges
         {
             //ListNode node = new ListNode(1);
             //node.next = new ListNode(2);
-            int[] nums = { 3, 2, 3 };
-            var check = MajorityElement(nums);
+            int[] nums = { 3, 2, 1, 5, 6, 4 };
+
 
         }
-        public static IList<int> MajorityElement(int[] nums)
-        {
-            
-            Dictionary<int, int> set = new Dictionary<int, int>();
-            for (int i = 0; i < nums.Length; i++)
-            {
-                if (!set.ContainsKey(nums[i]))
-                {
-                    set.Add(nums[i],1);
-                }
-                else
-                {
-                    set[nums[i]]++;
-                }
-            }
-            int n = nums.Length / 3;
-            var result = set.Where(x => x.Value > n).Select(x=>x.Key).ToList();
-            return result;
-        }
+
+      
     }
 }
 
