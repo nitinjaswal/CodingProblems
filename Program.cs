@@ -31,6 +31,17 @@ namespace Challenges
             child = null;
         }
     }
+    public class TreeNode
+    {
+        public int val;
+        public TreeNode left, right;
+
+        public TreeNode(int item)
+        {
+            val = item;
+            left = right = null;
+        }
+    }
     public class MyHashSet
     {
         static int[,] matrix = { { 1, 3, 5, 7 },
@@ -50,24 +61,58 @@ namespace Challenges
         {
             //ListNode node = new ListNode(1);
             //node.next = new ListNode(2);
-            int[] nums = { 1, 2, 1 };
-            var array = GetConcatenation(nums);
+            int[] nums = { 0, 2, 1, 5, 3, 4 };
+            var root = new TreeNode(3);
+            root.left = new TreeNode(9);
+            root.right = new TreeNode(20);
+            root.right.left = new TreeNode(15);
+            root.right.right = new TreeNode(7);
 
-
+            int[] height = { 1, 8, 6, 2, 5, 4, 8, 3, 7 };
+            int maxArea = MaxArea(height);
         }
 
-        public static int[] GetConcatenation(int[] nums)
+        //Brute force approach: Giving Time limit exceeded error
+        public static int MaxArea1(int[] height)
         {
-            int[] newArray = new int[nums.Length * 2];
-            for (int i = 0; i < nums.Length; i++)
-            {
-                newArray[i] = nums[i];
-                newArray[i + nums.Length] = nums[i];
-            }
+            int maxArea = 0;
 
-            return newArray;
+            for (int i = 0; i < height.Length; i++)
+            {
+                for (int j = i; j < height.Length; j++)
+                {
+                    int currArea = Math.Min(height[j], height[i]) * (j - i);
+                    maxArea = Math.Max(maxArea, currArea);
+                }
+            }
+            return maxArea;
         }
 
+        
+        public static int MaxArea(int[] height)
+        {
+            int maxArea = 0;
+
+            //using 2 pointers approach
+            int left = 0;
+            int right = height.Length - 1;
+
+            while (left < right)
+            {
+                int currArea = Math.Min(height[left], height[right]) * (right - left);
+                maxArea = Math.Max(maxArea, currArea);
+
+                if (height[left] < height[right])
+                {
+                    left++;
+                }
+                else
+                {
+                    right--;
+                }
+            }
+            return maxArea;
+        }
     }
 }
 
