@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-public class Solution
+public class SolutionFindMaxConsecutiveOnes
 {
     public int FindMaxConsecutiveOnes(int[] nums)
     {

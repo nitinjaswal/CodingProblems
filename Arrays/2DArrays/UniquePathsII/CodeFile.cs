@@ -1,4 +1,7 @@
-﻿public class Solution
+﻿using System;
+using System.Collections.Generic;
+
+public class Solution
 {
     int count = 0;
     private Dictionary<String, int> map = new Dictionary<String, int>();
